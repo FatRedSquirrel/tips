@@ -300,10 +300,15 @@ h1 {
   display: flex;
   align-items: center;
   gap: 20px;
-  padding-left: 10px;
+  //padding-left: 10px;
 
   &:not(:last-child) {
     margin-bottom: 15px;
+  }
+
+  &__number {
+    width: 20px;
+    text-align: end;
   }
 
   &__name {
@@ -312,6 +317,8 @@ h1 {
 
   &__hours {
     display: block;
+    position: relative;
+    left: -4px;
   }
 
   &__has {
@@ -347,6 +354,9 @@ select {
 
 option {
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .hidden {
