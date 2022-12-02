@@ -5,6 +5,7 @@ export default function Order(props) {
         <div className="fete">
             <span>{props.id}</span>
             <input
+                className="tips-input fete-input"
                 type="number"
                 id={props.id}
                 name="order"

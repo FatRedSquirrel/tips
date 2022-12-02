@@ -1,11 +1,20 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import Order from "./Components/Order";
 import Preorder from "./Components/Preorder";
+import WaiterSideMenu from "./Components/WaiterSideMenu";
+import WaiterMain from "./Components/WaiterMain";
+import {data} from "./data";
+import IsManagerRich from "./Components/IsManagerRich";
+import Results from "./Components/Results";
 
 function App() {
 
-    const [resultsShown, setResultsShown] = React.useState(false)
+    //Вспомогательное состояние для условного рендера блока с результатами
+    const [resultsShown, setResultsShown] = React.useState(false);
+
+    //Массив данных об официантах
+    const [waiters, setWaiters] = React.useState(JSON.parse(localStorage.getItem("waiters")) || data);
 
     //Массив с объектами банкетов
     const [feteData, setFeteData] = React.useState(JSON.parse(localStorage.getItem('fete')) || [{
@@ -14,11 +23,12 @@ function App() {
         order: ''
     }])
 
-    //Объект прочих полей (конверт, посадка, с верхами ли менеджер)
+    //Объект прочих полей
     const [additionalFields, setAdditionalFields] = React.useState(JSON.parse(localStorage.getItem('additionalFields')) || {
         tables: '',
         money: '',
-        isManagerRich: false
+        isManagerRich: false,
+        waitersMoney: ''
     })
 
     //Объект с результатами вычислений
@@ -28,7 +38,7 @@ function App() {
         manager: 0
     })
 
-    //Массив предзаказов
+    //Массив элементов предзаказов
     const preorders = feteData.map((fete) =>
         <Preorder
             action={handleFeteChange}
@@ -38,7 +48,7 @@ function App() {
         />
     )
 
-    //Массив дозаказов
+    //Массив элементов дозаказов
     const orders = feteData.map((fete) =>
         <Order
             action={handleFeteChange}
@@ -93,7 +103,7 @@ function App() {
     }
 
     //Функция для получения финальных значений
-    function count() {
+    function countDivisions() {
         setResultsShown(true);
         let sumPreorders = 0;
         let sumOrders = 0;
@@ -110,52 +120,165 @@ function App() {
         ))
     }
 
+    //Массив элементов официантов бокового меню
+    const waiterSideMenuElements = waiters.map((waiter) =>
+        <WaiterSideMenu
+            key={waiter.id}
+            name={waiter.name}
+            chooseWaiter={() => chooseWaiter(waiter.id)}
+            isChosen={waiter.isChosen}
+        />
+    )
+
+    //Массив элементов выбранных официантов
+    const chosenWaitersElements = waiters.filter(waiter => waiter.isChosen).map((chosenWaiter, index) =>
+        <WaiterMain
+            key={chosenWaiter.id}
+            name={chosenWaiter.name}
+            index={index + 1}
+            hasMoney={chosenWaiter.hasMoney}
+            toReceive={chosenWaiter.toReceive}
+            hours={chosenWaiter.hours}
+            changeHours={(evt) => changeHours(evt, chosenWaiter.id)}
+            handleHasMoneyChange={(evt) => handleHasMoneyChange(evt, chosenWaiter.id)}
+        />
+    )
+
+    function chooseWaiter(id) {
+        setWaiters(prevState => prevState.map(waiter => waiter.id === id ? {
+            ...waiter,
+            isChosen: !waiter.isChosen
+        } : waiter))
+    }
+
+    function changeHours(evt, id) {
+        setWaiters(prevState => prevState.map(waiter => waiter.id === id ? {...waiter, hours: evt.target.value} : waiter))
+    }
+
+    function handleHasMoneyChange(evt, id) {
+        setWaiters(prevState => prevState.map(waiter => waiter.id === id ? {...waiter, hasMoney: evt.target.value} : waiter))
+    }
+
+    function countWaiters() {
+        const hours = [];
+        for (let waiter of waiters) {
+            if (waiter.isChosen) {
+                hours.push(Number(waiter.hours / 12))
+            }
+        }
+        const waitersAmount = hours.reduce((a, b) => a + b)
+        const tipsPerWaiter = additionalFields.waitersMoney / waitersAmount;
+        setWaiters(prevState =>
+            prevState.map(waiter => {
+                if (waiter.isChosen) {
+                    return {
+                        ...waiter,
+                        toReceive: Math.floor(tipsPerWaiter * waiter.hours / 12 - waiter.hasMoney)
+                    }
+                }
+                 return waiter;
+            })
+        )
+    }
+
+    function openSideMenu() {
+        const sideMenu = document.querySelector(".side-menu");
+        const overlay = document.querySelector(".overlay");
+        const burger = document.querySelector(".burger");
+        sideMenu.classList.toggle("open");
+        overlay.classList.toggle("hidden");
+        overlay.classList.toggle("lock-scroll");
+        burger.classList.toggle("burger-close");
+        document.body.classList.toggle("lock-scroll")
+    }
+
     //Сохранение данных
     React.useEffect(() => {
         localStorage.setItem('fete', JSON.stringify(feteData));
         localStorage.setItem('additionalFields', JSON.stringify(additionalFields));
-    }, [feteData, additionalFields]);
+        localStorage.setItem('waiters', JSON.stringify(waiters))
+    }, [feteData, additionalFields, waiters]);
 
     return (
-        <div className="main">
-            <div className="main-top">
-                <div className="wrapper">
-                    <h1>Конверт</h1>
-                    <input type="number" name="money" onChange={handleAdditionalFieldsChange}
-                           value={additionalFields.money}/>
-                </div>
-                <div className="wrapper">
-                    <h1>Посадка</h1>
-                    <input type="number" name="tables" onChange={handleAdditionalFieldsChange}
-                           value={additionalFields.tables}/>
-                </div>
+        <div className="overall-container">
+            <div className="side-menu">
+                {waiterSideMenuElements}
             </div>
-            <div className="container">
-                <div className="inputs-container">
-                    <h1>Предзаказы</h1>
-                    <ul>
-                        {preorders}
-                    </ul>
+            <div className="main">
+                <div className="waiters-main-container">
+                    {waiters.filter(waiter => waiter.isChosen).length === 0 && <p className="hint">Добавьте официантов из бокового меню сюда</p>}
+                    {waiters.filter(waiter => waiter.isChosen).length !== 0 && <div className="waiters-main">
+                        <header className="waiters-main__header">
+                            <span className="waiter">Официант</span>
+                            <span className="hours">Часы</span>
+                            <span className="has">На карте</span>
+                            <span className="to-receive">К получению</span>
+                        </header>
+                        {chosenWaitersElements}
+                    </div>}
                 </div>
-                <div className="inputs-container">
-                    <h1>Дозаказы</h1>
-                    {orders}
+                <div className="overlay hidden"></div>
+                <button className="burger" onClick={openSideMenu}></button>
+                <div className="main-top">
+                    <div className="wrapper">
+                        <h1 className="title">Конверт</h1>
+                        <input
+                            type="number"
+                            name="money"
+                            onChange={handleAdditionalFieldsChange}
+                            value={additionalFields.money}
+                            className="tips-input"
+                        />
+                    </div>
+                    <div className="wrapper">
+                        <h1 className="title">Посадка</h1>
+                        <input
+                            type="number"
+                            name="tables"
+                            onChange={handleAdditionalFieldsChange}
+                            value={additionalFields.tables}
+                            className="tips-input"
+                        />
+                    </div>
                 </div>
-            </div>
-            <button onClick={add} className="button">+</button>
-            <button onClick={remove} className="button minus">-</button>
-            <label>
-                <input type="checkbox" name="isManagerRich" checked={additionalFields.isManagerRich}
-                       onChange={handleAdditionalFieldsChange}/>
-                Менеджер с верхами
-            </label>
-            <button onClick={count} className="button">Посчитать</button>
-            <div className={resultsShown ? "results" : "results hidden"}>
-                <p>кухня {results.kitchen}</p>
-                <p>бар {results.bar}</p>
-                <p>менеджер {results.manager}</p>
+                <div className="container">
+                    <div className="inputs-container">
+                        <h1 className="title">Предзаказы</h1>
+                        <ul>
+                            {preorders}
+                        </ul>
+                    </div>
+                    <div className="inputs-container">
+                        <h1 className="title">Дозаказы</h1>
+                        {orders}
+                    </div>
+                </div>
+                <div className="fete-buttons-container">
+                    <button onClick={add} className="button fete-button plus">+</button>
+                    <button onClick={remove} className="button fete-button minus">-</button>
+                </div>
+                <IsManagerRich
+                    isManagerRich={additionalFields.isManagerRich}
+                    handleAdditionalFieldsChange={handleAdditionalFieldsChange}
+                />
+                <button onClick={countDivisions} className="button count">Посчитать отчисления</button>
+                {resultsShown && <Results
+                    kitchen={results.kitchen}
+                    bar={results.bar}
+                    manager={results.manager}
+                />}
+                <input
+                    type="number"
+                    placeholder="Деньги официантов"
+                    className="waiters-money"
+                    name="waitersMoney"
+                    onChange={handleAdditionalFieldsChange}
+                    value={additionalFields.waitersMoney}
+                />
+                <button onClick={countWaiters} className="button count">Посчитать официантов</button>
             </div>
         </div>
+
     )
 }
 
