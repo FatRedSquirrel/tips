@@ -26,11 +26,13 @@ export default function WaiterMain(props) {
                     className="waiter-main__has-amount"
                     value={props.hasMoney}
                 />
-                (<select name="hasMoney" className="money-type-select">
+                (<div className="select-container">
+                    <select name="hasMoney" className="money-type-select">
                     <option value="tables">посадка</option>
                     <option value="service">сервак</option>
                     <option value="tips">верха</option>
-                </select>)
+                </select>
+                </div>)
             </div>
             <div className="to-receive">
                 {props.toReceive}
