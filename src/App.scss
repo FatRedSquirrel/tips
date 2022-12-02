@@ -167,7 +167,6 @@ h1 {
   z-index: 102;
 }
 
-/*------  FOR BURGER OPEN --------*/
 .burger::before, .burger::after {
   content: "";
   position: absolute;
@@ -182,36 +181,18 @@ h1 {
   bottom: 70%;
 }
 
-/*------  FOR BURGER CLOSE --------*/
-.burger-close::before {
-  left: 10px;
-  bottom: 5px;
-  content: "";
-  position: absolute;
-  transform: rotate(45deg);
-  width: 60%;
-}
-
-.burger-close::after {
-  left: 10px;
-  bottom: 5px;
-  content: "";
-  position: absolute;
-  transform: rotate(135deg);
-  width: 60%;
-}
-
 .overlay {
   position: fixed;
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 100;
   opacity: 1;
   visibility: visible;
   transition: .3s ease-in-out;
+  overflow: hidden;
 
   &.hidden {
     opacity: 0;
@@ -239,7 +220,7 @@ h1 {
 
 .waiter-side-menu {
   width: 100%;
-  padding: 10px 20px 10px 20px;
+  padding: 20px;
   position: relative;
 
   &:not(:last-child) {
@@ -366,4 +347,8 @@ select {
 
 option {
   text-align: center;
+}
+
+.hidden {
+  display: none;
 }

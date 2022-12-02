@@ -185,11 +185,22 @@ function App() {
         const sideMenu = document.querySelector(".side-menu");
         const overlay = document.querySelector(".overlay");
         const burger = document.querySelector(".burger");
-        sideMenu.classList.toggle("open");
-        overlay.classList.toggle("hidden");
-        overlay.classList.toggle("lock-scroll");
-        burger.classList.toggle("burger-close");
-        document.body.classList.toggle("lock-scroll")
+        burger.classList.add("hidden");
+        sideMenu.classList.add("open");
+        overlay.classList.remove("hidden");
+        document.body.classList.add("lock-scroll");
+        document.documentElement.classList.add("lock-scroll");
+    }
+
+    function closeSideMenu() {
+        const sideMenu = document.querySelector(".side-menu");
+        const overlay = document.querySelector(".overlay");
+        const burger = document.querySelector(".burger");
+        burger.classList.remove("hidden");
+        sideMenu.classList.remove("open");
+        overlay.classList.add("hidden");
+        document.body.classList.remove("lock-scroll");
+        document.documentElement.classList.remove("lock-scroll");
     }
 
     //Сохранение данных
@@ -217,7 +228,7 @@ function App() {
                         {chosenWaitersElements}
                     </div>}
                 </div>
-                <div className="overlay hidden"></div>
+                <div className="overlay hidden" onClick={closeSideMenu}></div>
                 <button className="burger" onClick={openSideMenu}></button>
                 <div className="main-top">
                     <div className="wrapper">

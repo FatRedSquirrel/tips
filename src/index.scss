@@ -44,3 +44,12 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+textarea,
+input[type="text"],
+input[type="button"],
+input[type="submit"],
+input[type="number"]{
+  -webkit-appearance: none;
+  border-radius: 0;
+}
