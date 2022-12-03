@@ -7,6 +7,7 @@ import WaiterMain from "./Components/WaiterMain";
 import {data} from "./data";
 import IsManagerRich from "./Components/IsManagerRich";
 import Results from "./Components/Results";
+import {burger,sideMenu,overlay} from "./dom";
 
 function App() {
 
@@ -160,13 +161,12 @@ function App() {
     }
 
     function countWaiters() {
-        const hours = [];
+        let waitersAmount = 0;
         for (let waiter of waiters) {
             if (waiter.isChosen) {
-                hours.push(Number(waiter.hours / 12))
+                waitersAmount = waitersAmount + Number(waiter.hours / 12)
             }
         }
-        const waitersAmount = hours.reduce((a, b) => a + b)
         const tipsPerWaiter = additionalFields.waitersMoney / waitersAmount;
         setWaiters(prevState =>
             prevState.map(waiter => {
@@ -182,9 +182,6 @@ function App() {
     }
 
     function openSideMenu() {
-        const sideMenu = document.querySelector(".side-menu");
-        const overlay = document.querySelector(".overlay");
-        const burger = document.querySelector(".burger");
         burger.classList.add("hidden");
         sideMenu.classList.add("open");
         overlay.classList.remove("hidden");
@@ -193,9 +190,6 @@ function App() {
     }
 
     function closeSideMenu() {
-        const sideMenu = document.querySelector(".side-menu");
-        const overlay = document.querySelector(".overlay");
-        const burger = document.querySelector(".burger");
         burger.classList.remove("hidden");
         sideMenu.classList.remove("open");
         overlay.classList.add("hidden");
