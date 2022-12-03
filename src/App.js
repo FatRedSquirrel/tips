@@ -172,7 +172,17 @@ function App() {
                 waitersAmount += Number(waiter.hours / 12);
             }
         }
-        const tipsPerWaiter = additionalFields.waitersMoney / waitersAmount;
+        //Прибавляем сумму верхов к чистым деньгам офиков
+        let waitersCards = 0;
+        for (let waiter of waiters) {
+            if (waiter.isChosen) {
+                waitersCards += Number(waiter.hasMoney);
+            }
+        }
+
+        const allTheMoney = Number(additionalFields.waitersMoney) + waitersCards
+
+        const tipsPerWaiter = allTheMoney / waitersAmount;
         setWaiters(prevState =>
             prevState.map(waiter => {
                 if (waiter.isChosen) {
