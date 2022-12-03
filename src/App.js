@@ -7,7 +7,6 @@ import WaiterMain from "./Components/WaiterMain";
 import {data} from "./data";
 import IsManagerRich from "./Components/IsManagerRich";
 import Results from "./Components/Results";
-import {burger,sideMenu,overlay} from "./dom";
 
 function App() {
 
@@ -153,18 +152,24 @@ function App() {
     }
 
     function changeHours(evt, id) {
-        setWaiters(prevState => prevState.map(waiter => waiter.id === id ? {...waiter, hours: evt.target.value} : waiter))
+        setWaiters(prevState => prevState.map(waiter => waiter.id === id ? {
+            ...waiter,
+            hours: evt.target.value
+        } : waiter))
     }
 
     function handleHasMoneyChange(evt, id) {
-        setWaiters(prevState => prevState.map(waiter => waiter.id === id ? {...waiter, hasMoney: evt.target.value} : waiter))
+        setWaiters(prevState => prevState.map(waiter => waiter.id === id ? {
+            ...waiter,
+            hasMoney: evt.target.value
+        } : waiter))
     }
 
     function countWaiters() {
         let waitersAmount = 0;
         for (let waiter of waiters) {
             if (waiter.isChosen) {
-                waitersAmount = waitersAmount + Number(waiter.hours / 12)
+                waitersAmount += Number(waiter.hours / 12);
             }
         }
         const tipsPerWaiter = additionalFields.waitersMoney / waitersAmount;
@@ -176,12 +181,15 @@ function App() {
                         toReceive: Math.floor(tipsPerWaiter * waiter.hours / 12 - waiter.hasMoney)
                     }
                 }
-                 return waiter;
+                return waiter;
             })
         )
     }
 
     function openSideMenu() {
+        const sideMenu = document.querySelector(".side-menu");
+        const overlay = document.querySelector(".overlay");
+        const burger = document.querySelector(".burger");
         burger.classList.add("hidden");
         sideMenu.classList.add("open");
         overlay.classList.remove("hidden");
@@ -190,6 +198,9 @@ function App() {
     }
 
     function closeSideMenu() {
+        const sideMenu = document.querySelector(".side-menu");
+        const overlay = document.querySelector(".overlay");
+        const burger = document.querySelector(".burger");
         burger.classList.remove("hidden");
         sideMenu.classList.remove("open");
         overlay.classList.add("hidden");
@@ -201,7 +212,7 @@ function App() {
     React.useEffect(() => {
         localStorage.setItem('fete', JSON.stringify(feteData));
         localStorage.setItem('additionalFields', JSON.stringify(additionalFields));
-        localStorage.setItem('waiters', JSON.stringify(waiters))
+        localStorage.setItem('waiters', JSON.stringify(waiters));
     }, [feteData, additionalFields, waiters]);
 
     return (
@@ -211,7 +222,8 @@ function App() {
             </div>
             <div className="main">
                 <div className="waiters-main-container">
-                    {waiters.filter(waiter => waiter.isChosen).length === 0 && <p className="hint">Добавьте официантов из бокового меню сюда</p>}
+                    {waiters.filter(waiter => waiter.isChosen).length === 0 &&
+                        <p className="hint">Добавьте официантов из бокового меню сюда</p>}
                     {waiters.filter(waiter => waiter.isChosen).length !== 0 && <div className="waiters-main">
                         <header className="waiters-main__header">
                             <span className="waiter">Официант</span>
