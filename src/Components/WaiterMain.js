@@ -1,20 +1,8 @@
 export default function WaiterMain(props) {
-
-    // const bankStyles = {
-    //     color: props.bank === "Сбербанк" ? "#13b413" : "#f8d81c"
-    // }
-
     return (
         <div className="waiter-main">
             <div className="waiter-main__text waiter-main__number">{props.index}</div>
             <div className="waiter-main__text waiter-main__name">
-                {/*<div className="tooltip">*/}
-                {/*    ?*/}
-                {/*    <div className="tooltip-text">*/}
-                {/*        <div className="bank" style={bankStyles}>{props.bank}</div>*/}
-                {/*        <div className="phone-number"><a onClick={(evt) => evt.preventDefault()} href="#">{props.phoneNumber}</a></div>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
                 {props.name}
             </div>
             <div className="waiter-main__text waiter-main__hours">
