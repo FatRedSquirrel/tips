@@ -15,7 +15,8 @@ function App() {
 
     //Массив данных об официантах
     const [waiters, setWaiters] = React.useState(
-        data.length > JSON.parse(localStorage.getItem("waiters")).length ?
+        //Проверяем длину data, чтобы обновлять данные в случае появления нового официанта
+        (JSON.parse(localStorage.getItem("waiters")) && data.length > JSON.parse(localStorage.getItem("waiters")).length) || !JSON.parse(localStorage.getItem("waiters")) ?
             data :
             JSON.parse(localStorage.getItem("waiters"))
     );
@@ -145,6 +146,8 @@ function App() {
             hours={chosenWaiter.hours}
             changeHours={(evt) => changeHours(evt, chosenWaiter.id)}
             handleHasMoneyChange={(evt) => handleHasMoneyChange(evt, chosenWaiter.id)}
+            bank={chosenWaiter.bank}
+            phoneNumber={chosenWaiter.phoneNumber}
         />
     )
 
@@ -298,14 +301,17 @@ function App() {
                     bar={results.bar}
                     manager={results.manager}
                 />}
-                <input
-                    type="number"
-                    placeholder="Деньги официантов"
-                    className="waiters-money"
-                    name="waitersMoney"
-                    onChange={handleAdditionalFieldsChange}
-                    value={additionalFields.waitersMoney}
-                />
+                <div className="waiters-money">
+                    <input
+                        type="number"
+                        placeholder="Деньги официантов"
+                        className="waiters-money-input"
+                        name="waitersMoney"
+                        onChange={handleAdditionalFieldsChange}
+                        value={additionalFields.waitersMoney}
+                    />
+                    <div className="waiters-money-tooltip">?<div className="waiters-money-tooltip-text">Без карт, они будут учтены и прибавлены автоматически</div></div>
+                </div>
                 <button onClick={countWaiters} className="button count">Посчитать официантов</button>
             </div>
         </div>

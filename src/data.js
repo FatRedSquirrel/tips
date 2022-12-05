@@ -8,7 +8,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Сбербанк",
+        phoneNumber: "+79867903930"
     },
     {
         id: nanoid(),
@@ -17,7 +19,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Тинькофф",
+        phoneNumber: "+79186850146"
     },
     {
         id: nanoid(),
@@ -26,7 +30,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Сбербанк",
+        phoneNumber: "+79773216593"
     },
     {
         id: nanoid(),
@@ -35,7 +41,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Сбербанк",
+        phoneNumber: "+79229678067"
     },
     {
         id: nanoid(),
@@ -44,7 +52,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Сбербанк",
+        phoneNumber: "+79772848323"
     },
     {
         id: nanoid(),
@@ -53,7 +63,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Тинькофф",
+        phoneNumber: "+79248740987"
     },
     {
         id: nanoid(),
@@ -62,7 +74,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Сбербанк",
+        phoneNumber: "+79264940091"
     },
     {
         id: nanoid(),
@@ -71,7 +85,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Сбербанк",
+        phoneNumber: "+79175511985"
     },
     {
         id: nanoid(),
@@ -80,7 +96,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Тинькофф",
+        phoneNumber: "+79104836934"
     },
     {
         id: nanoid(),
@@ -89,7 +107,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "",
+        phoneNumber: ""
     },
     {
         id: nanoid(),
@@ -98,7 +118,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Сбербанк",
+        phoneNumber: "+79280441514"
     },
     {
         id: nanoid(),
@@ -107,7 +129,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Сбербанк",
+        phoneNumber: "+79999089370"
     },
     {
         id: nanoid(),
@@ -116,7 +140,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Сбербанк",
+        phoneNumber: "2202206115255460"
     },
     {
         id: nanoid(),
@@ -125,7 +151,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Сбербанк",
+        phoneNumber: "+79998669258"
     },
     {
         id: nanoid(),
@@ -134,7 +162,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Сбербанк",
+        phoneNumber: "+79688578600"
     },
     {
         id: nanoid(),
@@ -143,7 +173,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Тинькофф",
+        phoneNumber: "+79898397255"
     },
     {
         id: nanoid(),
@@ -152,7 +184,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Тинькофф",
+        phoneNumber: "+79280441415"
     },
     {
         id: nanoid(),
@@ -161,7 +195,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Тинькофф",
+        phoneNumber: "+79852853070"
     },
     {
         id: nanoid(),
@@ -170,7 +206,9 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Сбербанк",
+        phoneNumber: "+79088609001"
     },
     {
         id: nanoid(),
@@ -179,6 +217,8 @@ export const data = [
         isChosen: false,
         hours: 12,
         hasMoney: 0,
-        toReceive: 0
+        toReceive: 0,
+        bank: "Сбербанк",
+        phoneNumber: "+79202488523"
     },
 ]
