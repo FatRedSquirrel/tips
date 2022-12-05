@@ -14,7 +14,11 @@ function App() {
     const [resultsShown, setResultsShown] = React.useState(false);
 
     //Массив данных об официантах
-    const [waiters, setWaiters] = React.useState(JSON.parse(localStorage.getItem("waiters")) || data);
+    const [waiters, setWaiters] = React.useState(
+        data.length > JSON.parse(localStorage.getItem("waiters")).length ?
+            data :
+            JSON.parse(localStorage.getItem("waiters"))
+    );
 
     //Массив с объектами банкетов
     const [feteData, setFeteData] = React.useState(JSON.parse(localStorage.getItem('fete')) || [{

@@ -138,7 +138,7 @@ export const data = [
     },
     {
         id: nanoid(),
-        name: "Кирилл",
+        name: "Кирилл C.",
         trainee: false,
         isChosen: false,
         hours: 12,
@@ -157,6 +157,15 @@ export const data = [
     {
         id: nanoid(),
         name: "Никита В.",
+        trainee: false,
+        isChosen: false,
+        hours: 12,
+        hasMoney: 0,
+        toReceive: 0
+    },
+    {
+        id: nanoid(),
+        name: "Кирилл Ш.",
         trainee: false,
         isChosen: false,
         hours: 12,
