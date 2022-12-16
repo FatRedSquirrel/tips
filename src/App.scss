@@ -8,9 +8,22 @@ $color-primary-dark-mode: #BB86FC;
 $color-secondary-dark-mode: #6200EE;
 $color-buttons-dark-mode: #6200EE;
 
+html {
+  height: 100%;
+}
+
+#root {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
 body {
   font-family: "PT Sans", sans-serif;
   overflow-x: hidden;
+  min-height: 100%;
 }
 
 .main {
@@ -20,11 +33,6 @@ body {
   padding: 40px 0;
   padding-top: 60px;
   position: relative;
-
-  &.dark {
-    background-color: #121212;
-    color: #fff;
-  }
 }
 
 input, select {
@@ -234,6 +242,7 @@ h1 {
 }
 
 .waiter-side-menu {
+  color: #000;
   width: 100%;
   padding: 20px;
   position: relative;
@@ -253,7 +262,12 @@ h1 {
 }
 
 .overall-container {
+  min-height: 100%;
   margin: 0 auto;
+  &.dark {
+    background-color: #121212;
+    color: #fff;
+  }
 }
 
 .lock-scroll {
@@ -508,6 +522,64 @@ option {
   }
 }
 
+.admin-modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  color: #000;
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.6);
+
+  &-open {
+    display: block;
+    position: absolute;
+    top: 14px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid black;
+    font-size: 14px;
+  }
+
+  &-form {
+    background-color: #fff;
+    padding: 40px 20px;
+    border-radius: 20px;
+    position: relative;
+  }
+
+  &-login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &-login {
+    background-color: transparent;
+    border: none;
+  }
+
+  &-close {
+    background-color: transparent;
+    border: none;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    right: 14px;
+    top: 14px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
 .dark {
   .waiters-money-tooltip {
     border-color: #fff;
@@ -540,6 +612,10 @@ option {
 
   .waiter-main:not(:last-child) {
     border-bottom: 1px solid #3b3b3b;
+  }
+
+  .admin-modal-open {
+    border-color: #fff;
   }
 
 }

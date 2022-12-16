@@ -8,10 +8,14 @@ import {data} from "./data";
 import IsManagerRich from "./Components/IsManagerRich";
 import Results from "./Components/Results";
 import DarkModeToggle from "./Components/DarkModeToggle";
+import AdminModal from "./Components/AdminModal";
 
 function App() {
 
     const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem('darkMode')) || false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(JSON.parse(localStorage.getItem('isAdmin')) || false);
+    const [isLoginValid, setIsLoginValid] = useState(true);
 
     function toggleDarkMode() {
         setDarkMode(prev => !prev);
@@ -210,6 +214,16 @@ function App() {
         )
     }
 
+    function login(event) {
+        event.preventDefault();
+        if (event.target.querySelector('.admin-modal-input').value === 'zxc666') {
+            setIsAdmin(true);
+        } else {
+            setIsLoginValid(false);
+        }
+        console.log(isAdmin)
+    }
+
     function openSideMenu() {
         const sideMenu = document.querySelector(".side-menu");
         const overlay = document.querySelector(".overlay");
@@ -232,23 +246,47 @@ function App() {
         document.documentElement.classList.remove("lock-scroll");
     }
 
+    console.log(isAdmin)
+
     //Сохранение данных
     React.useEffect(() => {
         localStorage.setItem('fete', JSON.stringify(feteData));
         localStorage.setItem('additionalFields', JSON.stringify(additionalFields));
         localStorage.setItem('waiters', JSON.stringify(waiters));
-        localStorage.setItem('darkMode', JSON.stringify(darkMode))
-    }, [feteData, additionalFields, waiters, darkMode]);
+        localStorage.setItem('darkMode', JSON.stringify(darkMode));
+        localStorage.setItem('isAdmin', JSON.stringify(isAdmin))
+    }, [feteData, additionalFields, waiters, darkMode, isAdmin]);
 
     return (
-        <div className="overall-container">
+        <div className={darkMode ? "overall-container dark" : "overall-container"}>
             <div className="side-menu">
                 {waiterSideMenuElements}
             </div>
-            <div className={darkMode ? "main dark" : "main"}>
+            <div className="main">
                 <DarkModeToggle
                     toggleDarkMode={toggleDarkMode}
                     darkMode={darkMode}
+                />
+                <button
+                    className="admin-modal-open"
+                    onClick={() => {
+                        setIsModalOpen(true)
+                        document.body.classList.add("lock-scroll");
+                    }
+                    }
+                >
+                    Админ
+                </button>
+                <AdminModal
+                    isModalOpen={isModalOpen}
+                    login={(event => {
+                        login(event)
+                    })}
+                    closeModal={() => {
+                        setIsModalOpen(false);
+                        document.body.classList.remove("lock-scroll");
+                    }
+                    }
                 />
                 <div className="waiters-main-container">
                     {waiters.filter(waiter => waiter.isChosen).length === 0 &&
