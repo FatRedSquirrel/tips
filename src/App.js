@@ -218,10 +218,14 @@ function App() {
         event.preventDefault();
         if (event.target.querySelector('.admin-modal-input').value === 'zxc666') {
             setIsAdmin(true);
+            setIsLoginValid(true);
         } else {
             setIsLoginValid(false);
         }
-        console.log(isAdmin)
+    }
+
+    function logout() {
+        setIsAdmin(false);
     }
 
     function openSideMenu() {
@@ -245,8 +249,6 @@ function App() {
         document.body.classList.remove("lock-scroll");
         document.documentElement.classList.remove("lock-scroll");
     }
-
-    console.log(isAdmin)
 
     //Сохранение данных
     React.useEffect(() => {
@@ -282,11 +284,14 @@ function App() {
                     login={(event => {
                         login(event)
                     })}
+                    logout={logout}
                     closeModal={() => {
                         setIsModalOpen(false);
                         document.body.classList.remove("lock-scroll");
                     }
                     }
+                    isAdmin={isAdmin}
+                    isLoginValid={isLoginValid}
                 />
                 <div className="waiters-main-container">
                     {waiters.filter(waiter => waiter.isChosen).length === 0 &&

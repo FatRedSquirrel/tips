@@ -13,9 +13,9 @@ export default function AdminModal(props) {
                 onSubmit={props.login}
                 className="admin-modal-form"
             >
-                <div className="admin-modal-login-container">
+                {!props.isAdmin && <div className="admin-modal-login-container">
                     <input
-                        className="admin-modal-input"
+                        className={`admin-modal-input ${props.isLoginValid ? '' : 'invalid'}`}
                         type="text"
                         placeholder="Пароль"
                     />
@@ -25,16 +25,17 @@ export default function AdminModal(props) {
                     >
                         Войти
                     </button>
-                </div>
-                <div className="admin-modal-login-container">
+                </div>}
+                {props.isAdmin && <div className="admin-modal-login-container">
                     <p>Вы авторизованы как админ</p>
                     <button
+                        onClick={props.logout}
                         className="admin-modal-login"
                         type="button"
                     >
                         Выйти
                     </button>
-                </div>
+                </div>}
                 <button
                     onClick={props.closeModal}
                     className="admin-modal-close"
