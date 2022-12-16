@@ -5,8 +5,8 @@ export default function IsManagerRich(props) {
     const styles = props.isManagerRich ?
         {
             opacity: 1,
-            color: "#000",
-            border: "2px solid #13b413"
+            color: props.darkMode ? "#fff" : "#000",
+            border: `2px solid ${props.darkMode ? '#BB86FC' : '#13b413'}`
         }
         :
         {

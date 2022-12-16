@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.scss';
 import Order from "./Components/Order";
 import Preorder from "./Components/Preorder";
@@ -7,8 +7,15 @@ import WaiterMain from "./Components/WaiterMain";
 import {data} from "./data";
 import IsManagerRich from "./Components/IsManagerRich";
 import Results from "./Components/Results";
+import DarkModeToggle from "./Components/DarkModeToggle";
 
 function App() {
+
+    const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem('darkMode')) || false);
+
+    function toggleDarkMode() {
+        setDarkMode(prev => !prev);
+    }
 
     //Вспомогательное состояние для условного рендера блока с результатами
     const [resultsShown, setResultsShown] = React.useState(false);
@@ -230,14 +237,19 @@ function App() {
         localStorage.setItem('fete', JSON.stringify(feteData));
         localStorage.setItem('additionalFields', JSON.stringify(additionalFields));
         localStorage.setItem('waiters', JSON.stringify(waiters));
-    }, [feteData, additionalFields, waiters]);
+        localStorage.setItem('darkMode', JSON.stringify(darkMode))
+    }, [feteData, additionalFields, waiters, darkMode]);
 
     return (
         <div className="overall-container">
             <div className="side-menu">
                 {waiterSideMenuElements}
             </div>
-            <div className="main">
+            <div className={darkMode ? "main dark" : "main"}>
+                <DarkModeToggle
+                    toggleDarkMode={toggleDarkMode}
+                    darkMode={darkMode}
+                />
                 <div className="waiters-main-container">
                     {waiters.filter(waiter => waiter.isChosen).length === 0 &&
                         <p className="hint">Добавьте официантов из бокового меню сюда</p>}
@@ -294,6 +306,7 @@ function App() {
                 <IsManagerRich
                     isManagerRich={additionalFields.isManagerRich}
                     handleAdditionalFieldsChange={handleAdditionalFieldsChange}
+                    darkMode={darkMode}
                 />
                 <button onClick={countDivisions} className="button count">Посчитать отчисления</button>
                 {resultsShown && <Results
@@ -310,7 +323,11 @@ function App() {
                         onChange={handleAdditionalFieldsChange}
                         value={additionalFields.waitersMoney}
                     />
-                    <div className="waiters-money-tooltip">?<div className="waiters-money-tooltip-text">Без карт, они будут учтены и прибавлены автоматически</div></div>
+                    <div
+                        className="waiters-money-tooltip"
+                    >
+                        ?
+                        <div className="waiters-money-tooltip-text">Без карт, они будут учтены и прибавлены автоматически</div></div>
                 </div>
                 <button onClick={countWaiters} className="button count">Посчитать официантов</button>
             </div>
