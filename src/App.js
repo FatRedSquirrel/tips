@@ -9,6 +9,8 @@ import IsManagerRich from "./Components/IsManagerRich";
 import Results from "./Components/Results";
 import DarkModeToggle from "./Components/DarkModeToggle";
 import AdminModal from "./Components/AdminModal";
+import NewWaiter from "./Components/NewWaiter";
+import Waiter from "./Waiter";
 
 function App() {
 
@@ -16,6 +18,7 @@ function App() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isAdmin, setIsAdmin] = useState(JSON.parse(localStorage.getItem('isAdmin')) || false);
     const [isLoginValid, setIsLoginValid] = useState(true);
+    const [isWaiterRemovalInProcess, setIsWaiterRemovalInProcess] = useState(false);
 
     function toggleDarkMode() {
         setDarkMode(prev => !prev);
@@ -27,7 +30,7 @@ function App() {
     //Массив данных об официантах
     const [waiters, setWaiters] = React.useState(
         //Проверяем длину data, чтобы обновлять данные в случае появления нового официанта
-        (JSON.parse(localStorage.getItem("waiters")) && data.length > JSON.parse(localStorage.getItem("waiters")).length) || !JSON.parse(localStorage.getItem("waiters")) ?
+        (JSON.parse(localStorage.getItem("waiters")) && data.length !== JSON.parse(localStorage.getItem("waiters")).length) || !JSON.parse(localStorage.getItem("waiters")) ?
             data :
             JSON.parse(localStorage.getItem("waiters"))
     );
@@ -143,6 +146,8 @@ function App() {
             name={waiter.name}
             chooseWaiter={() => chooseWaiter(waiter.id)}
             isChosen={waiter.isChosen}
+            isWaiterRemovalInProcess={isWaiterRemovalInProcess}
+            deleteWaiter={(event) => deleteWaiter(event, waiter.id)}
         />
     )
 
@@ -216,7 +221,7 @@ function App() {
 
     function login(event) {
         event.preventDefault();
-        if (event.target.querySelector('.admin-modal-input').value === 'zxc666') {
+        if (event.target.querySelector('.admin-modal-input').value === '808123') {
             setIsAdmin(true);
             setIsLoginValid(true);
         } else {
@@ -226,6 +231,29 @@ function App() {
 
     function logout() {
         setIsAdmin(false);
+    }
+
+    function addNewWaiter(event) {
+        const nameField = event.target.querySelector('.new-waiter-input');
+        const name = nameField.value;
+        if (name) {
+            setWaiters(prev => [
+                new Waiter(name),
+                ...prev
+            ])
+        }
+        nameField.value = '';
+    }
+
+    function deleteWaiter(event, id) {
+        event.stopPropagation();
+        setWaiters(prev => prev.filter(waiter => waiter.id !== id));
+        setIsWaiterRemovalInProcess(false);
+    }
+
+    function clearLocalStorage() {
+        localStorage.clear()
+        document.location.reload()
     }
 
     function openSideMenu() {
@@ -259,26 +287,45 @@ function App() {
         localStorage.setItem('isAdmin', JSON.stringify(isAdmin))
     }, [feteData, additionalFields, waiters, darkMode, isAdmin]);
 
+
+
     return (
         <div className={darkMode ? "overall-container dark" : "overall-container"}>
             <div className="side-menu">
+                {isAdmin && <NewWaiter
+                    addNewWaiter={(event) => {
+                        event.preventDefault();
+                        addNewWaiter(event);
+                    }}
+                />}
                 {waiterSideMenuElements}
+                {isAdmin && <button
+                    onClick={() => {
+                        setIsWaiterRemovalInProcess(prev => !prev)
+                    }}
+                    className="delete-waiter"
+                >
+                    {isWaiterRemovalInProcess
+                        ? "Отмена"
+                        : "Удалить официанта"}
+                </button>}
             </div>
             <div className="main">
                 <DarkModeToggle
                     toggleDarkMode={toggleDarkMode}
                     darkMode={darkMode}
                 />
-                <button
-                    className="admin-modal-open"
-                    onClick={() => {
-                        setIsModalOpen(true)
-                        document.body.classList.add("lock-scroll");
-                    }
-                    }
-                >
-                    Админ
-                </button>
+                {/*<button*/}
+                {/*    className="admin-modal-open"*/}
+                {/*    onClick={() => {*/}
+                {/*        setIsModalOpen(true)*/}
+                {/*        document.body.classList.add("lock-scroll");*/}
+                {/*    }*/}
+                {/*    }*/}
+                {/*>*/}
+                {/*    Админ*/}
+                {/*</button>*/}
+                <button onClick={clearLocalStorage} className="reset">Сбросить</button>
                 <AdminModal
                     isModalOpen={isModalOpen}
                     login={(event => {
@@ -370,7 +417,8 @@ function App() {
                         className="waiters-money-tooltip"
                     >
                         ?
-                        <div className="waiters-money-tooltip-text">Без карт, они будут учтены и прибавлены автоматически</div></div>
+                        <div className="waiters-money-tooltip-text">Без карт, они будут учтены и прибавлены
+                            автоматически</div></div>
                 </div>
                 <button onClick={countWaiters} className="button count">Посчитать официантов</button>
             </div>

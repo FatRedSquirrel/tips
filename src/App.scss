@@ -7,6 +7,7 @@ $color-sber-bright: #7cec84;
 $color-primary-dark-mode: #BB86FC;
 $color-secondary-dark-mode: #6200EE;
 $color-buttons-dark-mode: #6200EE;
+$color-warning: #D0342C;
 
 html {
   height: 100%;
@@ -248,7 +249,7 @@ h1 {
   padding: 20px;
   position: relative;
 
-  &:not(:last-child) {
+  &:not(:last-of-type) {
     border-bottom: 1px solid $color-secondary;
   }
 
@@ -259,6 +260,33 @@ h1 {
     top: 0;
     width: 100%;
     height: 100%;
+    z-index: 2;
+  }
+
+  &__label {
+    position: relative;
+  }
+
+  &__delete {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 3;
+
+    img {
+      display: block;
+      width: 20px;
+      height: 20px;
+    }
   }
 }
 
@@ -584,11 +612,63 @@ option {
   }
 
   &-input.invalid {
-    border-color: #D0342C;
+    border-color: $color-warning;
   }
 }
 
+.new-waiter {
+  padding-left: 6px;
+  color: #000;
+  margin-bottom: 10px;
+
+  &-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  &-form {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  &-button {
+    background-color: transparent;
+    font-weight: 400;
+    font-size: 18px;
+    border: 1px solid $color-primary;
+    width: 27px;
+    height: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.delete-waiter {
+  display: block;
+  width: 100%;
+  height: 40px;
+  background-color: #fff;
+  border: 2px solid $color-warning;
+  color: $color-warning;
+  cursor: pointer;
+}
+
+.reset {
+  display: block;
+  position: absolute;
+  top: 14px;
+  background-color: transparent;
+  border: none;
+  font-size: 14px;
+}
+
 .dark {
+  .new-waiter-button {
+    border-color: $color-primary-dark-mode;
+  }
+
   .waiters-money-tooltip {
     border-color: #fff;
   }
