@@ -1,4 +1,3 @@
-import {nanoid} from "nanoid"
 import Waiter from "./Waiter";
 
 const waiters = [
@@ -23,15 +22,6 @@ const waiters = [
     "Кирилл Ш.",
     "Марсель"
 ]
-
-// const data = waiters.map(waiter => ({
-//     id: nanoid(),
-//     name: waiter,
-//     isChosen: false,
-//     hours: 12,
-//     hasMoney: 0,
-//     toReceive: 0
-// }))
 
 const data = waiters.map(waiter => new Waiter(waiter));
 

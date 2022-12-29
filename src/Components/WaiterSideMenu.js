@@ -1,4 +1,4 @@
-import close from "../images/close.svg"
+// import close from "../images/close.svg"
 
 export default function WaiterSideMenu(props) {
 
@@ -20,7 +20,7 @@ export default function WaiterSideMenu(props) {
                         onClick={props.deleteWaiter}
                         className="waiter-side-menu__delete"
                     >
-                        <img src={close}/>
+                        {/*<img src={close}/>*/}
                     </button>}
             </label>
         </div>

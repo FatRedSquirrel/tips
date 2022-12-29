@@ -11,6 +11,7 @@ import DarkModeToggle from "./Components/DarkModeToggle";
 import AdminModal from "./Components/AdminModal";
 import NewWaiter from "./Components/NewWaiter";
 import Waiter from "./Waiter";
+import ResetConfirmationModal from "./Components/ResetConfirmationModal";
 
 function App() {
 
@@ -19,6 +20,8 @@ function App() {
     const [isAdmin, setIsAdmin] = useState(JSON.parse(localStorage.getItem('isAdmin')) || false);
     const [isLoginValid, setIsLoginValid] = useState(true);
     const [isWaiterRemovalInProcess, setIsWaiterRemovalInProcess] = useState(false);
+    const [resetConfirmation, setResetConfirmation] = useState(false);
+    const [sideMenuOpen, setSideMenuOpen] = useState(false);
 
     function toggleDarkMode() {
         setDarkMode(prev => !prev);
@@ -162,8 +165,6 @@ function App() {
             hours={chosenWaiter.hours}
             changeHours={(evt) => changeHours(evt, chosenWaiter.id)}
             handleHasMoneyChange={(evt) => handleHasMoneyChange(evt, chosenWaiter.id)}
-            bank={chosenWaiter.bank}
-            phoneNumber={chosenWaiter.phoneNumber}
         />
     )
 
@@ -251,31 +252,19 @@ function App() {
         setIsWaiterRemovalInProcess(false);
     }
 
-    function clearLocalStorage() {
-        localStorage.clear()
-        document.location.reload()
+    function reset() {
+        // Запрашивать подтверждение, если хоть 1 официант выбран или если введены цифры хотя бы в 1 поле
+        if (waiters.some(waiter => waiter.isChosen) || (feteData.some(fete => fete.preorder || fete.order)) || Object.values(additionalFields).some(value => value)) {
+            setResetConfirmation(true);
+            return;
+        }
+        localStorage.clear();
+        document.location.reload();
     }
 
-    function openSideMenu() {
-        const sideMenu = document.querySelector(".side-menu");
-        const overlay = document.querySelector(".overlay");
-        const burger = document.querySelector(".burger");
-        burger.classList.add("hidden");
-        sideMenu.classList.add("open");
-        overlay.classList.remove("hidden");
-        document.body.classList.add("lock-scroll");
-        document.documentElement.classList.add("lock-scroll");
-    }
-
-    function closeSideMenu() {
-        const sideMenu = document.querySelector(".side-menu");
-        const overlay = document.querySelector(".overlay");
-        const burger = document.querySelector(".burger");
-        burger.classList.remove("hidden");
-        sideMenu.classList.remove("open");
-        overlay.classList.add("hidden");
-        document.body.classList.remove("lock-scroll");
-        document.documentElement.classList.remove("lock-scroll");
+    function toggleSideMenu() {
+        setSideMenuOpen(prev => !prev);
+        document.body.classList.toggle("lock-scroll");
     }
 
     //Сохранение данных
@@ -284,14 +273,12 @@ function App() {
         localStorage.setItem('additionalFields', JSON.stringify(additionalFields));
         localStorage.setItem('waiters', JSON.stringify(waiters));
         localStorage.setItem('darkMode', JSON.stringify(darkMode));
-        localStorage.setItem('isAdmin', JSON.stringify(isAdmin))
+        localStorage.setItem('isAdmin', JSON.stringify(isAdmin));
     }, [feteData, additionalFields, waiters, darkMode, isAdmin]);
-
-
 
     return (
         <div className={darkMode ? "overall-container dark" : "overall-container"}>
-            <div className="side-menu">
+            <div className={sideMenuOpen ? "side-menu open" : "side-menu"}>
                 {isAdmin && <NewWaiter
                     addNewWaiter={(event) => {
                         event.preventDefault();
@@ -311,6 +298,17 @@ function App() {
                 </button>}
             </div>
             <div className="main">
+                {resetConfirmation &&
+                    <ResetConfirmationModal
+                        resetButtonClickHandler={() => {
+                            setResetConfirmation(false);
+                            localStorage.clear();
+                            document.location.reload();
+                        }}
+                        cancelButtonClickHandler={() => {
+                            setResetConfirmation(false);
+                        }}
+                    />}
                 <DarkModeToggle
                     toggleDarkMode={toggleDarkMode}
                     darkMode={darkMode}
@@ -325,7 +323,16 @@ function App() {
                 {/*>*/}
                 {/*    Админ*/}
                 {/*</button>*/}
-                <button onClick={clearLocalStorage} className="reset">Сбросить</button>
+                <button onClick={reset} className="reset">
+                    <svg width="26px" height="26px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
+                        <g fill="none" stroke={darkMode ? '#fff' : '#000'} strokeLinecap="round"
+                           strokeLinejoin="round" transform="matrix(0 1 1 0 2.5 2.5)">
+                            <path
+                                d="m3.98652376 1.07807068c-2.38377179 1.38514556-3.98652376 3.96636605-3.98652376 6.92192932 0 4.418278 3.581722 8 8 8s8-3.581722 8-8-3.581722-8-8-8"/>
+                            <path d="m4 1v4h-4" transform="matrix(1 0 0 -1 0 6)"/>
+                        </g>
+                    </svg>
+                </button>
                 <AdminModal
                     isModalOpen={isModalOpen}
                     login={(event => {
@@ -353,8 +360,8 @@ function App() {
                         {chosenWaitersElements}
                     </div>}
                 </div>
-                <div className="overlay hidden" onClick={closeSideMenu}></div>
-                <button className="burger" onClick={openSideMenu}></button>
+                <div className={sideMenuOpen ? "overlay" : "overlay hidden"} onClick={toggleSideMenu}></div>
+                <button className={sideMenuOpen ? "burger hidden" : "burger"} onClick={toggleSideMenu}></button>
                 <div className="main-top">
                     <div className="wrapper">
                         <h1 className="title">Конверт</h1>

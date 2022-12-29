@@ -552,7 +552,7 @@ option {
   }
 }
 
-.admin-modal {
+.modal {
   position: fixed;
   left: 0;
   top: 0;
@@ -561,6 +561,7 @@ option {
   background-color: #fff;
   color: #000;
   z-index: 200;
+  display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.6);
@@ -707,6 +708,41 @@ option {
     border-color: #fff;
   }
 
+}
+
+.reset-confirmation {
+  background-color: #fff;
+  width: 260px;
+  padding: 20px;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  h2 {
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .buttons {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+
+    button {
+      width: 70px;
+      padding: 6px;
+      background-color: transparent;
+      border: 2px solid $color-primary;
+      border-radius: 4px;
+    }
+
+    .reset-button {
+      border-color: $color-warning;
+    }
+  }
 }
 
 @keyframes toggleOn {

@@ -1,5 +1,5 @@
 import React from "react";
-import close from "../images/close.svg"
+// import close from "../images/close.svg"
 
 export default function AdminModal(props) {
 
@@ -8,29 +8,29 @@ export default function AdminModal(props) {
     }
 
     return (
-        <div className="admin-modal" style={styles}>
+        <div className="modal" style={styles}>
             <form
                 onSubmit={props.login}
-                className="admin-modal-form"
+                className="modal-form"
             >
                 {!props.isAdmin && <div className="admin-modal-login-container">
                     <input
-                        className={`admin-modal-input ${props.isLoginValid ? '' : 'invalid'}`}
+                        className={`modal-input ${props.isLoginValid ? '' : 'invalid'}`}
                         type="text"
                         placeholder="Пароль"
                     />
                     <button
-                        className="admin-modal-login"
+                        className="modal-login"
                         type="submit"
                     >
                         Войти
                     </button>
                 </div>}
-                {props.isAdmin && <div className="admin-modal-login-container">
+                {props.isAdmin && <div className="modal-login-container">
                     <p>Вы авторизованы как админ</p>
                     <button
                         onClick={props.logout}
-                        className="admin-modal-login"
+                        className="modal-login"
                         type="button"
                     >
                         Выйти
@@ -38,10 +38,10 @@ export default function AdminModal(props) {
                 </div>}
                 <button
                     onClick={props.closeModal}
-                    className="admin-modal-close"
+                    className="modal-close"
                     type="button"
                 >
-                    <img src={close}/>
+                    {/*<img src={close}/>*/}
                 </button>
             </form>
 
