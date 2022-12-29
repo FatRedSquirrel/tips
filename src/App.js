@@ -165,8 +165,14 @@ function App() {
             hours={chosenWaiter.hours}
             changeHours={(evt) => changeHours(evt, chosenWaiter.id)}
             handleHasMoneyChange={(evt) => handleHasMoneyChange(evt, chosenWaiter.id)}
+            comment={chosenWaiter.comment}
+            onCommentInput={(event) => onCommentInput(event, chosenWaiter.id)}
         />
     )
+
+    function onCommentInput(event, id) {
+        setWaiters(prev => prev.map(waiter => waiter.id === id ? {...waiter, comment: event.target.value} : waiter))
+    }
 
     function chooseWaiter(id) {
         setWaiters(prevState => prevState.map(waiter => waiter.id === id ? {
@@ -421,10 +427,10 @@ function App() {
                         value={additionalFields.waitersMoney}
                     />
                     <div
-                        className="waiters-money-tooltip"
+                        className="tooltip"
                     >
                         ?
-                        <div className="waiters-money-tooltip-text">Без карт, они будут учтены и прибавлены
+                        <div className="tooltip-text">Без карт, они будут учтены и прибавлены
                             автоматически</div></div>
                 </div>
                 <button onClick={countWaiters} className="button count">Посчитать официантов</button>

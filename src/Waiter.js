@@ -9,4 +9,5 @@ export default class Waiter {
     hours = 12;
     hasMoney = 0;
     toReceive = 0;
+    comment = '';
 }

@@ -1,6 +1,14 @@
+import {useState} from "react";
+
 export default function WaiterMain(props) {
+
+    const [commentShown, setCommentShown] = useState(false);
+
     return (
         <div className="waiter-main">
+            {commentShown && <div className="waiter-main__comment">
+                <input onChange={props.onCommentInput} type="text" placeholder="Сюда можно ввести комментарий" value={props.comment}/>
+            </div>}
             <div className="waiter-main__text waiter-main__number">{props.index}</div>
             <div className="waiter-main__text waiter-main__name">
                 {props.name}
@@ -28,18 +36,11 @@ export default function WaiterMain(props) {
                     className="waiter-main__has-amount"
                     value={props.hasMoney}
                 />
-                (
-                <div className="select-container">
-                    <select name="hasMoney" className="money-type-select">
-                        <option value="tables">посадка</option>
-                        <option value="service">сервак</option>
-                        <option value="tips">верха</option>
-                    </select>
-                </div>
-                )
             </div>
             <div className="to-receive">
                 {props.toReceive}
+            </div>
+            <div className="tooltip" onClick={() => setCommentShown(prev => !prev)}>?
             </div>
         </div>
     )
