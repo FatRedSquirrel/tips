@@ -264,8 +264,15 @@ function App() {
             setResetConfirmation(true);
             return;
         }
-        localStorage.clear();
+        clearLocalStorage();
         document.location.reload();
+    }
+
+    function clearLocalStorage() {
+        localStorage.removeItem('fete');
+        localStorage.removeItem('additionalFields');
+        localStorage.removeItem('waiters');
+        localStorage.removeItem('isAdmin');
     }
 
     function toggleSideMenu() {
@@ -278,8 +285,8 @@ function App() {
         localStorage.setItem('fete', JSON.stringify(feteData));
         localStorage.setItem('additionalFields', JSON.stringify(additionalFields));
         localStorage.setItem('waiters', JSON.stringify(waiters));
-        localStorage.setItem('darkMode', JSON.stringify(darkMode));
         localStorage.setItem('isAdmin', JSON.stringify(isAdmin));
+        localStorage.setItem('darkMode', JSON.stringify(darkMode));
     }, [feteData, additionalFields, waiters, darkMode, isAdmin]);
 
     return (
@@ -308,7 +315,7 @@ function App() {
                     <ResetConfirmationModal
                         resetButtonClickHandler={() => {
                             setResetConfirmation(false);
-                            localStorage.clear();
+                            clearLocalStorage();
                             document.location.reload();
                         }}
                         cancelButtonClickHandler={() => {
