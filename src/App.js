@@ -23,6 +23,8 @@ function App() {
     const [resetConfirmation, setResetConfirmation] = useState(false);
     const [sideMenuOpen, setSideMenuOpen] = useState(false);
 
+    const itemsNoReset = ['darkMode'];
+
     function toggleDarkMode() {
         setDarkMode(prev => !prev);
     }
@@ -269,10 +271,11 @@ function App() {
     }
 
     function clearLocalStorage() {
-        localStorage.removeItem('fete');
-        localStorage.removeItem('additionalFields');
-        localStorage.removeItem('waiters');
-        localStorage.removeItem('isAdmin');
+        Object.keys({...localStorage}).forEach(key => {
+            if (!itemsNoReset.includes(key)) {
+                localStorage.removeItem(key);
+            }
+        })
     }
 
     function toggleSideMenu() {
