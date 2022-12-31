@@ -21,7 +21,7 @@ export default function IsManagerRich(props) {
                 type="checkbox"
                 name="isManagerRich"
                 checked={props.isManagerRich}
-                onChange={props.handleAdditionalFieldsChange}
+                onChange={props.handleIsManagerRichChange}
                 hidden
             />
             Менеджер с верхами

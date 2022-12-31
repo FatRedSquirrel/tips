@@ -657,6 +657,10 @@ option {
   font-size: 14px;
 }
 
+.spin-animation {
+  animation: spin .8s forwards;
+}
+
 .dark {
   .new-waiter-button {
     border-color: $color-primary-dark-mode;
@@ -747,6 +751,20 @@ option {
     .reset-button {
       border-color: $color-warning;
     }
+  }
+}
+
+// ============================= ANIMATIONS =============================
+
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+  //50% {
+  //  transform: rotate(180deg);
+  //}
+  100% {
+    transform: rotate(-360deg);
   }
 }
 

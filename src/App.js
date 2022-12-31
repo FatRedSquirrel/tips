@@ -1,19 +1,23 @@
 import React, {useState} from 'react';
 import './App.scss';
+import {data} from "./data";
+import {updateLocalStorageData} from "./utils";
+import Waiter from "./Waiter";
 import Order from "./Components/Order";
 import Preorder from "./Components/Preorder";
 import WaiterSideMenu from "./Components/WaiterSideMenu";
 import WaiterMain from "./Components/WaiterMain";
-import {data} from "./data";
 import IsManagerRich from "./Components/IsManagerRich";
 import Results from "./Components/Results";
 import DarkModeToggle from "./Components/DarkModeToggle";
 import AdminModal from "./Components/AdminModal";
 import NewWaiter from "./Components/NewWaiter";
-import Waiter from "./Waiter";
 import ResetConfirmationModal from "./Components/ResetConfirmationModal";
 
+
 function App() {
+
+    updateLocalStorageData();
 
     const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem('darkMode')) || false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,7 +25,9 @@ function App() {
     const [isLoginValid, setIsLoginValid] = useState(true);
     const [isWaiterRemovalInProcess, setIsWaiterRemovalInProcess] = useState(false);
     const [resetConfirmation, setResetConfirmation] = useState(false);
+    const [resetConfirmed, setResetConfirmed] = useState(false);
     const [sideMenuOpen, setSideMenuOpen] = useState(false);
+    const [isManagerRich, setIsManagerRich] = useState(false);
 
     const itemsNoReset = ['darkMode'];
 
@@ -51,7 +57,6 @@ function App() {
     const [additionalFields, setAdditionalFields] = React.useState(JSON.parse(localStorage.getItem('additionalFields')) || {
         tables: '',
         money: '',
-        isManagerRich: false,
         waitersMoney: ''
     })
 
@@ -116,14 +121,18 @@ function App() {
 
     //Обработчик ввода данных в дополнительные поля, изменение данных об этих полях
     function handleAdditionalFieldsChange(evt) {
-        const {name, value, type, checked} = evt.target;
+        const {name, value} = evt.target;
         setAdditionalFields(prevState => {
                 return {
                     ...prevState,
-                    [name]: type === "checkbox" ? checked : value
+                    [name]: value
                 }
             }
         )
+    }
+
+    function handleIsManagerRichChange() {
+        setIsManagerRich(prev => !prev)
     }
 
     //Функция для получения финальных значений
@@ -139,7 +148,7 @@ function App() {
                 ...prevResults,
                 kitchen: Math.floor(sumPreorders / 50),
                 bar: Math.floor((sumPreorders / 100 + sumOrders / 100) + Number(additionalFields.tables / 10)),
-                manager: additionalFields.isManagerRich ? Math.floor(Number(additionalFields.money / 10)) : Math.floor(sumPreorders / 100 + sumOrders / 100)
+                manager: isManagerRich ? Math.floor(Number(additionalFields.money / 10)) : Math.floor(sumPreorders / 100 + sumOrders / 100)
             }
         ))
     }
@@ -266,8 +275,12 @@ function App() {
             setResetConfirmation(true);
             return;
         }
-        clearLocalStorage();
-        document.location.reload();
+        setResetConfirmed(true);
+        //таймаут для того, чтобы сброс произошел после завершения анимации спина кнопки ресета
+        setTimeout(() => {
+            clearLocalStorage();
+            document.location.reload();
+        }, 600)
     }
 
     function clearLocalStorage() {
@@ -281,6 +294,7 @@ function App() {
     function toggleSideMenu() {
         setSideMenuOpen(prev => !prev);
         document.body.classList.toggle("lock-scroll");
+        document.documentElement.classList.toggle("lock-scroll");
     }
 
     //Сохранение данных
@@ -318,8 +332,12 @@ function App() {
                     <ResetConfirmationModal
                         resetButtonClickHandler={() => {
                             setResetConfirmation(false);
-                            clearLocalStorage();
-                            document.location.reload();
+                            setResetConfirmed(true);
+                            //таймаут для того, чтобы сброс произошел после завершения анимации спина кнопки ресета
+                            setTimeout(() => {
+                                clearLocalStorage();
+                                document.location.reload();
+                            }, 600)
                         }}
                         cancelButtonClickHandler={() => {
                             setResetConfirmation(false);
@@ -339,7 +357,7 @@ function App() {
                 {/*>*/}
                 {/*    Админ*/}
                 {/*</button>*/}
-                <button onClick={reset} className="reset">
+                <button onClick={reset} className={resetConfirmed ? "reset spin-animation" : "reset"}>
                     <svg width="26px" height="26px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
                         <g fill="none" stroke={darkMode ? '#fff' : '#000'} strokeLinecap="round"
                            strokeLinejoin="round" transform="matrix(0 1 1 0 2.5 2.5)">
@@ -379,7 +397,7 @@ function App() {
                 <div className={sideMenuOpen ? "overlay" : "overlay hidden"} onClick={toggleSideMenu}></div>
                 <button className={sideMenuOpen ? "burger hidden" : "burger"} onClick={toggleSideMenu}></button>
                 <div className="main-top">
-                    <div className="wrapper">
+                    {isManagerRich && <div className="wrapper">
                         <h1 className="title">Конверт</h1>
                         <input
                             type="number"
@@ -388,7 +406,7 @@ function App() {
                             value={additionalFields.money}
                             className="tips-input"
                         />
-                    </div>
+                    </div>}
                     <div className="wrapper">
                         <h1 className="title">Посадка</h1>
                         <input
@@ -417,8 +435,8 @@ function App() {
                     <button onClick={remove} className="button fete-button minus">-</button>
                 </div>
                 <IsManagerRich
-                    isManagerRich={additionalFields.isManagerRich}
-                    handleAdditionalFieldsChange={handleAdditionalFieldsChange}
+                    isManagerRich={isManagerRich}
+                    handleIsManagerRichChange={handleIsManagerRichChange}
                     darkMode={darkMode}
                 />
                 <button onClick={countDivisions} className="button count">Посчитать отчисления</button>
