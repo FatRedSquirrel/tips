@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.scss';
 import {data} from "./data";
 import {updateLocalStorageData} from "./utils";
@@ -17,7 +17,10 @@ import ResetConfirmationModal from "./Components/ResetConfirmationModal";
 
 function App() {
 
-    updateLocalStorageData();
+    useEffect(() => {
+        console.log('hi')
+        updateLocalStorageData();
+    }, [])
 
     const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem('darkMode')) || false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +30,7 @@ function App() {
     const [resetConfirmation, setResetConfirmation] = useState(false);
     const [resetConfirmed, setResetConfirmed] = useState(false);
     const [sideMenuOpen, setSideMenuOpen] = useState(false);
-    const [isManagerRich, setIsManagerRich] = useState(false);
+    const [isManagerRich, setIsManagerRich] = useState(JSON.parse(localStorage.getItem('isManagerRich')) || false);
 
     const itemsNoReset = ['darkMode'];
 
@@ -304,7 +307,8 @@ function App() {
         localStorage.setItem('waiters', JSON.stringify(waiters));
         localStorage.setItem('isAdmin', JSON.stringify(isAdmin));
         localStorage.setItem('darkMode', JSON.stringify(darkMode));
-    }, [feteData, additionalFields, waiters, darkMode, isAdmin]);
+        localStorage.setItem('isManagerRich', JSON.stringify(isManagerRich));
+    }, [feteData, additionalFields, waiters, darkMode, isAdmin, isManagerRich]);
 
     return (
         <div className={darkMode ? "overall-container dark" : "overall-container"}>
