@@ -283,7 +283,7 @@ function App() {
         setTimeout(() => {
             clearLocalStorage();
             document.location.reload();
-        }, 600)
+        }, 400)
     }
 
     function clearLocalStorage() {
@@ -341,7 +341,7 @@ function App() {
                             setTimeout(() => {
                                 clearLocalStorage();
                                 document.location.reload();
-                            }, 600)
+                            }, 400)
                         }}
                         cancelButtonClickHandler={() => {
                             setResetConfirmation(false);
