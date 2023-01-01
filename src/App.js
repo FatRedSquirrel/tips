@@ -273,14 +273,9 @@ function App() {
     }
 
     function reset() {
-        // Запрашивать подтверждение, если хоть 1 официант выбран или если введены цифры хотя бы в 1 поле
-        if (waiters.some(waiter => waiter.isChosen) || (feteData.some(fete => fete.preorder || fete.order)) || Object.values(additionalFields).some(value => value)) {
-            setResetConfirmation(true);
-            return;
-        }
-        setResetConfirmed(true);
-        //таймаут для того, чтобы сброс произошел после завершения анимации спина кнопки ресета
-        setTimeout(() => {
+        setResetConfirmation(false); //close modal
+        setResetConfirmed(true); //start spin animation on reset button
+        setTimeout(() => { // clear data and reload page after animation is finished
             clearLocalStorage();
             document.location.reload();
         }, 400)
@@ -334,15 +329,7 @@ function App() {
             <div className="main">
                 {resetConfirmation &&
                     <ResetConfirmationModal
-                        resetButtonClickHandler={() => {
-                            setResetConfirmation(false);
-                            setResetConfirmed(true);
-                            //таймаут для того, чтобы сброс произошел после завершения анимации спина кнопки ресета
-                            setTimeout(() => {
-                                clearLocalStorage();
-                                document.location.reload();
-                            }, 400)
-                        }}
+                        resetButtonClickHandler={reset}
                         cancelButtonClickHandler={() => {
                             setResetConfirmation(false);
                         }}
@@ -361,7 +348,11 @@ function App() {
                 {/*>*/}
                 {/*    Админ*/}
                 {/*</button>*/}
-                <button onClick={reset} className={resetConfirmed ? "reset spin-animation" : "reset"}>
+                <button onClick={() => {
+                    if (waiters.some(waiter => waiter.isChosen) || (feteData.some(fete => fete.preorder || fete.order)) || Object.values(additionalFields).some(value => value)) {
+                        setResetConfirmation(true);
+                    }}
+                } className={resetConfirmed ? "reset spin-animation" : "reset"}>
                     <svg width="26px" height="26px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
                         <g fill="none" stroke={darkMode ? '#fff' : '#000'} strokeLinecap="round"
                            strokeLinejoin="round" transform="matrix(0 1 1 0 2.5 2.5)">
