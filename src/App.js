@@ -18,7 +18,6 @@ import ResetConfirmationModal from "./Components/ResetConfirmationModal";
 function App() {
 
     useEffect(() => {
-        console.log('hi')
         updateLocalStorageData();
     }, [])
 
@@ -54,21 +53,21 @@ function App() {
         id: 1,
         preorder: '',
         order: ''
-    }])
+    }]);
 
     //Объект прочих полей
     const [additionalFields, setAdditionalFields] = React.useState(JSON.parse(localStorage.getItem('additionalFields')) || {
         tables: '',
         money: '',
         waitersMoney: ''
-    })
+    });
 
     //Объект с результатами вычислений
     const [results, setResults] = React.useState({
         kitchen: 0,
         bar: 0,
         manager: 0
-    })
+    });
 
     //Массив элементов предзаказов
     const preorders = feteData.map((fete) =>
@@ -78,7 +77,7 @@ function App() {
             id={fete.id}
             value={fete.preorder}
         />
-    )
+    );
 
     //Массив элементов дозаказов
     const orders = feteData.map((fete) =>
@@ -88,7 +87,7 @@ function App() {
             id={fete.id}
             value={fete.order}
         />
-    )
+    );
 
     //Функция для добавления банкета
     function add() {
@@ -109,11 +108,13 @@ function App() {
     //Обработчик ввода данных в поля предзаказов и дозаказов, обновление данных о банкетах
     function handleFeteChange(evt) {
         const {id, value, name} = evt.target;
+        // checking whether value is number
+        if (isNaN(+value)) return;
         setFeteData(prevFeteData => {
             let newFeteData = [];
             for (let i = 0; i < prevFeteData.length; i++) {
                 let currentFete = prevFeteData[i];
-                if (Number(id) === currentFete.id) {
+                if (+id === currentFete.id) {
                     currentFete[name] = value;
                 }
                 newFeteData.push(currentFete);
@@ -125,6 +126,7 @@ function App() {
     //Обработчик ввода данных в дополнительные поля, изменение данных об этих полях
     function handleAdditionalFieldsChange(evt) {
         const {name, value} = evt.target;
+        if (isNaN(+value)) return;
         setAdditionalFields(prevState => {
                 return {
                     ...prevState,
@@ -135,7 +137,7 @@ function App() {
     }
 
     function handleIsManagerRichChange() {
-        setIsManagerRich(prev => !prev)
+        setIsManagerRich(prev => !prev);
     }
 
     //Функция для получения финальных значений
@@ -203,9 +205,11 @@ function App() {
     }
 
     function handleHasMoneyChange(evt, id) {
+        const {value} = evt.target;
+        if (isNaN(+value)) return;
         setWaiters(prevState => prevState.map(waiter => waiter.id === id ? {
             ...waiter,
-            hasMoney: evt.target.value
+            hasMoney: value
         } : waiter))
     }
 
