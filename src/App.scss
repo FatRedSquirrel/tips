@@ -7,7 +7,8 @@ $color-sber-bright: #7cec84;
 $color-primary-dark-mode: #BB86FC;
 $color-secondary-dark-mode: #6200EE;
 $color-buttons-dark-mode: #6200EE;
-$color-warning: #D0342C;
+// $color-warning: #D0342C;
+$color-warning: red;
 
 html {
   height: 100%;
@@ -661,6 +662,60 @@ option {
   animation: spin .8s forwards;
 }
 
+.reset-confirmation {
+  background-color: #fff;
+  width: 260px;
+  padding: 20px;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  h2 {
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .buttons {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+
+    button {
+      width: 70px;
+      padding: 6px;
+      background-color: transparent;
+      border: 2px solid $color-primary;
+      border-radius: 4px;
+    }
+
+    .reset-button {
+      border-color: $color-warning;
+    }
+  }
+}
+
+.warning-message {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translate(-50%, -100px);
+  color: $color-warning;
+  background-color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.4);
+  font-size: 20px;
+  z-index: 100;
+  transition: transform .3s ease;
+
+  &.shown {
+    transform: translate(-50%, 0);
+  }
+}
+
 .dark {
   .new-waiter-button {
     border-color: $color-primary-dark-mode;
@@ -716,41 +771,6 @@ option {
   .admin-modal-open {
     cursor: pointer;
     border-color: #fff;
-  }
-}
-
-.reset-confirmation {
-  background-color: #fff;
-  width: 260px;
-  padding: 20px;
-  border-radius: 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  h2 {
-    font-size: 14px;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-
-  .buttons {
-    display: flex;
-    width: 80%;
-    justify-content: space-between;
-
-    button {
-      width: 70px;
-      padding: 6px;
-      background-color: transparent;
-      border: 2px solid $color-primary;
-      border-radius: 4px;
-    }
-
-    .reset-button {
-      border-color: $color-warning;
-    }
   }
 }
 

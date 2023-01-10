@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
 import './App.scss';
-import {data} from "./data";
-import {updateLocalStorageData} from "./utils";
+import React, { useEffect, useState } from 'react';
+import { data } from "./data";
+import { updateLocalStorageData } from "./utils";
 import Waiter from "./Waiter";
 import Order from "./Components/Order";
 import Preorder from "./Components/Preorder";
@@ -13,6 +13,7 @@ import DarkModeToggle from "./Components/DarkModeToggle";
 import AdminModal from "./Components/AdminModal";
 import NewWaiter from "./Components/NewWaiter";
 import ResetConfirmationModal from "./Components/ResetConfirmationModal";
+import WarningMessage from './Components/WarningMessage';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
     const [resetConfirmed, setResetConfirmed] = useState(false);
     const [sideMenuOpen, setSideMenuOpen] = useState(false);
     const [isManagerRich, setIsManagerRich] = useState(JSON.parse(localStorage.getItem('isManagerRich')) || false);
+    const [isWarningMessageShown, setIsWarningMessageShown] = useState(false);
 
     const itemsNoReset = ['darkMode'];
 
@@ -107,7 +109,7 @@ function App() {
 
     //Обработчик ввода данных в поля предзаказов и дозаказов, обновление данных о банкетах
     function handleFeteChange(evt) {
-        const {id, value, name} = evt.target;
+        const { id, value, name } = evt.target;
         // checking whether value is number
         if (isNaN(+value)) return;
         setFeteData(prevFeteData => {
@@ -125,14 +127,14 @@ function App() {
 
     //Обработчик ввода данных в дополнительные поля, изменение данных об этих полях
     function handleAdditionalFieldsChange(evt) {
-        const {name, value} = evt.target;
+        const { name, value } = evt.target;
         if (isNaN(+value)) return;
         setAdditionalFields(prevState => {
-                return {
-                    ...prevState,
-                    [name]: value
-                }
+            return {
+                ...prevState,
+                [name]: value
             }
+        }
         )
     }
 
@@ -140,8 +142,22 @@ function App() {
         setIsManagerRich(prev => !prev);
     }
 
+    function showWarningMessage() {
+        setIsWarningMessageShown(true);
+        setTimeout(() => {
+            setIsWarningMessageShown(false);
+        }, 2000);
+    }
+
     //Функция для получения финальных значений
     function countDivisions() {
+
+        if (!checkIfThereIsDevisionsData()) {
+            setResultsShown(false);
+            showWarningMessage();
+            return;
+        }
+
         setResultsShown(true);
         let sumPreorders = 0;
         let sumOrders = 0;
@@ -150,11 +166,11 @@ function App() {
             sumOrders += Number(feteData[i].order);
         }
         setResults(prevResults => ({
-                ...prevResults,
-                kitchen: Math.floor(sumPreorders / 50),
-                bar: Math.floor((sumPreorders / 100 + sumOrders / 100) + Number(additionalFields.tables / 10)),
-                manager: isManagerRich ? Math.floor(Number(additionalFields.money / 10)) : Math.floor(sumPreorders / 100 + sumOrders / 100)
-            }
+            ...prevResults,
+            kitchen: Math.floor(sumPreorders / 50),
+            bar: Math.floor((sumPreorders / 100 + sumOrders / 100) + Number(additionalFields.tables / 10)),
+            manager: isManagerRich ? Math.floor(Number(additionalFields.money / 10)) : Math.floor(sumPreorders / 100 + sumOrders / 100)
+        }
         ))
     }
 
@@ -187,7 +203,7 @@ function App() {
     )
 
     function onCommentInput(event, id) {
-        setWaiters(prev => prev.map(waiter => waiter.id === id ? {...waiter, comment: event.target.value} : waiter))
+        setWaiters(prev => prev.map(waiter => waiter.id === id ? { ...waiter, comment: event.target.value } : waiter))
     }
 
     function chooseWaiter(id) {
@@ -205,7 +221,7 @@ function App() {
     }
 
     function handleHasMoneyChange(evt, id) {
-        const {value} = evt.target;
+        const { value } = evt.target;
         if (isNaN(+value)) return;
         setWaiters(prevState => prevState.map(waiter => waiter.id === id ? {
             ...waiter,
@@ -214,6 +230,12 @@ function App() {
     }
 
     function countWaiters() {
+
+        if (!(checkIfAnyWaiterChosen() && checkIfThereIsWaitersMoney())) {
+            showWarningMessage();
+            return;
+        }
+
         let waitersAmount = 0;
         for (let waiter of waiters) {
             if (waiter.isChosen) {
@@ -286,7 +308,7 @@ function App() {
     }
 
     function clearLocalStorage() {
-        Object.keys({...localStorage}).forEach(key => {
+        Object.keys({ ...localStorage }).forEach(key => {
             if (!itemsNoReset.includes(key)) {
                 localStorage.removeItem(key);
             }
@@ -297,6 +319,22 @@ function App() {
         setSideMenuOpen(prev => !prev);
         document.body.classList.toggle("lock-scroll");
         document.documentElement.classList.toggle("lock-scroll");
+    }
+
+    function checkIfThereIsDevisionsData() {
+        return (feteData.some(fete => fete.preorder || fete.order)) || additionalFields.tables || additionalFields.money;
+    }
+
+    function checkIfAnyWaiterChosen() {
+        return waiters.some(waiter => waiter.isChosen);
+    }
+
+    function checkIfThereIsWaitersMoney() {
+        return additionalFields.waitersMoney !== ''
+    }
+
+    function checkIfThereIsDataToReset() {
+        return checkIfThereIsDevisionsData() || checkIfAnyWaiterChosen() || additionalFields.waitersMoney;
     }
 
     //Сохранение данных
@@ -352,20 +390,23 @@ function App() {
                 {/*>*/}
                 {/*    Админ*/}
                 {/*</button>*/}
-                <button onClick={() => {
-                    if (waiters.some(waiter => waiter.isChosen) || (feteData.some(fete => fete.preorder || fete.order)) || Object.values(additionalFields).some(value => value)) {
-                        setResetConfirmation(true);
-                    }}
-                } className={resetConfirmed ? "reset spin-animation" : "reset"}>
+
+                {/* reset button */}
+                {checkIfThereIsDataToReset() && <button onClick={() => setResetConfirmation(true)} className={resetConfirmed ? "reset spin-animation" : "reset"}>
                     <svg width="26px" height="26px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
                         <g fill="none" stroke={darkMode ? '#fff' : '#000'} strokeLinecap="round"
-                           strokeLinejoin="round" transform="matrix(0 1 1 0 2.5 2.5)">
+                            strokeLinejoin="round" transform="matrix(0 1 1 0 2.5 2.5)">
                             <path
-                                d="m3.98652376 1.07807068c-2.38377179 1.38514556-3.98652376 3.96636605-3.98652376 6.92192932 0 4.418278 3.581722 8 8 8s8-3.581722 8-8-3.581722-8-8-8"/>
-                            <path d="m4 1v4h-4" transform="matrix(1 0 0 -1 0 6)"/>
+                                d="m3.98652376 1.07807068c-2.38377179 1.38514556-3.98652376 3.96636605-3.98652376 6.92192932 0 4.418278 3.581722 8 8 8s8-3.581722 8-8-3.581722-8-8-8" />
+                            <path d="m4 1v4h-4" transform="matrix(1 0 0 -1 0 6)" />
                         </g>
                     </svg>
-                </button>
+                </button>}
+
+                <WarningMessage
+                    isShown={isWarningMessageShown}
+                />
+
                 <AdminModal
                     isModalOpen={isModalOpen}
                     login={(event => {
@@ -375,8 +416,7 @@ function App() {
                     closeModal={() => {
                         setIsModalOpen(false);
                         document.body.classList.remove("lock-scroll");
-                    }
-                    }
+                    }}
                     isAdmin={isAdmin}
                     isLoginValid={isLoginValid}
                 />
@@ -439,7 +479,7 @@ function App() {
                     darkMode={darkMode}
                 />
                 <button onClick={countDivisions} className="button count">Посчитать отчисления</button>
-                {resultsShown && <Results
+                {resultsShown && checkIfThereIsDevisionsData() && <Results
                     kitchen={results.kitchen}
                     bar={results.bar}
                     manager={results.manager}
