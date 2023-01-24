@@ -8,11 +8,9 @@ export const fetchWaiters = createAsyncThunk('waiters/fetchWaiters', async () =>
 });
 
 const initialState = {
-    waiters: {
-        items: [],
-        status: 'loading'
-    }
-};
+    waiters: [],
+    status: 'loading'
+}
 
 const waitersSlice = createSlice({
     name: 'waiters',
@@ -20,10 +18,10 @@ const waitersSlice = createSlice({
     reducers: {},
     extraReducers: {
         [fetchWaiters.pending]: (state) => {
-            state.waiters.status = 'loading'
+            state.status = 'loading'
         },
         [fetchWaiters.fulfilled]: (state, action) => {
-            state.waiters.items = action.payload.map(runner => ({
+            state.waiters = action.payload.map(runner => ({
                 id: nanoid(),
                 name: runner.name,
                 isChosen: false,
@@ -32,11 +30,11 @@ const waitersSlice = createSlice({
                 toReceive: 0,
                 comment: '',
             }));
-            state.waiters.status = 'loaded';
+            state.status = 'loaded';
         },
         [fetchWaiters.rejected]: (state) => {
-            state.waiters.items = [];
-            state.waiters.status = 'error';
+            state.waiters = [];
+            state.status = 'error';
         },
     }
 });

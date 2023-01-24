@@ -17,7 +17,9 @@ function Home() {
 
     const {waiters} = useSelector(state => state.waiters);
 
-    const isWaitersLoading = waiters.status === 'loading';
+    console.log(waiters)
+
+    const isWaitersLoading = useSelector(state => state.waiters.status) === 'loading';
 
     React.useEffect(() => {
         dispatch(fetchWaiters());
@@ -142,17 +144,17 @@ function Home() {
 
     return isWaitersLoading ? <div>...Загрузка</div> : (
         <div className={darkMode ? "home dark" : "home"}>
-            <SideMenu chooseWaiter={chooseWaiter} waiters={waiters.items}/>
+            <SideMenu chooseWaiter={chooseWaiter} waiters={waiters}/>
             <div className="main">
                 <Header
-                    waiters={waiters.items}
+                    waiters={waiters}
                     feteData={feteData}
                     additionalFields={additionalFields}
                     darkMode={darkMode}
                     toggleDarkMode={toggleDarkMode}
                 />
                 <WaitersChart
-                    waiters={waiters.items}
+                    waiters={waiters}
                     changeHours={changeHours}
                     handleHasMoneyChange={handleHasMoneyChange}
                     onCommentInput={onCommentInput}
@@ -172,7 +174,7 @@ function Home() {
                     showWarning={showWarningMessage}
                 />
                 <WaitersMoney
-                    waiters={waiters.items}
+                    waiters={waiters}
                     // setWaiters={setWaiters}
                     setWaiters={() => console.log('hi')}
                     handleAdditionalFieldsChange={handleAdditionalFieldsChange}
