@@ -1,4 +1,4 @@
-import Waiter from "./Waiter";
+import Waiter from "./models/Waiter";
 
 const waiters = [
     "Олег",

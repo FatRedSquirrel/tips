@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-export default function WaiterMain(props) {
+export default function WaiterChartItem(props) {
 
     const [commentShown, setCommentShown] = useState(false);
 

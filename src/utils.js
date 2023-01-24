@@ -1,15 +1,17 @@
-import {data} from "./data";
-
-function updateLocalStorageData() {
-    const storedData = JSON.parse(localStorage.getItem("waiters")) ?? null;
-    if (storedData) {
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].name !== storedData[i].name) {
-                storedData[i].name = data[i].name;
-            }
-        }
-        localStorage.setItem('waiters', JSON.stringify(storedData));
-    }
+function checkIfThereIsDivisionsData(feteData, additionalFields) {
+    return (feteData.some(fete => fete.preorder || fete.order)) || additionalFields.tables || additionalFields.money;
 }
 
-export {updateLocalStorageData}
+function checkIfAnyWaiterChosen(waiters) {
+    return waiters.some(waiter => waiter.isChosen);
+}
+
+function checkIfThereIsWaitersMoney(additionalFields) {
+    return additionalFields.waitersMoney !== ''
+}
+
+function checkIfThereIsDataToReset(feteData, additionalFields, waiters) {
+    return checkIfThereIsDivisionsData(feteData, additionalFields) || checkIfAnyWaiterChosen(waiters) || additionalFields.waitersMoney;
+}
+
+export {checkIfThereIsDivisionsData, checkIfAnyWaiterChosen, checkIfThereIsWaitersMoney, checkIfThereIsDataToReset}

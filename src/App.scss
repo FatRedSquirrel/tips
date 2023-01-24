@@ -7,11 +7,53 @@ $color-sber-bright: #7cec84;
 $color-primary-dark-mode: #BB86FC;
 $color-secondary-dark-mode: #6200EE;
 $color-buttons-dark-mode: #6200EE;
-// $color-warning: #D0342C;
 $color-warning: red;
 
 html {
   height: 100%;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  font-family: inherit;
+  color: inherit;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+textarea,
+input[type="text"],
+input[type="button"],
+input[type="submit"],
+input[type="number"]{
+  -webkit-appearance: none;
+  border-radius: 0;
 }
 
 #root {
@@ -77,6 +119,7 @@ option {
   &-buttons-container {
     display: flex;
     gap: 30px;
+    margin-bottom: 20px;
   }
 
   &-button {
@@ -148,10 +191,14 @@ h1 {
 
 .main-top {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 20px;
   width: 370px;
-  margin-bottom: 20px;
+
+  &__container {
+    display: flex;
+  }
 }
 
 .wrapper {
@@ -291,7 +338,7 @@ h1 {
   }
 }
 
-.overall-container {
+.home {
   flex-grow: 1;
   min-height: 100%;
 
