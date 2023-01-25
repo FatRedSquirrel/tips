@@ -736,6 +736,68 @@ option {
   color: #000;
 }
 
+.loading-message {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 70px;
+}
+
+.login-form {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  border: 2px solid #e2e1e1;
+  padding: 130px 0;
+  border-radius: 30px;
+  width: 310px;
+
+  h1 {
+    margin-bottom: 0;
+  }
+
+  button {
+    border: none;
+    border-bottom: 2px solid $color-primary;
+    font-size: 22px;
+    padding: 0 20px;
+    padding-bottom: 3px;
+    margin-top: 20px;
+
+    &:active {
+      border-color: transparent;
+    }
+  }
+
+  &-fields {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+
+    .helper-text {
+      position: absolute;
+      width: 300%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      bottom: -31px;
+      color: $color-warning;
+    }
+  }
+}
+
+.input-error {
+  border-color: $color-warning;
+}
+
 .dark {
   .change-waiters-button {
     border-color: $color-primary-dark-mode;

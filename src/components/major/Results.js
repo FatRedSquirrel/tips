@@ -1,7 +1,11 @@
 import React from "react";
 import {checkIfThereIsDivisionsData} from "../../utils";
+import {hideWarning, showWarning} from "../../redux/slices/warning";
+import {useDispatch} from "react-redux";
 
-export default function Results({fete, mainFields, isManagerRich, showWarning}) {
+export default function Results({fete, mainFields, isManagerRich}) {
+
+    const dispatch = useDispatch();
 
     //Объект с результатами вычислений
     const [results, setResults] = React.useState({
@@ -18,7 +22,10 @@ export default function Results({fete, mainFields, isManagerRich, showWarning}) 
 
         if (!checkIfThereIsDivisionsData(fete, mainFields)) {
             setResultsShown(false);
-            showWarning();
+            dispatch(showWarning());
+            setTimeout(() => {
+                dispatch(hideWarning())
+            }, 2000);
             return;
         }
 

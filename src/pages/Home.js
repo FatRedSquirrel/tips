@@ -6,7 +6,8 @@ import WaitersChart from "../components/major/WaitersChart";
 import EnvelopeLanding from "../components/major/Envelope-Landing";
 import Fete from "../components/major/Fete";
 import WaitersMoney from "../components/major/WaitersMoney";
-import Header from "../components/major/Header"
+import Header from "../components/major/Header";
+import Loading from "../components/minor/Loading";
 
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchWaiters} from "../redux/slices/waiters";
@@ -22,10 +23,10 @@ function Home() {
     const {mainFields} = useSelector(store => store.mainFields);
     const {fete} = useSelector(store => store.fete);
     const {isLoaded} = useSelector(store => store.waiters);
+    const {isWarningShown} = useSelector(store => store.warning);
 
     const [darkMode, setDarkMode] = React.useState(false);
     const [isManagerRich, setIsManagerRich] = React.useState(false);
-    const [isWarningMessageShown, setIsWarningMessageShown] = React.useState(false);
 
     function toggleDarkMode() {
         setDarkMode(prev => !prev);
@@ -35,16 +36,9 @@ function Home() {
         setIsManagerRich(prev => !prev);
     }
 
-    function showWarningMessage() {
-        setIsWarningMessageShown(true);
-        setTimeout(() => {
-            setIsWarningMessageShown(false);
-        }, 2000);
-    }
-
     // код для сохранения данных лежит в самом низу файла
 
-    return !isLoaded ? <div>...Загрузка</div> : (
+    return !isLoaded ? <Loading/> : (
         <div className={darkMode ? "home dark" : "home"}>
             <SideMenu waiters={waiters}/>
             <div className="main">
@@ -70,15 +64,13 @@ function Home() {
                     fete={fete}
                     mainFields={mainFields}
                     isManagerRich={isManagerRich}
-                    showWarning={showWarningMessage}
                 />
                 <WaitersMoney
                     waiters={waiters}
                     mainFields={mainFields}
-                    showWarning={showWarningMessage}
                 />
             </div>
-            <WarningMessage isShown={isWarningMessageShown}>Нет данных</WarningMessage>
+            <WarningMessage isShown={isWarningShown}>Нет данных</WarningMessage>
         </div>
     )
 }

@@ -3,8 +3,9 @@ import {checkIfAnyWaiterChosen, checkIfThereIsWaitersMoney} from "../../utils";
 import {count} from "../../redux/slices/waiters";
 import {useDispatch} from "react-redux";
 import {changeMainFields} from "../../redux/slices/mainFields";
+import {hideWarning, showWarning} from "../../redux/slices/warning";
 
-const WaitersMoney = ({waiters, mainFields, showWarning}) => {
+const WaitersMoney = ({waiters, mainFields}) => {
 
     const dispatch = useDispatch();
 
@@ -15,7 +16,11 @@ const WaitersMoney = ({waiters, mainFields, showWarning}) => {
 
     function countWaiters() {
         if (!(checkIfAnyWaiterChosen(waiters) && checkIfThereIsWaitersMoney(mainFields))) {
-            return showWarning();
+            dispatch(showWarning());
+            setTimeout(() => {
+                dispatch(hideWarning())
+            }, 2000);
+            return;
         }
         let waitersAmount = 0;
         for (let waiter of waiters) {
@@ -32,7 +37,7 @@ const WaitersMoney = ({waiters, mainFields, showWarning}) => {
         }
         const allTheMoney = Number(mainFields.waitersMoney) + waitersCards;
         const tipsPerWaiter = allTheMoney / waitersAmount;
-        dispatch(count(tipsPerWaiter))
+        dispatch(count(tipsPerWaiter));
     }
 
     return (

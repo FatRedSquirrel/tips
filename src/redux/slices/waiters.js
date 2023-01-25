@@ -47,9 +47,6 @@ const waitersSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchWaiters.pending, state => {
-                state.isLoaded = false;
-            })
             .addCase(fetchWaiters.fulfilled, (state, action) => {
                 // здесь будем задавать waiters опционально, учитывая localStorage
                 state.waiters = action.payload.map(runner => ({
@@ -62,10 +59,6 @@ const waitersSlice = createSlice({
                     comment: '',
                 }));
                 state.isLoaded = true;
-            })
-            .addCase(fetchWaiters.rejected, state => {
-                state.waiters = [];
-                state.isLoaded = false;
             })
     }
 });
