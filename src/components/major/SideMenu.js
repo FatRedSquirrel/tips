@@ -1,5 +1,5 @@
 import React from 'react';
-import WaiterSideMenu from "../minor/WaiterSideMenu";
+import WaiterSideMenu from "../minor/waiter/WaiterSideMenu";
 
 const SideMenu = ({waiters}) => {
 
