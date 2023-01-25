@@ -27,4 +27,4 @@ const feteSlice = createSlice({
 });
 
 export const {changeFeteData, addFete, removeFete} = feteSlice.actions;
-export const feteReducer = feteSlice.reducer;
+export default feteSlice.reducer;

@@ -70,5 +70,4 @@ const waitersSlice = createSlice({
 });
 
 export const {chooseWaiter, addComment, selectHours, toggleMoney, count} = waitersSlice.actions;
-
-export const waitersReducer = waitersSlice.reducer;
+export default waitersSlice.reducer;

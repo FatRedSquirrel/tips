@@ -3,16 +3,19 @@ import Modal from "../minor/Modal";
 import DarkModeToggle from "../minor/DarkModeToggle";
 import {checkIfThereIsDataToReset} from "../../utils";
 import ResetIcon from "../../icons/ResetIcon";
+import {openModal, closeModal} from "../../redux/slices/modal";
+import {useSelector, useDispatch} from "react-redux";
 
 const Header = ({waiters, fete, mainFields, darkMode, toggleDarkMode}) => {
 
-    const [resetConfirmation, setResetConfirmation] = React.useState(false);
+    const dispatch = useDispatch();
+    const {isOpen} = useSelector(store => store.modal);
     const [resetConfirmed, setResetConfirmed] = React.useState(false);
 
     const itemsNoReset = ['darkMode'];
 
     function reset() {
-        setResetConfirmation(false); //close modal
+        dispatch(closeModal());
         setResetConfirmed(true); //start spin animation on reset button
         setTimeout(() => { //clear data and reload page after animation is finished
             clearLocalStorage();
@@ -30,13 +33,11 @@ const Header = ({waiters, fete, mainFields, darkMode, toggleDarkMode}) => {
 
     return (
         <>
-            {resetConfirmation &&
+            {isOpen &&
                 <Modal
                     text="Вы уверены, что хотите сделать сброс? Все сохраненные данные будут удалены"
                     onConfirm={reset}
-                    onCancel={() => {
-                        setResetConfirmation(false);
-                    }}
+                    onCancel={() => dispatch(closeModal())}
                 />
             }
             <DarkModeToggle
@@ -45,7 +46,7 @@ const Header = ({waiters, fete, mainFields, darkMode, toggleDarkMode}) => {
             />
             {checkIfThereIsDataToReset(fete, mainFields, waiters) &&
                 <button
-                    onClick={() => setResetConfirmation(true)}
+                    onClick={() => dispatch(openModal())}
                     className={resetConfirmed ? "reset spin-animation" : "reset"}
                 >
                     <ResetIcon darkMode={darkMode}/>

@@ -19,4 +19,4 @@ const mainFieldsSlice = createSlice({
 });
 
 export const {changeMainFields} = mainFieldsSlice.actions;
-export const mainFieldsReducer = mainFieldsSlice.reducer;
+export default mainFieldsSlice.reducer;
