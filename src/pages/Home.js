@@ -15,11 +15,11 @@ function Home() {
 
     const dispatch = useDispatch();
 
-    const {waiters} = useSelector(state => state.waiters);
+    const {waiters} = useSelector(store => store.waiters);
 
     console.log(waiters)
 
-    const isWaitersLoading = useSelector(state => state.waiters.status) === 'loading';
+    const isWaitersLoading = useSelector(store => store.waiters.status) === 'loading';
 
     React.useEffect(() => {
         dispatch(fetchWaiters());
@@ -40,6 +40,8 @@ function Home() {
     // console.log(data)
     // const [waiters, setWaiters] = React.useState(isWaitersLoading ? [] : data);
     // console.log(waiters)
+
+
     //Массив с объектами банкетов
     const [feteData, setFeteData] = React.useState(JSON.parse(localStorage.getItem('fete')) || [{
         id: 1,

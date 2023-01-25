@@ -2,7 +2,7 @@ import React from 'react';
 import ResetConfirmationModal from "../minor/ResetConfirmationModal";
 import DarkModeToggle from "../minor/DarkModeToggle";
 import {checkIfThereIsDataToReset} from "../../utils";
-import ResetButton from "../minor/ResetButton";
+import ResetIcon from "../../icons/ResetIcon";
 
 const Header = ({waiters, feteData, additionalFields, darkMode, toggleDarkMode}) => {
 
@@ -14,7 +14,7 @@ const Header = ({waiters, feteData, additionalFields, darkMode, toggleDarkMode})
     function reset() {
         setResetConfirmation(false); //close modal
         setResetConfirmed(true); //start spin animation on reset button
-        setTimeout(() => { // clear data and reload page after animation is finished
+        setTimeout(() => { //clear data and reload page after animation is finished
             clearLocalStorage();
             document.location.reload();
         }, 300);
@@ -36,17 +36,19 @@ const Header = ({waiters, feteData, additionalFields, darkMode, toggleDarkMode})
                     cancelButtonClickHandler={() => {
                         setResetConfirmation(false);
                     }}
-                />}
+                />
+            }
             <DarkModeToggle
                 toggleDarkMode={toggleDarkMode}
                 darkMode={darkMode}
             />
             {checkIfThereIsDataToReset(feteData, additionalFields, waiters) &&
-                <ResetButton
+                <button
                     onClick={() => setResetConfirmation(true)}
-                    resetConfirmed={resetConfirmed}
-                    darkMode={darkMode}
-                />
+                    className={resetConfirmed ? "reset spin-animation" : "reset"}
+                >
+                    <ResetIcon darkMode={darkMode}/>
+                </button>
             }
         </>
     );
