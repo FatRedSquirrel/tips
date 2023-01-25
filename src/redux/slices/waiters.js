@@ -45,27 +45,28 @@ const waitersSlice = createSlice({
             )
         }
     },
-    extraReducers: {
-        [fetchWaiters.pending]: (state) => {
-            state.status = 'loading'
-        },
-        [fetchWaiters.fulfilled]: (state, action) => {
-            // здесь будем задавать waiters опционально, учитывая localStorage
-            state.waiters = action.payload.map(runner => ({
-                id: runner._id,
-                name: runner.name,
-                isChosen: false,
-                hours: 12,
-                hasMoney: 0,
-                toReceive: 0,
-                comment: '',
-            }));
-            state.status = 'loaded';
-        },
-        [fetchWaiters.rejected]: (state) => {
-            state.waiters = [];
-            state.status = 'error';
-        },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchWaiters.pending, state => {
+                state.status = 'loading'
+            })
+            .addCase(fetchWaiters.fulfilled, (state, action) => {
+                // здесь будем задавать waiters опционально, учитывая localStorage
+                state.waiters = action.payload.map(runner => ({
+                    id: runner._id,
+                    name: runner.name,
+                    isChosen: false,
+                    hours: 12,
+                    hasMoney: 0,
+                    toReceive: 0,
+                    comment: '',
+                }));
+                state.status = 'loaded';
+            })
+            .addCase(fetchWaiters.rejected, state => {
+                state.waiters = [];
+                state.status = 'error';
+            })
     }
 });
 
