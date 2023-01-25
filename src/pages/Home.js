@@ -14,43 +14,27 @@ import {fetchWaiters} from "../redux/slices/waiters";
 function Home() {
 
     const dispatch = useDispatch();
+    const isWaitersLoading = useSelector(store => store.waiters.status) === 'loading';
 
     const {waiters} = useSelector(store => store.waiters);
-
-    console.log(waiters)
-
-    const isWaitersLoading = useSelector(store => store.waiters.status) === 'loading';
 
     React.useEffect(() => {
         dispatch(fetchWaiters());
     }, []);
 
-    const [darkMode, setDarkMode] = React.useState(JSON.parse(localStorage.getItem('darkMode')) || false);
-    const [isManagerRich, setIsManagerRich] = React.useState(JSON.parse(localStorage.getItem('isManagerRich')) || false);
+    const [darkMode, setDarkMode] = React.useState(false);
+    const [isManagerRich, setIsManagerRich] = React.useState(false);
     const [isWarningMessageShown, setIsWarningMessageShown] = React.useState(false);
 
-    //Массив данных об официантах
-    // const [waiters, setWaiters] = React.useState(
-    //     //Проверяем длину data, чтобы обновлять данные в случае появления нового официанта
-    //     ((JSON.parse(localStorage.getItem("waiters")) && data.length !== JSON.parse(localStorage.getItem("waiters")).length) || !JSON.parse(localStorage.getItem("waiters")) && !isWaitersLoading) ?
-    //         data :
-    //         JSON.parse(localStorage.getItem("waiters"))
-    // );
-    // console.log(isWaitersLoading)
-    // console.log(data)
-    // const [waiters, setWaiters] = React.useState(isWaitersLoading ? [] : data);
-    // console.log(waiters)
-
-
     //Массив с объектами банкетов
-    const [feteData, setFeteData] = React.useState(JSON.parse(localStorage.getItem('fete')) || [{
+    const [feteData, setFeteData] = React.useState([{
         id: 1,
         preorder: '',
         order: ''
     }]);
 
     //Объект прочих полей
-    const [additionalFields, setAdditionalFields] = React.useState(JSON.parse(localStorage.getItem('additionalFields')) || {
+    const [additionalFields, setAdditionalFields] = React.useState({
         tables: '',
         money: '',
         waitersMoney: ''
@@ -106,13 +90,6 @@ function Home() {
         // setWaiters(prev => prev.map(waiter => waiter.id === id ? {...waiter, comment: event.target.value} : waiter))
     }
 
-    function chooseWaiter(id) {
-        // setWaiters(prevState => prevState.map(waiter => waiter.id === id ? {
-        //     ...waiter,
-        //     isChosen: !waiter.isChosen
-        // } : waiter))
-    }
-
     function changeHours(evt, id) {
         // setWaiters(prevState => prevState.map(waiter => waiter.id === id ? {
         //     ...waiter,
@@ -129,24 +106,11 @@ function Home() {
         // } : waiter))
     }
 
-    //Сохранение данных
-    const dataToStore = {
-        'feteData': feteData,
-        'additionalFields': additionalFields,
-        'waiters': waiters,
-        'darkMode': darkMode,
-        'isManagerRich': isManagerRich,
-    }
-
-    React.useEffect(() => {
-        for (let [name, obj] of Object.entries(dataToStore)) {
-            localStorage.setItem(`${name}`, JSON.stringify(obj));
-        }
-    }, Object.values(dataToStore));
+    // код для сохранения данных лежит в самом низу файла
 
     return isWaitersLoading ? <div>...Загрузка</div> : (
         <div className={darkMode ? "home dark" : "home"}>
-            <SideMenu chooseWaiter={chooseWaiter} waiters={waiters}/>
+            <SideMenu waiters={waiters}/>
             <div className="main">
                 <Header
                     waiters={waiters}
@@ -177,7 +141,6 @@ function Home() {
                 />
                 <WaitersMoney
                     waiters={waiters}
-                    // setWaiters={setWaiters}
                     setWaiters={() => console.log('hi')}
                     handleAdditionalFieldsChange={handleAdditionalFieldsChange}
                     additionalFields={additionalFields}
@@ -190,3 +153,18 @@ function Home() {
 }
 
 export default Home;
+
+//Сохранение данных
+// const dataToStore = {
+//     'feteData': feteData,
+//     'additionalFields': additionalFields,
+//     'waiters': waiters,
+//     'darkMode': darkMode,
+//     'isManagerRich': isManagerRich,
+// }
+//
+// React.useEffect(() => {
+//     for (let [name, obj] of Object.entries(dataToStore)) {
+//         localStorage.setItem(`${name}`, JSON.stringify(obj));
+//     }
+// }, Object.values(dataToStore));

@@ -1,6 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from "../../axios";
-import {nanoid} from "nanoid";
 
 export const fetchWaiters = createAsyncThunk('waiters/fetchWaiters', async () => {
     const {data} = await axios.get('/waiters');
@@ -15,14 +14,22 @@ const initialState = {
 const waitersSlice = createSlice({
     name: 'waiters',
     initialState,
-    reducers: {},
+    reducers: {
+        chooseWaiter: (state, action) => {
+            const id = action.payload;
+            state.waiters = state.waiters.map(waiter => waiter.id === id ? {
+                ...waiter,
+                isChosen: !waiter.isChosen
+            } : waiter);
+        }
+    },
     extraReducers: {
         [fetchWaiters.pending]: (state) => {
             state.status = 'loading'
         },
         [fetchWaiters.fulfilled]: (state, action) => {
             state.waiters = action.payload.map(runner => ({
-                id: nanoid(),
+                id: runner._id,
                 name: runner.name,
                 isChosen: false,
                 hours: 12,
@@ -38,5 +45,7 @@ const waitersSlice = createSlice({
         },
     }
 });
+
+export const {chooseWaiter} = waitersSlice.actions;
 
 export const waitersReducer = waitersSlice.reducer;
