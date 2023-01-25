@@ -1,21 +1,14 @@
 import React from 'react';
 import WaiterChartItem from "../minor/WaiterChartItem";
 
-const WaitersChart = ({waiters, changeHours, handleHasMoneyChange, onCommentInput}) => {
+const WaitersChart = ({waiters}) => {
 
     //Массив элементов выбранных официантов
     const chosenWaitersElements = waiters.filter(waiter => waiter.isChosen).map((chosenWaiter, index) =>
         <WaiterChartItem
             key={chosenWaiter.id}
-            name={chosenWaiter.name}
             index={index + 1}
-            hasMoney={chosenWaiter.hasMoney}
-            toReceive={chosenWaiter.toReceive}
-            hours={chosenWaiter.hours}
-            changeHours={(evt) => changeHours(evt, chosenWaiter.id)}
-            handleHasMoneyChange={(evt) => handleHasMoneyChange(evt, chosenWaiter.id)}
-            comment={chosenWaiter.comment}
-            onCommentInput={(event) => onCommentInput(event, chosenWaiter.id)}
+            {...chosenWaiter}
         />
     )
 

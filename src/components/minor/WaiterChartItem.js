@@ -1,20 +1,42 @@
 import {useState} from "react";
+import {addComment, selectHours, toggleMoney} from "../../redux/slices/waiters";
+import {useDispatch} from "react-redux";
 
-export default function WaiterChartItem(props) {
+export default function WaiterChartItem(
+    {
+        index,
+        id,
+        comment,
+        name,
+        hasMoney,
+        toReceive,
+        hours,
+    }
+) {
 
+    const dispatch = useDispatch();
     const [commentShown, setCommentShown] = useState(false);
 
     return (
         <div className="waiter-main">
             {commentShown && <div className="waiter-main__comment">
-                <input onChange={props.onCommentInput} type="text" placeholder="Сюда можно ввести комментарий" value={props.comment}/>
+                <input
+                    onChange={(event) => dispatch(addComment({id, comment: event.target.value}))}
+                    type="text"
+                    placeholder="Сюда можно ввести комментарий"
+                    value={comment}
+                />
             </div>}
-            <div className="waiter-main__text waiter-main__number">{props.index}</div>
+            <div className="waiter-main__text waiter-main__number">{index}</div>
             <div className="waiter-main__text waiter-main__name">
-                {props.name}
+                {name}
             </div>
             <div className="waiter-main__text waiter-main__hours">
-                <select name="hours" className="hours-select" value={props.hours} onChange={props.changeHours}>
+                <select
+                    name="hours" className="hours-select"
+                    value={hours}
+                    onChange={(event) => dispatch(selectHours({id, hours: event.target.value}))}
+                >
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -31,14 +53,14 @@ export default function WaiterChartItem(props) {
             </div>
             <div className="waiter-main__text waiter-main__has">
                 <input
-                    onChange={props.handleHasMoneyChange}
                     type="number"
                     className="waiter-main__has-amount"
-                    value={props.hasMoney}
+                    value={hasMoney}
+                    onChange={(event) => dispatch(toggleMoney({id, money: event.target.value}))}
                 />
             </div>
             <div className="to-receive">
-                {props.toReceive}
+                {toReceive}
             </div>
             <div className="tooltip" onClick={() => setCommentShown(prev => !prev)}>?
             </div>

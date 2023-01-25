@@ -1,7 +1,11 @@
 import React from 'react';
 import {checkIfAnyWaiterChosen, checkIfThereIsWaitersMoney} from "../../utils";
+import {count} from "../../redux/slices/waiters";
+import {useDispatch} from "react-redux";
 
-const WaitersMoney = ({waiters, setWaiters, handleAdditionalFieldsChange, additionalFields, showWarning}) => {
+const WaitersMoney = ({waiters, handleAdditionalFieldsChange, additionalFields, showWarning}) => {
+
+    const dispatch = useDispatch();
 
     function countWaiters() {
 
@@ -24,20 +28,22 @@ const WaitersMoney = ({waiters, setWaiters, handleAdditionalFieldsChange, additi
             }
         }
 
-        const allTheMoney = Number(additionalFields.waitersMoney) + waitersCards
+        const allTheMoney = Number(additionalFields.waitersMoney) + waitersCards;
 
         const tipsPerWaiter = allTheMoney / waitersAmount;
-        setWaiters(prevState =>
-            prevState.map(waiter => {
-                if (waiter.isChosen) {
-                    return {
-                        ...waiter,
-                        toReceive: Math.floor(tipsPerWaiter * waiter.hours / 12 - waiter.hasMoney)
-                    }
-                }
-                return waiter;
-            })
-        )
+
+        dispatch(count(tipsPerWaiter))
+        // setWaiters(prevState =>
+        //     prevState.map(waiter => {
+        //         if (waiter.isChosen) {
+        //             return {
+        //                 ...waiter,
+        //                 toReceive: Math.floor(tipsPerWaiter * waiter.hours / 12 - waiter.hasMoney)
+        //             }
+        //         }
+        //         return waiter;
+        //     })
+        // )
     }
 
     return (

@@ -86,10 +86,6 @@ function Home() {
         }, 2000);
     }
 
-    function onCommentInput(event, id) {
-        // setWaiters(prev => prev.map(waiter => waiter.id === id ? {...waiter, comment: event.target.value} : waiter))
-    }
-
     function changeHours(evt, id) {
         // setWaiters(prevState => prevState.map(waiter => waiter.id === id ? {
         //     ...waiter,
@@ -98,8 +94,6 @@ function Home() {
     }
 
     function handleHasMoneyChange(evt, id) {
-        const {value} = evt.target;
-        if (isNaN(+value)) return;
         // setWaiters(prevState => prevState.map(waiter => waiter.id === id ? {
         //     ...waiter,
         //     hasMoney: value
@@ -123,7 +117,6 @@ function Home() {
                     waiters={waiters}
                     changeHours={changeHours}
                     handleHasMoneyChange={handleHasMoneyChange}
-                    onCommentInput={onCommentInput}
                 />
                 <EnvelopeLanding
                     isManagerRich={isManagerRich}
@@ -141,7 +134,6 @@ function Home() {
                 />
                 <WaitersMoney
                     waiters={waiters}
-                    setWaiters={() => console.log('hi')}
                     handleAdditionalFieldsChange={handleAdditionalFieldsChange}
                     additionalFields={additionalFields}
                     showWarning={showWarningMessage}

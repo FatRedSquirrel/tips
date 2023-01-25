@@ -15,12 +15,33 @@ const waitersSlice = createSlice({
     name: 'waiters',
     initialState,
     reducers: {
-        chooseWaiter: (state, action) => {
-            const id = action.payload;
+        chooseWaiter: (state, {payload: id}) => {
             state.waiters = state.waiters.map(waiter => waiter.id === id ? {
                 ...waiter,
                 isChosen: !waiter.isChosen
             } : waiter);
+        },
+        addComment: (state, {payload: {id, comment}}) => {
+            const waiter = state.waiters.find(waiter => waiter.id === id);
+            waiter.comment = comment;
+        },
+        selectHours: (state, {payload: {id, hours}}) => {
+            const waiter = state.waiters.find(waiter => waiter.id === id);
+            waiter.hours = hours;
+        },
+        toggleMoney: (state, {payload: {id, money}}) => {
+            const waiter = state.waiters.find(waiter => waiter.id === id);
+            waiter.hasMoney = money;
+        },
+        count: (state, {payload: tipsPerWaiter}) => {
+            state.waiters = state.waiters.map(waiter =>
+                waiter.isChosen
+                    ? {
+                        ...waiter,
+                        toReceive: Math.floor(tipsPerWaiter * waiter.hours / 12 - waiter.hasMoney)
+                    }
+                    : waiter
+            )
         }
     },
     extraReducers: {
@@ -28,6 +49,7 @@ const waitersSlice = createSlice({
             state.status = 'loading'
         },
         [fetchWaiters.fulfilled]: (state, action) => {
+            // здесь будем задавать waiters опционально, учитывая localStorage
             state.waiters = action.payload.map(runner => ({
                 id: runner._id,
                 name: runner.name,
@@ -46,6 +68,6 @@ const waitersSlice = createSlice({
     }
 });
 
-export const {chooseWaiter} = waitersSlice.actions;
+export const {chooseWaiter, addComment, selectHours, toggleMoney, count} = waitersSlice.actions;
 
 export const waitersReducer = waitersSlice.reducer;
