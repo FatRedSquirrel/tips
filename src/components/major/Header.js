@@ -4,7 +4,7 @@ import DarkModeToggle from "../minor/DarkModeToggle";
 import {checkIfThereIsDataToReset} from "../../utils";
 import ResetIcon from "../../icons/ResetIcon";
 
-const Header = ({waiters, feteData, additionalFields, darkMode, toggleDarkMode}) => {
+const Header = ({waiters, fete, mainFields, darkMode, toggleDarkMode}) => {
 
     const [resetConfirmation, setResetConfirmation] = React.useState(false);
     const [resetConfirmed, setResetConfirmed] = React.useState(false);
@@ -42,7 +42,7 @@ const Header = ({waiters, feteData, additionalFields, darkMode, toggleDarkMode})
                 toggleDarkMode={toggleDarkMode}
                 darkMode={darkMode}
             />
-            {checkIfThereIsDataToReset(feteData, additionalFields, waiters) &&
+            {checkIfThereIsDataToReset(fete, mainFields, waiters) &&
                 <button
                     onClick={() => setResetConfirmation(true)}
                     className={resetConfirmed ? "reset spin-animation" : "reset"}

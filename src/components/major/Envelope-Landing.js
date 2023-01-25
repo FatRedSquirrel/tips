@@ -1,7 +1,18 @@
 import React from 'react';
 import IsManagerRich from "../minor/IsManagerRich";
+import {useDispatch} from "react-redux";
+import {changeMainFields} from "../../redux/slices/mainFields";
 
-const EnvelopeLanding = ({isManagerRich, handleAdditionalFieldsChange, additionalFields, handleIsManagerRichChange, darkMode}) => {
+
+
+const EnvelopeLanding = ({isManagerRich, mainFields, handleIsManagerRichChange, darkMode}) => {
+
+    const dispatch = useDispatch();
+    function mainFieldsChangeHandler(event) {
+        const {name, value} = event.target;
+        dispatch(changeMainFields({name, value}))
+    }
+
     return (
         <div className="main-top">
             <div className="main-top__container">
@@ -10,8 +21,8 @@ const EnvelopeLanding = ({isManagerRich, handleAdditionalFieldsChange, additiona
                     <input
                         type="number"
                         name="money"
-                        onChange={handleAdditionalFieldsChange}
-                        value={additionalFields.money}
+                        onChange={mainFieldsChangeHandler}
+                        value={mainFields.money}
                         className="tips-input"
                     />
                 </div>}
@@ -20,8 +31,8 @@ const EnvelopeLanding = ({isManagerRich, handleAdditionalFieldsChange, additiona
                     <input
                         type="number"
                         name="tables"
-                        onChange={handleAdditionalFieldsChange}
-                        value={additionalFields.tables}
+                        onChange={mainFieldsChangeHandler}
+                        value={mainFields.tables}
                         className="tips-input"
                     />
                 </div>

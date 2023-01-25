@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {addComment, selectHours, toggleMoney} from "../../redux/slices/waiters";
+import {addComment, selectHours, toggleMoney} from "../../../redux/slices/waiters";
 import {useDispatch} from "react-redux";
 
 export default function WaiterChartItem(

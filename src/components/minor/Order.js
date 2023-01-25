@@ -1,16 +1,26 @@
 import React from "react";
+import {useDispatch} from "react-redux";
+import {changeFeteData} from "../../redux/slices/fete";
 
-export default function Order(props) {
+export default function Order({id, order}) {
+
+    const dispatch = useDispatch();
+
+    function feteChangeHandler(event) {
+        const {id, name, value} = event.target;
+        dispatch(changeFeteData({id, name, value}));
+    }
+
     return (
         <div className="fete">
-            <span>{props.id}</span>
+            <span>{id}</span>
             <input
                 className="tips-input fete-input"
                 type="number"
-                id={props.id}
+                id={id}
                 name="order"
-                onChange={props.action}
-                value={props.value}/>
+                onChange={feteChangeHandler}
+                value={order}/>
         </div>
     )
 }

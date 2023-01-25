@@ -1,5 +1,5 @@
 import {useDispatch} from "react-redux";
-import {chooseWaiter} from "../../redux/slices/waiters";
+import {chooseWaiter} from "../../../redux/slices/waiters";
 
 export default function WaiterSideMenu(props) {
 

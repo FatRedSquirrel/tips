@@ -1,7 +1,7 @@
 import React from "react";
 import {checkIfThereIsDivisionsData} from "../../utils";
 
-export default function Results({feteData, additionalFields, isManagerRich, showWarning}) {
+export default function Results({fete, mainFields, isManagerRich, showWarning}) {
 
     //Объект с результатами вычислений
     const [results, setResults] = React.useState({
@@ -16,7 +16,7 @@ export default function Results({feteData, additionalFields, isManagerRich, show
     //Функция для получения финальных значений
     function countDivisions() {
 
-        if (!checkIfThereIsDivisionsData(feteData, additionalFields)) {
+        if (!checkIfThereIsDivisionsData(fete, mainFields)) {
             setResultsShown(false);
             showWarning();
             return;
@@ -25,15 +25,15 @@ export default function Results({feteData, additionalFields, isManagerRich, show
         setResultsShown(true);
         let sumPreorders = 0;
         let sumOrders = 0;
-        for (let i = 0; i < feteData.length; i++) {
-            sumPreorders += Number(feteData[i].preorder);
-            sumOrders += Number(feteData[i].order);
+        for (let i = 0; i < fete.length; i++) {
+            sumPreorders += Number(fete[i].preorder);
+            sumOrders += Number(fete[i].order);
         }
         setResults(prevResults => ({
                 ...prevResults,
                 kitchen: Math.floor(sumPreorders / 50),
-                bar: Math.floor((sumPreorders / 100 + sumOrders / 100) + Number(additionalFields.tables / 10)),
-                manager: isManagerRich ? Math.floor(Number(additionalFields.money / 10)) : Math.floor(sumPreorders / 100 + sumOrders / 100)
+                bar: Math.floor((sumPreorders / 100 + sumOrders / 100) + Number(mainFields.tables / 10)),
+                manager: isManagerRich ? Math.floor(Number(mainFields.money / 10)) : Math.floor(sumPreorders / 100 + sumOrders / 100)
             }
         ))
     }

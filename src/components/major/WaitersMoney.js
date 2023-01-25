@@ -2,18 +2,21 @@ import React from 'react';
 import {checkIfAnyWaiterChosen, checkIfThereIsWaitersMoney} from "../../utils";
 import {count} from "../../redux/slices/waiters";
 import {useDispatch} from "react-redux";
+import {changeMainFields} from "../../redux/slices/mainFields";
 
-const WaitersMoney = ({waiters, handleAdditionalFieldsChange, additionalFields, showWarning}) => {
+const WaitersMoney = ({waiters, mainFields, showWarning}) => {
 
     const dispatch = useDispatch();
 
+    function mainFieldsChangeHandler(event) {
+        const {name, value} = event.target;
+        dispatch(changeMainFields({name, value}))
+    }
+
     function countWaiters() {
-
-        if (!(checkIfAnyWaiterChosen(waiters) && checkIfThereIsWaitersMoney(additionalFields))) {
-            showWarning();
-            return;
+        if (!(checkIfAnyWaiterChosen(waiters) && checkIfThereIsWaitersMoney(mainFields))) {
+            return showWarning();
         }
-
         let waitersAmount = 0;
         for (let waiter of waiters) {
             if (waiter.isChosen) {
@@ -27,23 +30,9 @@ const WaitersMoney = ({waiters, handleAdditionalFieldsChange, additionalFields, 
                 waitersCards += Number(waiter.hasMoney);
             }
         }
-
-        const allTheMoney = Number(additionalFields.waitersMoney) + waitersCards;
-
+        const allTheMoney = Number(mainFields.waitersMoney) + waitersCards;
         const tipsPerWaiter = allTheMoney / waitersAmount;
-
         dispatch(count(tipsPerWaiter))
-        // setWaiters(prevState =>
-        //     prevState.map(waiter => {
-        //         if (waiter.isChosen) {
-        //             return {
-        //                 ...waiter,
-        //                 toReceive: Math.floor(tipsPerWaiter * waiter.hours / 12 - waiter.hasMoney)
-        //             }
-        //         }
-        //         return waiter;
-        //     })
-        // )
     }
 
     return (
@@ -54,8 +43,8 @@ const WaitersMoney = ({waiters, handleAdditionalFieldsChange, additionalFields, 
                     placeholder="Деньги официантов"
                     className="waiters-money-input"
                     name="waitersMoney"
-                    onChange={handleAdditionalFieldsChange}
-                    value={additionalFields.waitersMoney}
+                    onChange={mainFieldsChangeHandler}
+                    value={mainFields.waitersMoney}
                 />
                 <div
                     className="tooltip"

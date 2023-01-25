@@ -1,5 +1,5 @@
 import React from 'react';
-import WaiterChartItem from "../minor/WaiterChartItem";
+import WaiterChartItem from "../minor/waiter/WaiterChartItem";
 
 const WaitersChart = ({waiters}) => {
 

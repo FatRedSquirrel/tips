@@ -14,66 +14,42 @@ import {fetchWaiters} from "../redux/slices/waiters";
 function Home() {
 
     const dispatch = useDispatch();
-    const isWaitersLoading = useSelector(store => store.waiters.status) === 'loading';
-
-    const {waiters} = useSelector(store => store.waiters);
-
     React.useEffect(() => {
         dispatch(fetchWaiters());
     }, []);
+
+    const {waiters} = useSelector(store => store.waiters);
+    const {mainFields} = useSelector(store => store);
+    const {fete} = useSelector(store => store);
 
     const [darkMode, setDarkMode] = React.useState(false);
     const [isManagerRich, setIsManagerRich] = React.useState(false);
     const [isWarningMessageShown, setIsWarningMessageShown] = React.useState(false);
 
-    //Массив с объектами банкетов
-    const [feteData, setFeteData] = React.useState([{
-        id: 1,
-        preorder: '',
-        order: ''
-    }]);
+    const isWaitersLoading = useSelector(store => store.waiters.status) === 'loading';
 
-    //Объект прочих полей
-    const [additionalFields, setAdditionalFields] = React.useState({
-        tables: '',
-        money: '',
-        waitersMoney: ''
-    });
+    // //Массив с объектами банкетов
+    // const [feteData, setFeteData] = React.useState();
 
     function toggleDarkMode() {
         setDarkMode(prev => !prev);
     }
 
     //Обработчик ввода данных в поля предзаказов и дозаказов, обновление данных о банкетах
-    function handleFeteChange(evt) {
-        const {id, value, name} = evt.target;
-        // checking whether value is number
-        if (isNaN(+value)) return;
-        setFeteData(prevFeteData => {
-            let newFeteData = [];
-            for (let i = 0; i < prevFeteData.length; i++) {
-                let currentFete = prevFeteData[i];
-                if (+id === currentFete.id) {
-                    currentFete[name] = value;
-                }
-                newFeteData.push(currentFete);
-            }
-            return newFeteData;
-        })
-    }
-
-    //Обработчик ввода данных в дополнительные поля, изменение данных об этих полях
-    function handleAdditionalFieldsChange(evt) {
-        const {name, value} = evt.target;
-        if (isNaN(+value)) return;
-        setAdditionalFields(prevState => {
-                return {
-                    ...prevState,
-                    [name]: value
-                }
-            }
-        )
-    }
+    // function handleFeteChange(evt) {
+    //     const {id, value, name} = evt.target;
+    //     setFeteData(prevFeteData => {
+    //         let newFeteData = [];
+    //         for (let i = 0; i < prevFeteData.length; i++) {
+    //             let currentFete = prevFeteData[i];
+    //             if (+id === currentFete.id) {
+    //                 currentFete[name] = value;
+    //             }
+    //             newFeteData.push(currentFete);
+    //         }
+    //         return newFeteData;
+    //     })
+    // }
 
     function handleIsManagerRichChange() {
         setIsManagerRich(prev => !prev);
@@ -86,20 +62,6 @@ function Home() {
         }, 2000);
     }
 
-    function changeHours(evt, id) {
-        // setWaiters(prevState => prevState.map(waiter => waiter.id === id ? {
-        //     ...waiter,
-        //     hours: evt.target.value
-        // } : waiter))
-    }
-
-    function handleHasMoneyChange(evt, id) {
-        // setWaiters(prevState => prevState.map(waiter => waiter.id === id ? {
-        //     ...waiter,
-        //     hasMoney: value
-        // } : waiter))
-    }
-
     // код для сохранения данных лежит в самом низу файла
 
     return isWaitersLoading ? <div>...Загрузка</div> : (
@@ -108,34 +70,31 @@ function Home() {
             <div className="main">
                 <Header
                     waiters={waiters}
-                    feteData={feteData}
-                    additionalFields={additionalFields}
+                    fete={fete}
+                    mainFields={mainFields}
                     darkMode={darkMode}
                     toggleDarkMode={toggleDarkMode}
                 />
-                <WaitersChart
-                    waiters={waiters}
-                    changeHours={changeHours}
-                    handleHasMoneyChange={handleHasMoneyChange}
-                />
+                <WaitersChart waiters={waiters}/>
                 <EnvelopeLanding
                     isManagerRich={isManagerRich}
-                    handleAdditionalFieldsChange={handleAdditionalFieldsChange}
-                    additionalFields={additionalFields}
+                    mainFields={mainFields}
                     handleIsManagerRichChange={handleIsManagerRichChange}
                     darkMode={darkMode}
                 />
-                <Fete feteData={feteData} handleFeteChange={handleFeteChange} setFeteData={setFeteData}/>
+                <Fete
+                    fete={fete}
+                    setFeteData={() => console.log('hi')}
+                />
                 <Results
-                    feteData={feteData}
-                    additionalFields={additionalFields}
+                    fete={fete}
+                    mainFields={mainFields}
                     isManagerRich={isManagerRich}
                     showWarning={showWarningMessage}
                 />
                 <WaitersMoney
                     waiters={waiters}
-                    handleAdditionalFieldsChange={handleAdditionalFieldsChange}
-                    additionalFields={additionalFields}
+                    mainFields={mainFields}
                     showWarning={showWarningMessage}
                 />
             </div>

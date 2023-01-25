@@ -2,7 +2,23 @@ import React from 'react';
 import Preorder from "../minor/Preorder";
 import Order from "../minor/Order";
 
-const Fete = ({feteData, handleFeteChange, setFeteData}) => {
+const Fete = ({fete, setFeteData}) => {
+
+
+    // function handleFeteChange(evt) {
+    //     const {id, value, name} = evt.target;
+    //     setFeteData(prevFeteData => {
+    //         let newFeteData = [];
+    //         for (let i = 0; i < prevFeteData.length; i++) {
+    //             let currentFete = prevFeteData[i];
+    //             if (+id === currentFete.id) {
+    //                 currentFete[name] = value;
+    //             }
+    //             newFeteData.push(currentFete);
+    //         }
+    //         return newFeteData;
+    //     })
+    // }
 
     //Функция для добавления банкета
     function add() {
@@ -21,22 +37,22 @@ const Fete = ({feteData, handleFeteChange, setFeteData}) => {
     }
 
     //Массив элементов предзаказов
-    const preorders = feteData.map((fete) =>
+    const preorders = fete.map((fete) =>
         <Preorder
-            action={handleFeteChange}
             key={fete.id}
-            id={fete.id}
-            value={fete.preorder}
+            // id={fete.id}
+            // value={fete.preorder}
+            {...fete}
         />
     );
 
     //Массив элементов дозаказов
-    const orders = feteData.map((fete) =>
+    const orders = fete.map((fete) =>
         <Order
-            action={handleFeteChange}
             key={fete.id}
-            id={fete.id}
-            value={fete.order}
+            // id={fete.id}
+            // value={fete.order}
+            {...fete}
         />
     );
 

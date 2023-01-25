@@ -1,16 +1,26 @@
 import React from "react";
+import {changeFeteData} from "../../redux/slices/fete";
+import {useDispatch} from "react-redux";
 
-export default function Preorder(props) {
+export default function Preorder({id, preorder}) {
+
+    const dispatch = useDispatch();
+
+    function feteChangeHandler(event) {
+        const {id, name, value} = event.target;
+        dispatch(changeFeteData({id, name, value}));
+    }
+
     return (
         <div className="fete">
-            <span>{props.id}</span>
+            <span>{id}</span>
             <input
                 className="tips-input fete-input"
                 type="number"
-                id={props.id}
+                id={id}
                 name="preorder"
-                onChange={props.action}
-                value={props.value}/>
+                onChange={feteChangeHandler}
+                value={preorder}/>
         </div>
     )
 }
