@@ -21,12 +21,11 @@ function Home() {
     const {waiters} = useSelector(store => store.waiters);
     const {mainFields} = useSelector(store => store.mainFields);
     const {fete} = useSelector(store => store.fete);
+    const {isLoaded} = useSelector(store => store.waiters);
 
     const [darkMode, setDarkMode] = React.useState(false);
     const [isManagerRich, setIsManagerRich] = React.useState(false);
     const [isWarningMessageShown, setIsWarningMessageShown] = React.useState(false);
-
-    const isWaitersLoading = useSelector(store => store.waiters.status) === 'loading';
 
     function toggleDarkMode() {
         setDarkMode(prev => !prev);
@@ -45,7 +44,7 @@ function Home() {
 
     // код для сохранения данных лежит в самом низу файла
 
-    return isWaitersLoading ? <div>...Загрузка</div> : (
+    return !isLoaded ? <div>...Загрузка</div> : (
         <div className={darkMode ? "home dark" : "home"}>
             <SideMenu waiters={waiters}/>
             <div className="main">

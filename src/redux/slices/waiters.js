@@ -8,7 +8,7 @@ export const fetchWaiters = createAsyncThunk('waiters/fetchWaiters', async () =>
 
 const initialState = {
     waiters: [],
-    status: 'loading'
+    isLoaded: false
 }
 
 const waitersSlice = createSlice({
@@ -48,7 +48,7 @@ const waitersSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchWaiters.pending, state => {
-                state.status = 'loading'
+                state.isLoaded = false;
             })
             .addCase(fetchWaiters.fulfilled, (state, action) => {
                 // здесь будем задавать waiters опционально, учитывая localStorage
@@ -61,11 +61,11 @@ const waitersSlice = createSlice({
                     toReceive: 0,
                     comment: '',
                 }));
-                state.status = 'loaded';
+                state.isLoaded = true;
             })
             .addCase(fetchWaiters.rejected, state => {
                 state.waiters = [];
-                state.status = 'error';
+                state.isLoaded = false;
             })
     }
 });
