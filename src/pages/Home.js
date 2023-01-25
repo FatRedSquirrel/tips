@@ -19,8 +19,8 @@ function Home() {
     }, []);
 
     const {waiters} = useSelector(store => store.waiters);
-    const {mainFields} = useSelector(store => store);
-    const {fete} = useSelector(store => store);
+    const {mainFields} = useSelector(store => store.mainFields);
+    const {fete} = useSelector(store => store.fete);
 
     const [darkMode, setDarkMode] = React.useState(false);
     const [isManagerRich, setIsManagerRich] = React.useState(false);
@@ -28,28 +28,9 @@ function Home() {
 
     const isWaitersLoading = useSelector(store => store.waiters.status) === 'loading';
 
-    // //Массив с объектами банкетов
-    // const [feteData, setFeteData] = React.useState();
-
     function toggleDarkMode() {
         setDarkMode(prev => !prev);
     }
-
-    //Обработчик ввода данных в поля предзаказов и дозаказов, обновление данных о банкетах
-    // function handleFeteChange(evt) {
-    //     const {id, value, name} = evt.target;
-    //     setFeteData(prevFeteData => {
-    //         let newFeteData = [];
-    //         for (let i = 0; i < prevFeteData.length; i++) {
-    //             let currentFete = prevFeteData[i];
-    //             if (+id === currentFete.id) {
-    //                 currentFete[name] = value;
-    //             }
-    //             newFeteData.push(currentFete);
-    //         }
-    //         return newFeteData;
-    //     })
-    // }
 
     function handleIsManagerRichChange() {
         setIsManagerRich(prev => !prev);

@@ -1,5 +1,6 @@
 import React from 'react';
 import WaiterSideMenu from "../minor/waiter/WaiterSideMenu";
+import {Link} from "react-router-dom";
 
 const SideMenu = ({waiters}) => {
 
@@ -26,6 +27,7 @@ const SideMenu = ({waiters}) => {
             <button className={sideMenuOpen ? "burger hidden" : "burger"} onClick={toggleSideMenu}></button>
             <div className={sideMenuOpen ? "side-menu open" : "side-menu"}>
                 {waiterSideMenuElements}
+                <Link to='/login' className="change-waiters-button">Редактировать</Link>
             </div>
         </>
     );

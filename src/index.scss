@@ -51,7 +51,7 @@ textarea,
 input[type="text"],
 input[type="button"],
 input[type="submit"],
-input[type="number"]{
+input[type="number"] {
   -webkit-appearance: none;
   border-radius: 0;
 }
@@ -727,22 +727,23 @@ option {
 
   .buttons {
     display: flex;
-    width: 80%;
+    width: 92%;
     justify-content: space-between;
+  }
 
-    button {
-      width: 70px;
-      padding: 6px;
-      background-color: transparent;
-      border: 2px solid $color-primary;
-      border-radius: 4px;
-    }
+  .modal-button {
+    min-width: 90px;
+    padding: 6px;
+    background-color: transparent;
+    border: 2px solid $color-primary;
+    border-radius: 4px;
 
-    .reset-button {
+    &-cancel {
       border-color: $color-warning;
     }
   }
 }
+
 
 .warning-message {
   position: fixed;
@@ -763,7 +764,23 @@ option {
   }
 }
 
+.change-waiters-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border: 2px solid $color-primary;
+  height: 45px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #000;
+}
+
 .dark {
+  .change-waiters-button {
+    border-color: $color-primary-dark-mode;
+  }
+
   .new-waiter-button {
     border-color: $color-primary-dark-mode;
   }

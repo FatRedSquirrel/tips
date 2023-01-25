@@ -1,9 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    tables: '',
-    money: '',
-    waitersMoney: ''
+    mainFields: {
+        tables: '',
+        money: '',
+        waitersMoney: ''
+    }
 };
 
 const mainFieldsSlice = createSlice({
@@ -11,7 +13,7 @@ const mainFieldsSlice = createSlice({
     initialState,
     reducers: {
         changeMainFields: (state, {payload: {name, value}}) => {
-            state[name] = value;
+            state.mainFields[name] = value;
         }
     }
 });

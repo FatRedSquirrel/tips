@@ -1,47 +1,17 @@
 import React from 'react';
 import Preorder from "../minor/Preorder";
 import Order from "../minor/Order";
+import {addFete, removeFete} from "../../redux/slices/fete";
+import {useDispatch} from "react-redux";
 
-const Fete = ({fete, setFeteData}) => {
+const Fete = ({fete}) => {
 
-
-    // function handleFeteChange(evt) {
-    //     const {id, value, name} = evt.target;
-    //     setFeteData(prevFeteData => {
-    //         let newFeteData = [];
-    //         for (let i = 0; i < prevFeteData.length; i++) {
-    //             let currentFete = prevFeteData[i];
-    //             if (+id === currentFete.id) {
-    //                 currentFete[name] = value;
-    //             }
-    //             newFeteData.push(currentFete);
-    //         }
-    //         return newFeteData;
-    //     })
-    // }
-
-    //Функция для добавления банкета
-    function add() {
-        setFeteData((prevFeteData) => {
-            return [...prevFeteData, {
-                id: prevFeteData.length + 1,
-                preorder: '',
-                order: ''
-            }]
-        })
-    }
-
-    //Функция для удаления банкета
-    function remove() {
-        setFeteData(prevFeteData => prevFeteData.slice(0, prevFeteData.length - 1))
-    }
+    const dispatch = useDispatch();
 
     //Массив элементов предзаказов
     const preorders = fete.map((fete) =>
         <Preorder
             key={fete.id}
-            // id={fete.id}
-            // value={fete.preorder}
             {...fete}
         />
     );
@@ -50,8 +20,6 @@ const Fete = ({fete, setFeteData}) => {
     const orders = fete.map((fete) =>
         <Order
             key={fete.id}
-            // id={fete.id}
-            // value={fete.order}
             {...fete}
         />
     );
@@ -69,8 +37,8 @@ const Fete = ({fete, setFeteData}) => {
                 </div>
             </div>
             <div className="fete-buttons-container">
-                <button onClick={add} className="button fete-button plus">+</button>
-                <button onClick={remove} className="button fete-button minus">-</button>
+                <button onClick={() => dispatch(addFete())} className="button fete-button plus">+</button>
+                <button onClick={() => dispatch(removeFete())} className="button fete-button minus">-</button>
             </div>
         </>
 

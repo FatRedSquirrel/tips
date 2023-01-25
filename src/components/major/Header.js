@@ -1,5 +1,5 @@
 import React from 'react';
-import ResetConfirmationModal from "../minor/ResetConfirmationModal";
+import Modal from "../minor/Modal";
 import DarkModeToggle from "../minor/DarkModeToggle";
 import {checkIfThereIsDataToReset} from "../../utils";
 import ResetIcon from "../../icons/ResetIcon";
@@ -31,9 +31,10 @@ const Header = ({waiters, fete, mainFields, darkMode, toggleDarkMode}) => {
     return (
         <>
             {resetConfirmation &&
-                <ResetConfirmationModal
-                    resetButtonClickHandler={reset}
-                    cancelButtonClickHandler={() => {
+                <Modal
+                    text="Вы уверены, что хотите сделать сброс? Все сохраненные данные будут удалены"
+                    onConfirm={reset}
+                    onCancel={() => {
                         setResetConfirmation(false);
                     }}
                 />

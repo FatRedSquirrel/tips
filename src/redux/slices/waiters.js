@@ -20,6 +20,7 @@ const waitersSlice = createSlice({
                 ...waiter,
                 isChosen: !waiter.isChosen
             } : waiter);
+            console.log(state.waiters)
         },
         addComment: (state, {payload: {id, comment}}) => {
             const waiter = state.waiters.find(waiter => waiter.id === id);
