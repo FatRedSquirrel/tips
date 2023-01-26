@@ -8,6 +8,7 @@ import Fete from "../components/major/Fete";
 import WaitersMoney from "../components/major/WaitersMoney";
 import Header from "../components/major/Header";
 import Loading from "../components/minor/Loading";
+import {storage} from "../utils";
 
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchWaiters} from "../redux/slices/waiters";
@@ -22,18 +23,32 @@ function Home() {
     const {waiters} = useSelector(store => store.waiters);
     const {mainFields} = useSelector(store => store.mainFields);
     const {fete} = useSelector(store => store.fete);
-    const {isLoaded} = useSelector(store => store.waiters);
+    const {isLoaded: isWaitersLoaded} = useSelector(store => store.waiters);
     const {isWarningShown} = useSelector(store => store.warning);
+    const {darkMode} = useSelector(store => store.darkMode);
 
-    const [isManagerRich, setIsManagerRich] = React.useState(false);
+    const [isManagerRich, setIsManagerRich] = React.useState(storage('isManagerRich') || false);
 
     function handleIsManagerRichChange() {
         setIsManagerRich(prev => !prev);
     }
 
-    // код для сохранения данных лежит в самом низу файла
+    //Сохранение данных
+    const dataToStore = {
+        'fete': fete,
+        'mainFields': mainFields,
+        'waiters': waiters,
+        'isManagerRich': isManagerRich,
+        'darkMode': darkMode
+    }
 
-    return !isLoaded ? <Loading/> : (
+    React.useEffect(() => {
+        for (let [name, obj] of Object.entries(dataToStore)) {
+            localStorage.setItem(`${name}`, JSON.stringify(obj));
+        }
+    }, Object.values(dataToStore));
+
+    return !isWaitersLoaded ? <Loading/> : (
         <div className="home">
             <SideMenu waiters={waiters}/>
             <div className="main">
@@ -68,18 +83,3 @@ function Home() {
 }
 
 export default Home;
-
-//Сохранение данных
-// const dataToStore = {
-//     'feteData': feteData,
-//     'additionalFields': additionalFields,
-//     'waiters': waiters,
-//     'darkMode': darkMode,
-//     'isManagerRich': isManagerRich,
-// }
-//
-// React.useEffect(() => {
-//     for (let [name, obj] of Object.entries(dataToStore)) {
-//         localStorage.setItem(`${name}`, JSON.stringify(obj));
-//     }
-// }, Object.values(dataToStore));

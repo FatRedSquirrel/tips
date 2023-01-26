@@ -1,7 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {storage} from "../../utils";
 
 const initialState = {
-    mainFields: {
+    mainFields: storage('mainFields') || {
         tables: '',
         money: '',
         waitersMoney: ''

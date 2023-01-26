@@ -1,7 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {storage} from "../../utils";
 
 const initialState = {
-    fete: [
+    fete: storage('fete') || [
         {
             id: 1,
             preorder: '',

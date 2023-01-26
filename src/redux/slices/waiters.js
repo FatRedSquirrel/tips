@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from "../../axios";
+import {storage} from "../../utils";
 
 export const fetchWaiters = createAsyncThunk('waiters/fetchWaiters', async () => {
     const {data} = await axios.get('/waiters');
@@ -7,7 +8,7 @@ export const fetchWaiters = createAsyncThunk('waiters/fetchWaiters', async () =>
 });
 
 const initialState = {
-    waiters: [],
+    waiters: storage('waiters') || [],
     isLoaded: false
 }
 
@@ -48,17 +49,20 @@ const waitersSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchWaiters.fulfilled, (state, action) => {
-                // здесь будем задавать waiters опционально, учитывая localStorage
-                state.waiters = action.payload.map(runner => ({
-                    id: runner._id,
-                    name: runner.name,
-                    isChosen: false,
-                    hours: 12,
-                    hasMoney: 0,
-                    toReceive: 0,
-                    comment: '',
-                }));
-                state.isLoaded = true;
+                if (state.waiters.length !== action.payload.length) {
+                    state.waiters = action.payload.map(runner => ({
+                        id: runner._id,
+                        name: runner.name,
+                        isChosen: false,
+                        hours: 12,
+                        hasMoney: 0,
+                        toReceive: 0,
+                        comment: '',
+                    }));
+                    state.isLoaded = true;
+                } else {
+                    state.isLoaded = true;
+                }
             })
     }
 });

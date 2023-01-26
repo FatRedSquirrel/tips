@@ -615,9 +615,10 @@ option {
     justify-content: center;
 
     h2 {
-      font-size: 14px;
+      font-size: 18px;
       margin-bottom: 20px;
       text-align: center;
+      font-weight: 400;
     }
 
     .buttons {
@@ -872,6 +873,19 @@ option {
       }
     }
   }
+
+  &-message {
+    margin-top: 4px;
+    font-size: 18px;
+    color: #249a24;
+    text-align: center;
+    opacity: 1;
+    height: 23px;
+
+    &.error {
+      color: $color-warning;
+    }
+  }
 }
 
 .new-employee-form {
@@ -887,6 +901,12 @@ option {
     font-size: 18px;
     padding: 10px;
     border: 1px solid $color-primary;
+
+    &:disabled {
+      opacity: 0.8;
+      color: $color-secondary;
+      border-color: $color-secondary;
+    }
   }
 }
 
@@ -907,10 +927,6 @@ option {
     border-color: #fff;
   }
 
-  button {
-    background: transparent;
-  }
-
   .change-waiters-button {
     border-color: $color-primary-dark-mode;
   }
@@ -924,6 +940,7 @@ option {
   }
 
   button {
+    background: transparent;
     border-color: $color-primary-dark-mode;
   }
 
@@ -936,6 +953,7 @@ option {
   }
 
   input {
+    background: transparent;
     border-color: $color-primary-dark-mode;
   }
 
@@ -967,11 +985,6 @@ option {
 
   .waiter-main:not(:last-child) {
     border-bottom: 1px solid #3b3b3b;
-  }
-
-  .admin-modal-open {
-    cursor: pointer;
-    border-color: #fff;
   }
 }
 

@@ -14,4 +14,8 @@ function checkIfThereIsDataToReset(fete, mainFields, waiters) {
     return checkIfThereIsDivisionsData(fete, mainFields) || checkIfAnyWaiterChosen(waiters) || mainFields.waitersMoney;
 }
 
-export {checkIfThereIsDivisionsData, checkIfAnyWaiterChosen, checkIfThereIsWaitersMoney, checkIfThereIsDataToReset}
+function storage(item) {
+    return JSON.parse(localStorage.getItem(item))
+}
+
+export {checkIfThereIsDivisionsData, checkIfAnyWaiterChosen, checkIfThereIsWaitersMoney, checkIfThereIsDataToReset, storage}
