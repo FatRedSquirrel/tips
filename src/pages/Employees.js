@@ -70,7 +70,7 @@ const Employees = () => {
         setAddConfirmationShown(false);
         setNameToCreate('');
         try {
-            const response = await axios.post('/waiters', {name: nameToCreate});
+            const response = await axios.post('/waiters', {name: nameToCreate.trim()});
             if (response.status === 200) {
                 showMessage(Message.body.adding.SUCCESS, Message.status.SUCCESS);
                 dispatch(fetchWaiters());
