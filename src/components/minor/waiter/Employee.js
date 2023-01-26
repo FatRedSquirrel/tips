@@ -21,11 +21,10 @@ const Employee = ({id, name, showConfirmation, setData}) => {
 
     return (
         <div
-            onClick={employeeClickHandler}
             ref={ref}
             className="employee"
         >
-            <p>{name}</p>
+            <p onClick={employeeClickHandler}>{name}</p>
             <button onClick={deleteClickHandler}><Trash/></button>
         </div>
     );

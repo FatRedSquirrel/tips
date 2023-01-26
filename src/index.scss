@@ -343,6 +343,7 @@ h1 {
   justify-content: center;
   flex-grow: 1;
   min-height: 100%;
+  padding-bottom: 60px;
 }
 
 .lock-scroll {
@@ -831,7 +832,7 @@ option {
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     overflow-y: auto;
-    margin-top: 135px;
+    margin-top: 110px;
   }
 
   .employee {
