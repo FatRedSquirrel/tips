@@ -1,8 +1,9 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "../../axios";
+import {storage} from "../../utils";
 
 const initialState = {
-    data: null,
+    data: storage('isAuth') || null,
     isLoaded: false
 }
 
@@ -17,7 +18,9 @@ const authSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchAdminData.fulfilled, (state, action) => {
-                state.data = action.payload;
+                if (!state.data) {
+                    state.data = action.payload;
+                }
                 state.isLoaded = true;
             })
     }

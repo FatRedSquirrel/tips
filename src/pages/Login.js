@@ -15,6 +15,10 @@ const Login = () => {
         dispatch(fetchAdminData(values));
     }
 
+    React.useEffect(() => {
+        localStorage.setItem('isAuth', JSON.stringify(isAuth))
+    }, [isAuth]);
+
     return isAuth ? <Navigate to='/waiters'/> : (
         <>
             <Link className='home-link' to='/tips'>На главную</Link>
