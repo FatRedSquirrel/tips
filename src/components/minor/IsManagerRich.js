@@ -1,12 +1,15 @@
 import React from "react";
+import {useSelector} from "react-redux";
 
 export default function IsManagerRich(props) {
+
+    const {darkMode} = useSelector(store => store.darkMode);
 
     const styles = props.isManagerRich ?
         {
             opacity: 1,
-            color: props.darkMode ? "#fff" : "#000",
-            border: `2px solid ${props.darkMode ? '#BB86FC' : '#13b413'}`
+            color: darkMode ? "#fff" : "#000",
+            border: `2px solid ${darkMode ? '#BB86FC' : '#13b413'}`
         }
         :
         {

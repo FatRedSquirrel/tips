@@ -25,12 +25,7 @@ function Home() {
     const {isLoaded} = useSelector(store => store.waiters);
     const {isWarningShown} = useSelector(store => store.warning);
 
-    const [darkMode, setDarkMode] = React.useState(false);
     const [isManagerRich, setIsManagerRich] = React.useState(false);
-
-    function toggleDarkMode() {
-        setDarkMode(prev => !prev);
-    }
 
     function handleIsManagerRichChange() {
         setIsManagerRich(prev => !prev);
@@ -39,22 +34,19 @@ function Home() {
     // код для сохранения данных лежит в самом низу файла
 
     return !isLoaded ? <Loading/> : (
-        <div className={darkMode ? "home dark" : "home"}>
+        <div className="home">
             <SideMenu waiters={waiters}/>
             <div className="main">
                 <Header
                     waiters={waiters}
                     fete={fete}
                     mainFields={mainFields}
-                    darkMode={darkMode}
-                    toggleDarkMode={toggleDarkMode}
                 />
                 <WaitersChart waiters={waiters}/>
                 <EnvelopeLanding
                     isManagerRich={isManagerRich}
                     mainFields={mainFields}
                     handleIsManagerRichChange={handleIsManagerRichChange}
-                    darkMode={darkMode}
                 />
                 <Fete
                     fete={fete}

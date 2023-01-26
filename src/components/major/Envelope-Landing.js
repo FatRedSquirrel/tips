@@ -5,7 +5,7 @@ import {changeMainFields} from "../../redux/slices/mainFields";
 
 
 
-const EnvelopeLanding = ({isManagerRich, mainFields, handleIsManagerRichChange, darkMode}) => {
+const EnvelopeLanding = ({isManagerRich, mainFields, handleIsManagerRichChange}) => {
 
     const dispatch = useDispatch();
     function mainFieldsChangeHandler(event) {
@@ -40,7 +40,6 @@ const EnvelopeLanding = ({isManagerRich, mainFields, handleIsManagerRichChange, 
             <IsManagerRich
                 isManagerRich={isManagerRich}
                 handleIsManagerRichChange={handleIsManagerRichChange}
-                darkMode={darkMode}
             />
         </div>
     );

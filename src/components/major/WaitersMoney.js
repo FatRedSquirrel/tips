@@ -22,12 +22,14 @@ const WaitersMoney = ({waiters, mainFields}) => {
             }, 2000);
             return;
         }
+
         let waitersAmount = 0;
         for (let waiter of waiters) {
             if (waiter.isChosen) {
                 waitersAmount += Number(waiter.hours / 12);
             }
         }
+
         //Прибавляем сумму верхов к чистым деньгам офиков
         let waitersCards = 0;
         for (let waiter of waiters) {
@@ -35,6 +37,7 @@ const WaitersMoney = ({waiters, mainFields}) => {
                 waitersCards += Number(waiter.hasMoney);
             }
         }
+
         const allTheMoney = Number(mainFields.waitersMoney) + waitersCards;
         const tipsPerWaiter = allTheMoney / waitersAmount;
         dispatch(count(tipsPerWaiter));

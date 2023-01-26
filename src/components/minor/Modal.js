@@ -4,8 +4,16 @@ export default function Modal({text, onConfirm, onCancel}) {
             <div className='modal-inner'>
                 <h2>{text}</h2>
                 <div className="buttons">
-                    <button className="modal-button modal-button-confirm" onClick={onConfirm}>Подтвердить</button>
-                    <button className="modal-button modal-button-cancel" onClick={onCancel}>Отмена</button>
+                    <button
+                        type="button"
+                        className="modal-button modal-button-confirm"
+                        onClick={onConfirm}
+                    >Подтвердить</button>
+                    <button
+                        type="button"
+                        className="modal-button modal-button-cancel"
+                        onClick={onCancel}
+                    >Отмена</button>
                 </div>
             </div>
         </div>

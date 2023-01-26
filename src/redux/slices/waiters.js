@@ -43,7 +43,7 @@ const waitersSlice = createSlice({
                     }
                     : waiter
             )
-        }
+        },
     },
     extraReducers: (builder) => {
         builder

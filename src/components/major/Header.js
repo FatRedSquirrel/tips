@@ -1,21 +1,17 @@
 import React from 'react';
 import Modal from "../minor/Modal";
-import DarkModeToggle from "../minor/DarkModeToggle";
 import {checkIfThereIsDataToReset} from "../../utils";
-import ResetIcon from "../../icons/ResetIcon";
-import {openModal, closeModal} from "../../redux/slices/modal";
-import {useSelector, useDispatch} from "react-redux";
+import Reset from "../../icons/Reset";
 
-const Header = ({waiters, fete, mainFields, darkMode, toggleDarkMode}) => {
+const Header = ({waiters, fete, mainFields}) => {
 
-    const dispatch = useDispatch();
-    const {isOpen} = useSelector(store => store.modal);
+    const [resetConfirmation, setResetConfirmation] = React.useState(false);
     const [resetConfirmed, setResetConfirmed] = React.useState(false);
 
     const itemsNoReset = ['darkMode'];
 
     function reset() {
-        dispatch(closeModal());
+        setResetConfirmation(false);
         setResetConfirmed(true); //start spin animation on reset button
         setTimeout(() => { //clear data and reload page after animation is finished
             clearLocalStorage();
@@ -33,23 +29,19 @@ const Header = ({waiters, fete, mainFields, darkMode, toggleDarkMode}) => {
 
     return (
         <>
-            {isOpen &&
+            {resetConfirmation &&
                 <Modal
                     text="Вы уверены, что хотите сделать сброс? Все сохраненные данные будут удалены"
                     onConfirm={reset}
-                    onCancel={() => dispatch(closeModal())}
+                    onCancel={() => setResetConfirmation(false)}
                 />
             }
-            <DarkModeToggle
-                toggleDarkMode={toggleDarkMode}
-                darkMode={darkMode}
-            />
             {checkIfThereIsDataToReset(fete, mainFields, waiters) &&
                 <button
-                    onClick={() => dispatch(openModal())}
+                    onClick={() => setResetConfirmation(true)}
                     className={resetConfirmed ? "reset spin-animation" : "reset"}
                 >
-                    <ResetIcon darkMode={darkMode}/>
+                    <Reset/>
                 </button>
             }
         </>

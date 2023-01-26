@@ -338,14 +338,11 @@ h1 {
   }
 }
 
-.home {
+.app {
+  display: flex;
+  justify-content: center;
   flex-grow: 1;
   min-height: 100%;
-
-  &.dark {
-    background-color: #121212;
-    color: #fff;
-  }
 }
 
 .lock-scroll {
@@ -560,6 +557,7 @@ option {
   position: absolute;
   right: 20px;
   top: 14px;
+  z-index: 89;
 
   &-label {
     display: block;
@@ -798,7 +796,121 @@ option {
   border-color: $color-warning;
 }
 
+.home-link {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 12px;
+  font-size: 20px;
+  border-bottom: 1px solid black;
+
+  &:active {
+    border-color: transparent;
+    opacity: 0.3;
+  }
+}
+
+.employees-list {
+
+  overflow: hidden;
+
+  &-container {
+    flex-grow: 1;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+  }
+
+  &-inner-container {
+    width: 320px;
+    overflow-x: hidden;
+    height: 480px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    overflow-y: auto;
+  }
+
+  .employee {
+    display: flex;
+    transition: transform 400ms;
+    position: relative;
+    width: 101%;
+    font-size: 20px;
+    height: 60px;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #bdbaba;
+    }
+
+    p {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding-left: 24px;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      position: absolute;
+      left: 100%;
+      height: 100%;
+      background: red;
+      border: none;
+      color: #fff;
+      width: 55px;
+
+      svg {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}
+
+.new-employee-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  input {
+    font-size: 20px;
+  }
+
+  button {
+    font-size: 18px;
+    padding: 10px;
+    border: 1px solid $color-primary;
+  }
+}
+
 .dark {
+
+  background-color: #121212;
+  color: #fff;
+
+  svg {
+    stroke: #fff;
+  }
+
+  .input-error {
+    border-color: $color-warning;
+  }
+
+  .home-link {
+    border-color: #fff;
+  }
+
+  button {
+    background: transparent;
+  }
+
   .change-waiters-button {
     border-color: $color-primary-dark-mode;
   }
@@ -809,6 +921,10 @@ option {
 
   .waiters-money-tooltip {
     border-color: #fff;
+  }
+
+  button {
+    border-color: $color-primary-dark-mode;
   }
 
   .fete-button {
@@ -830,7 +946,6 @@ option {
   .tooltip {
     color: $color-primary-dark-mode;
     border-color: $color-primary-dark-mode;
-    //background-color: $color-primary-dark-mode;
 
     &-text {
       border-color: $color-secondary-dark-mode;
@@ -866,9 +981,6 @@ option {
   0% {
     transform: rotate(0);
   }
-  //50% {
-  //  transform: rotate(180deg);
-  //}
   100% {
     transform: rotate(-360deg);
   }
