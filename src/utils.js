@@ -15,8 +15,11 @@ function checkIfThereIsDataToReset(fete, mainFields, waiters) {
 }
 
 function storage(item) {
-    return false
-    // return JSON.parse(localStorage.getItem(item))
+    return JSON.parse(localStorage.getItem(item))
 }
 
-export {checkIfThereIsDivisionsData, checkIfAnyWaiterChosen, checkIfThereIsWaitersMoney, checkIfThereIsDataToReset, storage}
+function capitalizeWord(word) {
+    return word[0].toUpperCase() + word.slice(1);
+}
+
+export {checkIfThereIsDivisionsData, checkIfAnyWaiterChosen, checkIfThereIsWaitersMoney, checkIfThereIsDataToReset, storage, capitalizeWord}

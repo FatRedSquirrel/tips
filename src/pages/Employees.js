@@ -7,6 +7,7 @@ import Modal from "../components/minor/Modal";
 import axios from "../axios";
 import {fetchWaiters} from "../redux/slices/waiters";
 import Loading from "../components/minor/Loading";
+import {capitalizeWord} from "../utils";
 
 const Employees = () => {
 
@@ -70,7 +71,7 @@ const Employees = () => {
         setAddConfirmationShown(false);
         setNameToCreate('');
         try {
-            const response = await axios.post('/waiters', {name: nameToCreate.trim()});
+            const response = await axios.post('/waiters', {name: capitalizeWord(nameToCreate).trim()});
             if (response.status === 200) {
                 showMessage(Message.body.adding.SUCCESS, Message.status.SUCCESS);
                 dispatch(fetchWaiters());
