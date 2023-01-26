@@ -820,18 +820,18 @@ option {
     min-height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     gap: 60px;
   }
 
   &-inner-container {
-    width: 320px;
+    width: 300px;
     overflow-x: hidden;
-    height: 480px;
+    height: 440px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
     overflow-y: auto;
+    margin-top: 135px;
   }
 
   .employee {
@@ -840,7 +840,7 @@ option {
     position: relative;
     width: 101%;
     font-size: 20px;
-    height: 60px;
+    height: 55px;
 
     &:not(:last-child) {
       border-bottom: 1px solid #bdbaba;
@@ -851,7 +851,7 @@ option {
       height: 100%;
       display: flex;
       align-items: center;
-      padding-left: 24px;
+      padding-left: 60px;
     }
 
     button {

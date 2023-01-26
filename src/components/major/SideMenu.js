@@ -27,7 +27,11 @@ const SideMenu = ({waiters}) => {
             <button className={sideMenuOpen ? "burger hidden" : "burger"} onClick={toggleSideMenu}></button>
             <div className={sideMenuOpen ? "side-menu open" : "side-menu"}>
                 {waiterSideMenuElements}
-                <Link to='/login' className="change-waiters-button">Редактировать</Link>
+                <Link
+                    to='/login'
+                    className="change-waiters-button"
+                    onClick={toggleSideMenu}
+                >Редактировать</Link>
             </div>
         </>
     );
