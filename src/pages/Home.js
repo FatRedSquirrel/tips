@@ -42,11 +42,11 @@ function Home() {
         'darkMode': darkMode
     }
 
-    React.useEffect(() => {
-        for (let [name, obj] of Object.entries(dataToStore)) {
-            localStorage.setItem(`${name}`, JSON.stringify(obj));
-        }
-    }, Object.values(dataToStore));
+    // React.useEffect(() => {
+    //     for (let [name, obj] of Object.entries(dataToStore)) {
+    //         localStorage.setItem(`${name}`, JSON.stringify(obj));
+    //     }
+    // }, Object.values(dataToStore));
 
     return !isWaitersLoaded ? <Loading/> : (
         <div className="home">

@@ -3,11 +3,12 @@ import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchAdminData} from "../redux/slices/auth";
 import {Link, Navigate} from "react-router-dom";
+import {clearError} from "../redux/slices/auth";
 
 const Login = () => {
 
     const dispatch = useDispatch();
-    const {data: isAuth} = useSelector(store => store.auth);
+    const {data: isAuth, error: authError} = useSelector(store => store.auth);
 
     const {register, handleSubmit, formState: {errors}} = useForm({mode: 'onChange'});
 
@@ -26,22 +27,25 @@ const Login = () => {
                 <h1>Войти как админ</h1>
                 <div className="login-form-fields">
                     <input
-                        className={errors.login?.message ? 'input-error' : ''}
+                        className={authError ? 'input-error' : ''}
                         type="text"
                         placeholder="Логин"
                         {...register('login', {required: 'Введите логин'})}
+                        onChange={() => dispatch(clearError())}
                     />
                     <input
-                        className={errors.password?.message ? 'input-error' : ''}
+                        className={authError ? 'input-error' : ''}
                         type="text"
                         placeholder="Пароль"
                         {...register('password', {required: 'Введите пароль'})}
+                        onChange={() => dispatch(clearError())}
                     />
-                    {(errors.login?.message || errors.password?.message) &&
-                        <p className="helper-text">Введите логин и пароль</p>
-                    }
                 </div>
-                <button type="submit">Войти</button>
+                <button className={`${authError ? 'error' : ''}`} type="submit">Войти</button>
+                {(errors.login?.message || errors.password?.message) &&
+                    <p className="helper-text">Введите логин и пароль</p>
+                }
+                <p className="helper-text">{authError}</p>
             </form>
         </>
     );

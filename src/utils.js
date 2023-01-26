@@ -15,7 +15,8 @@ function checkIfThereIsDataToReset(fete, mainFields, waiters) {
 }
 
 function storage(item) {
-    return JSON.parse(localStorage.getItem(item))
+    return false
+    // return JSON.parse(localStorage.getItem(item))
 }
 
 export {checkIfThereIsDivisionsData, checkIfAnyWaiterChosen, checkIfThereIsWaitersMoney, checkIfThereIsDataToReset, storage}
