@@ -24,7 +24,7 @@ const Fete = () => {
     function handleFeteButtonClick(type) {
         dispatch(changeFeteData({type}));
         ordersContainerRef.current.scrollTo({
-            top: ordersContainerRef.current.scrollHeight + 1000,
+            top: ordersContainerRef.current.scrollHeight,
             behavior: 'smooth'
         });
     }

@@ -140,6 +140,10 @@ option {
     border-radius: 50%;
     border: 1px solid $color-primary;
     background-color: transparent;
+
+    &:active {
+      background: $color-secondary;
+    }
   }
 }
 
@@ -820,6 +824,14 @@ option {
     padding-bottom: 3px;
     margin-bottom: 20px;
 
+    &:disabled:active {
+      background: transparent;
+    }
+
+    &:active {
+      background: $color-secondary;
+    }
+
     &.error {
       border-color: $color-warning;
     }
@@ -1066,4 +1078,8 @@ option {
   100% {
     transform: translateX(0);
   }
+}
+
+button:active {
+  background: $color-secondary;
 }
