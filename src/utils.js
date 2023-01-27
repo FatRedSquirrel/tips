@@ -21,7 +21,7 @@ function storage(item) {
 }
 
 function capitalizeWord(word) {
-    return word[0].toUpperCase() + word.slice(1);
+    return word.split('').map((char, index) => index === 0 ? char.toUpperCase() : char.toLowerCase()).join('');
 }
 
 function clearLocalStorage() {
