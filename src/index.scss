@@ -698,6 +698,10 @@ option {
   background-color: transparent;
   border: none;
   font-size: 14px;
+
+  svg {
+    stroke: #000;
+  }
 }
 
 .spin-animation {
@@ -922,6 +926,7 @@ option {
 
   svg {
     stroke: #fff;
+    fill: #fff;
   }
 
   .input-error {

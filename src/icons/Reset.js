@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Reset = ({darkMode}) => {
+const Reset = () => {
     return (
         <svg width="26px" height="26px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
-            <g fill="none" stroke='#000' strokeLinecap="round"
+            <g fill="none" strokeLinecap="round"
                strokeLinejoin="round" transform="matrix(0 1 1 0 2.5 2.5)">
                 <path
                     d="m3.98652376 1.07807068c-2.38377179 1.38514556-3.98652376 3.96636605-3.98652376 6.92192932 0 4.418278 3.581722 8 8 8s8-3.581722 8-8-3.581722-8-8-8"/>
