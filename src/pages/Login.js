@@ -12,12 +12,21 @@ const Login = () => {
 
     const {register, handleSubmit, formState: {errors}} = useForm({mode: 'onChange'});
 
-    function formSubmitHandler(values) {
-        dispatch(fetchAdminData(values));
+    const submitButtonRef = React.useRef();
+    async function formSubmitHandler(values) {
+        dispatch(fetchAdminData(values))
+            .then(data => {
+                if (submitButtonRef.current) {
+                    submitButtonRef.current.disabled = false;
+                    submitButtonRef.current.textContent = 'Войти';
+                }
+            });
+        submitButtonRef.current.disabled = true;
+        submitButtonRef.current.textContent = 'Авторизация...';
     }
 
     React.useEffect(() => {
-        localStorage.setItem('isAuth', JSON.stringify(isAuth))
+        localStorage.setItem('isAuth', JSON.stringify(isAuth));
     }, [isAuth]);
 
     return isAuth ? <Navigate to='/waiters'/> : (
@@ -41,7 +50,12 @@ const Login = () => {
                         onChange={() => dispatch(clearError())}
                     />
                 </div>
-                <button className={`${authError ? 'error' : ''}`} type="submit">Войти</button>
+                <button
+                    onClick={() => dispatch(clearError())}
+                    ref={submitButtonRef}
+                    className={`${authError ? 'error' : ''}`}
+                    type="submit"
+                >Войти</button>
                 {(errors.login?.message || errors.password?.message) &&
                     <p className="helper-text">Введите логин и пароль</p>
                 }

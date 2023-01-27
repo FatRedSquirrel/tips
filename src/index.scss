@@ -774,8 +774,8 @@ option {
       border-color: $color-warning;
     }
 
-    &:active {
-      border-color: transparent;
+    &:disabled {
+      opacity: 0.6;
     }
   }
 

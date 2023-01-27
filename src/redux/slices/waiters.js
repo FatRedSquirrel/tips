@@ -50,15 +50,15 @@ const waitersSlice = createSlice({
         builder
             .addCase(fetchWaiters.fulfilled, (state, action) => {
                 if (state.waiters.length !== action.payload.length) {
-                    state.waiters = action.payload.map(runner => ({
-                        id: runner._id,
-                        name: runner.name,
+                    state.waiters = action.payload.map(waiter => ({
+                        id: waiter._id,
+                        name: waiter.name,
                         isChosen: false,
                         hours: 12,
                         hasMoney: 0,
                         toReceive: 0,
                         comment: '',
-                    }));
+                    })).sort((a, b) => a.name > b.name ? 1 : -1);
                     state.isLoaded = true;
                 } else {
                     state.isLoaded = true;
