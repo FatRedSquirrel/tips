@@ -2,30 +2,24 @@ import React from 'react';
 import Preorder from "../minor/Preorder";
 import Order from "../minor/Order";
 import {changeFeteData} from "../../redux/slices/fete";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {FeteActionTypes} from "../../const";
 
-const Fete = ({fete}) => {
+const Fete = () => {
 
     const dispatch = useDispatch();
+    const {fete} = useSelector(store => store.fete);
+    const ordersContainerRef = React.useRef();
 
     //Массив элементов предзаказов
     const preorders = fete.map((fete) =>
-        <Preorder
-            key={fete.id}
-            {...fete}
-        />
+        <Preorder key={fete.id}{...fete}/>
     );
 
     //Массив элементов дозаказов
     const orders = fete.map((fete) =>
-        <Order
-            key={fete.id}
-            {...fete}
-        />
+        <Order key={fete.id}{...fete}/>
     );
-
-    const ordersContainerRef = React.useRef();
 
     function handleFeteButtonClick(type) {
         dispatch(changeFeteData({type}));

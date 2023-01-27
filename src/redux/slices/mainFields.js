@@ -5,7 +5,8 @@ const initialState = {
     mainFields: storage('mainFields') || {
         tables: '',
         money: '',
-        waitersMoney: ''
+        waitersMoney: '',
+        isManagerRich: false
     }
 };
 
@@ -13,8 +14,8 @@ const mainFieldsSlice = createSlice({
     name: 'mainFields',
     initialState,
     reducers: {
-        changeMainFields: (state, {payload: {name, value}}) => {
-            state.mainFields[name] = value;
+        changeMainFields: (state, {payload: {name, value, type, checked}}) => {
+            state.mainFields[name] = type === 'checkbox' ? checked : value;
         }
     }
 });

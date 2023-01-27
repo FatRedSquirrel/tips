@@ -1,12 +1,16 @@
 import React from "react";
 import {checkIfThereIsDivisionsData} from "../../utils";
 import {hideWarning, showWarning} from "../../redux/slices/warning";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Close from "../../icons/Close";
 
-export default function Results({fete, mainFields, isManagerRich}) {
+export default function Results() {
 
     const dispatch = useDispatch();
+
+    const {isManagerRich} = useSelector(store => store.mainFields.mainFields);
+    const {mainFields} = useSelector(store => store.mainFields);
+    const {fete} = useSelector(store => store.fete);
 
     //Объект с результатами вычислений
     const [results, setResults] = React.useState({

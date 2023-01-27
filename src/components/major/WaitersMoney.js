@@ -1,13 +1,15 @@
 import React from 'react';
 import {checkIfAnyWaiterChosen, checkIfThereIsWaitersMoney} from "../../utils";
 import {count} from "../../redux/slices/waiters";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {changeMainFields} from "../../redux/slices/mainFields";
 import {hideWarning, showWarning} from "../../redux/slices/warning";
 
-const WaitersMoney = ({waiters, mainFields}) => {
+const WaitersMoney = () => {
 
     const dispatch = useDispatch();
+    const {waiters} = useSelector(store => store.waiters);
+    const {mainFields} = useSelector(store => store.mainFields);
 
     function mainFieldsChangeHandler(event) {
         const {name, value} = event.target;
@@ -26,19 +28,19 @@ const WaitersMoney = ({waiters, mainFields}) => {
         let waitersAmount = 0;
         for (let waiter of waiters) {
             if (waiter.isChosen) {
-                waitersAmount += Number(waiter.hours / 12);
+                waitersAmount += +waiter.hours / 12;
             }
         }
 
-        //Прибавляем сумму верхов к чистым деньгам офиков
+        //Прибавляем сумму верхов к чистым деньгам
         let waitersCards = 0;
         for (let waiter of waiters) {
             if (waiter.isChosen) {
-                waitersCards += Number(waiter.hasMoney);
+                waitersCards += +waiter.hasMoney;
             }
         }
 
-        const allTheMoney = Number(mainFields.waitersMoney) + waitersCards;
+        const allTheMoney = +mainFields.waitersMoney + waitersCards;
         const tipsPerWaiter = allTheMoney / waitersAmount;
         dispatch(count(tipsPerWaiter));
     }

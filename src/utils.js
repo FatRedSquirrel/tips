@@ -1,3 +1,5 @@
+import {itemsNoReset} from "./const";
+
 function checkIfThereIsDivisionsData(fete, mainFields) {
     return (fete.some(fete => fete.preorder || fete.order)) || mainFields.tables || mainFields.money;
 }
@@ -22,4 +24,12 @@ function capitalizeWord(word) {
     return word[0].toUpperCase() + word.slice(1);
 }
 
-export {checkIfThereIsDivisionsData, checkIfAnyWaiterChosen, checkIfThereIsWaitersMoney, checkIfThereIsDataToReset, storage, capitalizeWord}
+function clearLocalStorage() {
+    Object.keys({...localStorage}).forEach(key => {
+        if (!itemsNoReset.includes(key)) {
+            localStorage.removeItem(key);
+        }
+    })
+}
+
+export {checkIfThereIsDivisionsData, checkIfAnyWaiterChosen, checkIfThereIsWaitersMoney, checkIfThereIsDataToReset, storage, capitalizeWord, clearLocalStorage}

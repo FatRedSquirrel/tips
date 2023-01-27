@@ -2,13 +2,17 @@ import React from 'react';
 import Modal from "../minor/Modal";
 import {checkIfThereIsDataToReset} from "../../utils";
 import Reset from "../../icons/Reset";
+import {clearLocalStorage} from "../../utils";
+import {useSelector} from "react-redux";
 
-const Header = ({waiters, fete, mainFields}) => {
+const Header = () => {
+
+    const {waiters} = useSelector(store => store.waiters);
+    const {mainFields} = useSelector(store => store.mainFields);
+    const {fete} = useSelector(store => store.fete);
 
     const [resetConfirmation, setResetConfirmation] = React.useState(false);
     const [resetConfirmed, setResetConfirmed] = React.useState(false);
-
-    const itemsNoReset = ['darkMode'];
 
     function reset() {
         setResetConfirmation(false);
@@ -17,14 +21,6 @@ const Header = ({waiters, fete, mainFields}) => {
             clearLocalStorage();
             document.location.reload();
         }, 300);
-    }
-
-    function clearLocalStorage() {
-        Object.keys({...localStorage}).forEach(key => {
-            if (!itemsNoReset.includes(key)) {
-                localStorage.removeItem(key);
-            }
-        })
     }
 
     return (

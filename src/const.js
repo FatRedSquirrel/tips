@@ -30,4 +30,6 @@ const waiterObj = {
     comment: '',
 }
 
-export {FeteActionTypes, EmployeeMessage, waiterObj}
+const itemsNoReset = ['darkMode', 'isAuth'];
+
+export {FeteActionTypes, EmployeeMessage, waiterObj, itemsNoReset}

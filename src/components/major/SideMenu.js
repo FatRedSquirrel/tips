@@ -1,10 +1,12 @@
 import React from 'react';
 import WaiterSideMenu from "../minor/waiter/WaiterSideMenu";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 
-const SideMenu = ({waiters}) => {
+const SideMenu = () => {
 
     const [sideMenuOpen, setSideMenuOpen] = React.useState(false);
+    const {waiters} = useSelector(store => store.waiters);
 
     const waiterSideMenuElements = waiters.map((waiter) =>
         <WaiterSideMenu

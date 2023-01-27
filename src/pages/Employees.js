@@ -99,12 +99,9 @@ const Employees = () => {
                     onNameChange={(event) => setNameToCreate(event.target.value)}
                     name={nameToCreate}
                 />
-                <p
-                    className={`employees-list-message ${message.status === EmployeeMessage.status.ERROR ? 'error' : ''}`}
-                >
+                <p className={`employees-list-message ${message.status === EmployeeMessage.status.ERROR ? 'error' : ''}`}>
                     {message.message}
                 </p>
-
             </div>
             {addConfirmationShown &&
                 <Modal

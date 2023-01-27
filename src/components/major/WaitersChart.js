@@ -1,7 +1,10 @@
 import React from 'react';
 import WaiterChartItem from "../minor/waiter/WaiterChartItem";
+import {useSelector} from "react-redux";
 
-const WaitersChart = ({waiters}) => {
+const WaitersChart = () => {
+
+    const {waiters} = useSelector(store => store.waiters);
 
     //Массив элементов выбранных официантов
     const chosenWaitersElements = waiters.filter(waiter => waiter.isChosen).map((chosenWaiter, index) =>
