@@ -1,6 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from "../../axios";
 import {storage} from "../../utils";
+import {waiterObj} from "../../const";
 
 export const fetchWaiters = createAsyncThunk('waiters/fetchWaiters', async () => {
     const {data} = await axios.get('/waiters');
@@ -21,7 +22,6 @@ const waitersSlice = createSlice({
                 ...waiter,
                 isChosen: !waiter.isChosen
             } : waiter);
-            console.log(state.waiters)
         },
         addComment: (state, {payload: {id, comment}}) => {
             const waiter = state.waiters.find(waiter => waiter.id === id);
@@ -50,15 +50,9 @@ const waitersSlice = createSlice({
         builder
             .addCase(fetchWaiters.fulfilled, (state, action) => {
                 if (state.waiters.length !== action.payload.length) {
-                    state.waiters = action.payload.map(waiter => ({
-                        id: waiter._id,
-                        name: waiter.name,
-                        isChosen: false,
-                        hours: 12,
-                        hasMoney: 0,
-                        toReceive: 0,
-                        comment: '',
-                    })).sort((a, b) => a.name > b.name ? 1 : -1);
+                    state.waiters = action.payload
+                        .map(waiter => ({...waiterObj, id: waiter._id, name: waiter.name}))
+                        .sort((a, b) => a.name > b.name ? 1 : -1);
                     state.isLoaded = true;
                 } else {
                     state.isLoaded = true;

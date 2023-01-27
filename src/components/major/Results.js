@@ -2,6 +2,7 @@ import React from "react";
 import {checkIfThereIsDivisionsData} from "../../utils";
 import {hideWarning, showWarning} from "../../redux/slices/warning";
 import {useDispatch} from "react-redux";
+import Close from "../../icons/Close";
 
 export default function Results({fete, mainFields, isManagerRich}) {
 
@@ -29,31 +30,35 @@ export default function Results({fete, mainFields, isManagerRich}) {
             return;
         }
 
+        let sumPreorders = fete.reduce((a, b) => a + +b.preorder, 0);
+        let sumOrders = fete.reduce((a, b) => a + +b.order, 0);
+
         setResultsShown(true);
-        let sumPreorders = 0;
-        let sumOrders = 0;
-        for (let i = 0; i < fete.length; i++) {
-            sumPreorders += Number(fete[i].preorder);
-            sumOrders += Number(fete[i].order);
-        }
-        setResults(prevResults => ({
-                ...prevResults,
+        setResults({
                 kitchen: Math.floor(sumPreorders / 50),
                 bar: Math.floor((sumPreorders / 100 + sumOrders / 100) + Number(mainFields.tables / 10)),
                 manager: isManagerRich ? Math.floor(Number(mainFields.money / 10)) : Math.floor(sumPreorders / 100 + sumOrders / 100)
             }
-        ))
+        )
     }
 
     return (
         <>
-            <button onClick={countDivisions} className="button count">Посчитать отчисления</button>
-            {resultsShown && <div className="results">
-                <p><span className="division">кухня:</span> <span className="division-tips">{results.kitchen}</span></p>
-                <p><span className="division">бар:</span> <span className="division-tips">{results.bar}</span></p>
-                <p><span className="division">менеджер:</span> <span className="division-tips">{results.manager}</span>
-                </p>
-            </div>}
+            <button onClick={countDivisions} className="button count">Показать результаты</button>
+            {resultsShown &&
+                <div className="modal">
+                    <div className="results">
+                        <p><span className="division">кухня:</span> <span
+                            className="division-tips">{results.kitchen}</span></p>
+                        <p><span className="division">бар:</span> <span className="division-tips">{results.bar}</span>
+                        </p>
+                        <p><span className="division">менеджер:</span> <span
+                            className="division-tips">{results.manager}</span>
+                        </p>
+                        <button onClick={() => setResultsShown(false)}><Close/></button>
+                    </div>
+                </div>
+            }
         </>
 
     )

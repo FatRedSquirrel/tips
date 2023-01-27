@@ -8,26 +8,9 @@ import axios from "../axios";
 import {fetchWaiters} from "../redux/slices/waiters";
 import Loading from "../components/minor/Loading";
 import {capitalizeWord} from "../utils";
+import {EmployeeMessage} from "../const";
 
 const Employees = () => {
-
-    const Message = {
-        body: {
-            adding: {
-                SUCCESS: 'Сотрудник успешно добавлен!',
-                ERROR: 'Не удалось добавить сотрудника',
-            },
-            removing: {
-                SUCCESS: 'Сотрудник успешно удален!',
-                ERROR: 'Не удалось удалить сотрудника',
-            }
-        },
-        status: {
-            SUCCESS: 'success',
-            ERROR: 'error',
-        }
-
-    }
 
     const {data: isAuth} = useSelector(store => store.auth);
 
@@ -73,13 +56,13 @@ const Employees = () => {
         try {
             const response = await axios.post('/waiters', {name: capitalizeWord(nameToCreate).trim()});
             if (response.status === 200) {
-                showMessage(Message.body.adding.SUCCESS, Message.status.SUCCESS);
+                showMessage(EmployeeMessage.body.adding.SUCCESS, EmployeeMessage.status.SUCCESS);
                 dispatch(fetchWaiters());
             } else {
-                showMessage(Message.body.adding.ERROR, Message.status.ERROR);
+                showMessage(EmployeeMessage.body.adding.ERROR, EmployeeMessage.status.ERROR);
             }
         } catch (e) {
-            showMessage(Message.body.adding.ERROR, Message.status.ERROR);
+            showMessage(EmployeeMessage.body.adding.ERROR, EmployeeMessage.status.ERROR);
         }
     }
 
@@ -88,13 +71,13 @@ const Employees = () => {
         try {
             const response = await axios.delete(`/waiters/${dataToRemove.id}`);
             if (response.status === 200) {
-                showMessage(Message.body.removing.SUCCESS, Message.status.SUCCESS);
+                showMessage(EmployeeMessage.body.removing.SUCCESS, EmployeeMessage.status.SUCCESS);
                 dispatch(fetchWaiters());
             } else {
-                showMessage(Message.body.removing.ERROR, Message.status.ERROR);
+                showMessage(EmployeeMessage.body.removing.ERROR, EmployeeMessage.status.ERROR);
             }
         } catch (e) {
-            showMessage(Message.body.removing.ERROR, Message.status.ERROR);
+            showMessage(EmployeeMessage.body.removing.ERROR, EmployeeMessage.status.ERROR);
         }
     }
 
@@ -117,7 +100,7 @@ const Employees = () => {
                     name={nameToCreate}
                 />
                 <p
-                    className={`employees-list-message ${message.status === Message.status.ERROR ? 'error' : ''}`}
+                    className={`employees-list-message ${message.status === EmployeeMessage.status.ERROR ? 'error' : ''}`}
                 >
                     {message.message}
                 </p>

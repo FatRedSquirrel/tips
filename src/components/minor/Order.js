@@ -1,6 +1,7 @@
 import React from "react";
 import {useDispatch} from "react-redux";
 import {changeFeteData} from "../../redux/slices/fete";
+import {FeteActionTypes} from "../../const";
 
 export default function Order({id, order}) {
 
@@ -8,7 +9,7 @@ export default function Order({id, order}) {
 
     function feteChangeHandler(event) {
         const {id, name, value} = event.target;
-        dispatch(changeFeteData({id, name, value}));
+        dispatch(changeFeteData({id, name, value, type: FeteActionTypes.ENTER_NUMBERS}));
     }
 
     return (

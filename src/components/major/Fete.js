@@ -1,8 +1,9 @@
 import React from 'react';
 import Preorder from "../minor/Preorder";
 import Order from "../minor/Order";
-import {addFete, removeFete} from "../../redux/slices/fete";
+import {changeFeteData} from "../../redux/slices/fete";
 import {useDispatch} from "react-redux";
+import {FeteActionTypes} from "../../const";
 
 const Fete = ({fete}) => {
 
@@ -24,9 +25,19 @@ const Fete = ({fete}) => {
         />
     );
 
+    const ordersContainerRef = React.useRef();
+
+    function handleFeteButtonClick(type) {
+        dispatch(changeFeteData({type}));
+        ordersContainerRef.current.scrollTo({
+            top: ordersContainerRef.current.scrollHeight,
+            behavior: 'smooth'
+        });
+    }
+
     return (
         <>
-            <div className="container">
+            <div ref={ordersContainerRef} className="orders-container">
                 <div className="inputs-container">
                     <h1 className="title">Предзаказы</h1>
                     {preorders}
@@ -37,8 +48,8 @@ const Fete = ({fete}) => {
                 </div>
             </div>
             <div className="fete-buttons-container">
-                <button onClick={() => dispatch(addFete())} className="button fete-button plus">+</button>
-                <button onClick={() => dispatch(removeFete())} className="button fete-button minus">-</button>
+                <button onClick={() => handleFeteButtonClick(FeteActionTypes.ADD)} className="button fete-button plus">+</button>
+                <button onClick={() => handleFeteButtonClick(FeteActionTypes.REMOVE)} className="button fete-button minus">-</button>
             </div>
         </>
 

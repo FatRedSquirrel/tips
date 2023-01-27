@@ -1,6 +1,7 @@
 import React from "react";
 import {changeFeteData} from "../../redux/slices/fete";
 import {useDispatch} from "react-redux";
+import {FeteActionTypes} from "../../const";
 
 export default function Preorder({id, preorder}) {
 
@@ -8,7 +9,7 @@ export default function Preorder({id, preorder}) {
 
     function feteChangeHandler(event) {
         const {id, name, value} = event.target;
-        dispatch(changeFeteData({id, name, value}));
+        dispatch(changeFeteData({id, name, value, type: FeteActionTypes.ENTER_NUMBERS}));
     }
 
     return (
