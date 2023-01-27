@@ -3,9 +3,8 @@ import {checkIfAnyWaiterChosen, checkIfThereIsWaitersMoney} from "../../utils";
 import {count} from "../../redux/slices/waiters";
 import {useDispatch, useSelector} from "react-redux";
 import {changeMainFields} from "../../redux/slices/mainFields";
-import {hideWarning, showWarning} from "../../redux/slices/warning";
 
-const WaitersMoney = () => {
+const WaitersMoney = ({showWarning}) => {
 
     const dispatch = useDispatch();
     const {waiters} = useSelector(store => store.waiters);
@@ -18,10 +17,7 @@ const WaitersMoney = () => {
 
     function countWaiters() {
         if (!(checkIfAnyWaiterChosen(waiters) && checkIfThereIsWaitersMoney(mainFields))) {
-            dispatch(showWarning());
-            setTimeout(() => {
-                dispatch(hideWarning())
-            }, 2000);
+            showWarning();
             return;
         }
 

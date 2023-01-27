@@ -1,12 +1,9 @@
 import React from "react";
 import {checkIfThereIsDivisionsData} from "../../utils";
-import {hideWarning, showWarning} from "../../redux/slices/warning";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import Close from "../../icons/Close";
 
-export default function Results() {
-
-    const dispatch = useDispatch();
+export default function Results({showWarning}) {
 
     const {isManagerRich} = useSelector(store => store.mainFields.mainFields);
     const {mainFields} = useSelector(store => store.mainFields);
@@ -19,18 +16,15 @@ export default function Results() {
         manager: 0
     });
 
-    //Вспомогательное состояние для условного рендера блока с результатами
+    //Вспомогательное состояние для условного рендера модалки с результатами
     const [resultsShown, setResultsShown] = React.useState(false);
 
     //Функция для получения финальных значений
     function countDivisions() {
 
         if (!checkIfThereIsDivisionsData(fete, mainFields)) {
+            showWarning();
             setResultsShown(false);
-            dispatch(showWarning());
-            setTimeout(() => {
-                dispatch(hideWarning())
-            }, 2000);
             return;
         }
 

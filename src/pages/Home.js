@@ -14,7 +14,14 @@ import {useSelector} from 'react-redux';
 function Home() {
 
     const {isLoaded: isWaitersLoaded} = useSelector(store => store.waiters);
-    const {isWarningShown} = useSelector(store => store.warning);
+    const [warning, setWarning] = React.useState(false);
+
+    function showWarning() {
+        setWarning(true);
+        setTimeout(() => {
+            setWarning(false)
+        }, 2000);
+    }
 
     return !isWaitersLoaded ? <Loading/> : (
         <div className="home">
@@ -24,10 +31,10 @@ function Home() {
                 <WaitersChart/>
                 <EnvelopeLanding/>
                 <Fete/>
-                <Results/>
-                <WaitersMoney/>
+                <Results showWarning={showWarning}/>
+                <WaitersMoney showWarning={showWarning}/>
             </div>
-            <WarningMessage isShown={isWarningShown}>Нет данных</WarningMessage>
+            <WarningMessage isShown={warning}>Нет данных</WarningMessage>
         </div>
     )
 }
