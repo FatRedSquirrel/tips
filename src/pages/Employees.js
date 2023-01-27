@@ -59,10 +59,14 @@ const Employees = () => {
                 showMessage(EmployeeMessage.body.adding.SUCCESS, EmployeeMessage.status.SUCCESS);
                 dispatch(fetchWaiters());
             } else {
-                showMessage(EmployeeMessage.body.adding.ERROR, EmployeeMessage.status.ERROR);
+                showMessage(EmployeeMessage.body.adding.ERROR.DEFAULT, EmployeeMessage.status.ERROR);
             }
         } catch (e) {
-            showMessage(EmployeeMessage.body.adding.ERROR, EmployeeMessage.status.ERROR);
+            if (e.response.data.error.code === 11000) {
+                showMessage(EmployeeMessage.body.adding.ERROR.ALREADY_EXISTING, EmployeeMessage.status.ERROR);
+            } else {
+                showMessage(EmployeeMessage.body.adding.ERROR.DEFAULT, EmployeeMessage.status.ERROR);
+            }
         }
     }
 

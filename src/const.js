@@ -8,7 +8,10 @@ const EmployeeMessage = {
     body: {
         adding: {
             SUCCESS: 'Сотрудник успешно добавлен!',
-            ERROR: 'Не удалось добавить сотрудника',
+            ERROR: {
+                DEFAULT: 'Не удалось добавить сотрудника',
+                ALREADY_EXISTING: 'Сотрудник уже есть в базе'
+            },
         },
         removing: {
             SUCCESS: 'Сотрудник успешно удален!',
