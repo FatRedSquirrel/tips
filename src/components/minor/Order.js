@@ -16,6 +16,7 @@ export default function Order({id, order}) {
         <div className="fete">
             <span>{id}</span>
             <input
+                onBlur={() => window.scrollTo({top: 0})}
                 className="tips-input fete-input"
                 type="number"
                 id={id}
