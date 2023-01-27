@@ -1,7 +1,5 @@
 <h1 align="center">Tips</h1>
 
-# Используемые технологии
-Tips - Fullstack SPA, написанное на React. State manager - Redux.
 <p align="center">
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png?20220125121207" width="50" heigth="50">
 <img src="https://raw.githubusercontent.com/reduxjs/redux/master/logo/logo.png" width="50" heigth="50">
@@ -9,6 +7,14 @@ Tips - Fullstack SPA, написанное на React. State manager - Redux.
 <img src="https://wsofter.ru/wp-content/uploads/2017/12/node-express.png" width="50" heigth="50">
 <img src="https://www.desuvit.com/wp-content/uploads/2021/03/mongodb-icon.png" width="50" heigth="50">
 </p>
+
+# Используемые технологии
+- React
+- Redux
+- NodeJS
+- Express
+- MongoDB
+- Axios
 
 # Оригинальность
 Чуть ниже в данном Readme описываются причины, по которым приложение актуально. Возможно, слово "Актуальность" тут звучит очень громко, 
