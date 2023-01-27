@@ -19,6 +19,9 @@ const authSlice = createSlice({
     reducers: {
         clearError: (state) => {
             state.error = null;
+        },
+        setError: (state, {payload: error}) => {
+            state.error = error;
         }
     },
     extraReducers: (builder) => {
@@ -29,13 +32,9 @@ const authSlice = createSlice({
                 }
                 state.error = null;
                 state.isLoaded = true;
-            })
-            .addCase(fetchAdminData.rejected, (state, action) => {
-                state.error = 'Не удалось авторизоваться';
-                console.log(`Error: ${action.error.message}`);
-            })
+            });
     }
 });
 
-export const {clearError} = authSlice.actions;
+export const {clearError, setError} = authSlice.actions;
 export default authSlice.reducer;

@@ -3,7 +3,7 @@ import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchAdminData} from "../redux/slices/auth";
 import {Link, Navigate} from "react-router-dom";
-import {clearError} from "../redux/slices/auth";
+import {clearError, setError} from "../redux/slices/auth";
 
 const Login = () => {
 
@@ -16,8 +16,10 @@ const Login = () => {
     async function formSubmitHandler(values) {
         dispatch(fetchAdminData(values))
             .then(data => {
+                if (data.error) {
+                    dispatch(setError('Не удалось авторизоваться'));
+                }
                 if (submitButtonRef.current) {
-                    submitButtonRef.current.disabled = false;
                     submitButtonRef.current.textContent = 'Войти';
                 }
             });
@@ -51,6 +53,7 @@ const Login = () => {
                     ref={submitButtonRef}
                     className={`${authError ? 'error' : ''}`}
                     type="submit"
+                    disabled={!!authError}
                 >Войти</button>
                 {(errors.login?.message || errors.password?.message) &&
                     <p className="helper-text">Введите логин и пароль</p>
