@@ -6,9 +6,9 @@ import NewEmployee from "../components/major/NewEmployee";
 import Modal from "../components/minor/Modal";
 import axios from "../axios";
 import {fetchWaiters} from "../redux/slices/waiters";
-import Loading from "../components/minor/Loading";
 import {capitalizeWord} from "../utils";
 import {EmployeeMessage} from "../const";
+import Loader from "../components/UI/Loader/Loader";
 
 const Employees = () => {
 
@@ -89,7 +89,7 @@ const Employees = () => {
         return <Navigate to='/login'/>;
     }
 
-    return !isWaitersLoaded ? <Loading/> : (
+    return !isWaitersLoaded ? <Loader/> : (
         <div className="employees-list-container">
             <Link className='home-link' to='/tips'>На главную</Link>
             <div className="employees-list">

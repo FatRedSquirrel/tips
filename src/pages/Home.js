@@ -7,9 +7,9 @@ import EnvelopeLanding from "../components/major/Envelope-Landing";
 import Fete from "../components/major/Fete";
 import WaitersMoney from "../components/major/WaitersMoney";
 import Header from "../components/major/Header";
-import Loading from "../components/minor/Loading";
 
 import {useSelector} from 'react-redux';
+import Loader from "../components/UI/Loader/Loader";
 
 function Home() {
 
@@ -23,7 +23,7 @@ function Home() {
         }, 2000);
     }
 
-    return !isWaitersLoaded ? <Loading/> : (
+    return !isWaitersLoaded ? <Loader/> : (
         <div className="home">
             <SideMenu/>
             <div className="main">
