@@ -1,11 +1,8 @@
 import React from 'react';
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Employees from "./pages/Employees";
-import {Routes, Route} from "react-router-dom";
 import DarkModeToggle from "./components/minor/DarkModeToggle";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchWaiters} from "./redux/slices/waiters";
+import AppRouter from "./appRouter";
 
 function App() {
 
@@ -41,12 +38,7 @@ function App() {
     return (
         <div className={darkMode ? "app dark" : "app"}>
             <DarkModeToggle/>
-            <Routes>
-                <Route path='/tips' element={<Home/>}/>
-                <Route path='/login' element={<Login/>}/>
-                <Route path='/waiters' element={<Employees/>}/>
-                <Route path='*' element={<Home/>}/>
-            </Routes>
+            <AppRouter/>
         </div>
     )
 }
