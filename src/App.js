@@ -45,6 +45,7 @@ function App() {
                 <Route path='/tips' element={<Home/>}/>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/waiters' element={<Employees/>}/>
+                <Route path='*' element={<Home/>}/>
             </Routes>
         </div>
     )
