@@ -19,6 +19,8 @@ function App() {
     const {isManagerRich} = useSelector(store => store.mainFields.mainFields);
     const {data: isAuth} = useSelector(store => store.auth);
 
+    const {isLoaded: isWaitersLoaded} = useSelector(store => store.waiters);
+
     //Сохранение данных в localStorage
     const dataToStore = {
         'fete': fete,
@@ -36,7 +38,9 @@ function App() {
     }, Object.values(dataToStore));
 
     return (
-        <div className={darkMode ? "app dark" : "app"}>
+        <div
+            className={`app ${isWaitersLoaded ? '' : 'loading'} ${darkMode ? 'dark' : ''}`}
+        >
             <DarkModeToggle/>
             <AppRouter/>
         </div>
