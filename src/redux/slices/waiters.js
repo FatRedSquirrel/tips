@@ -3,6 +3,27 @@ import axios from "../../axios";
 import {storage} from "../../utils";
 import {waiterObj} from "../../const";
 
+function syncWithLocalStorage(data) {
+    // проходимся по массиву, приходящему с базы
+    // если в localStorage есть официант с совпадающим id
+    // вернуть объект этого официанта со всеми данными из локал сторейджа
+    // если такого официанта в localStorage нету, вернуть пустой initial объект с именем официанта
+
+    const storedData = JSON.parse(localStorage.getItem('waiters'));
+
+    return data.map(item => {
+        const storedWaiter = storedData.find(waiter => waiter.id === item._id);
+        if (storedWaiter) {
+            return storedWaiter
+        }
+        return {
+            ...waiterObj,
+            id: item._id,
+            name: item.name
+        }
+    }).sort((a, b) => a.name > b.name ? 1 : -1)
+}
+
 export const fetchWaiters = createAsyncThunk('waiters/fetchWaiters', async () => {
     const {data} = await axios.get('/waiters');
     return data;
@@ -49,14 +70,8 @@ const waitersSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchWaiters.fulfilled, (state, action) => {
-                if (state.waiters.length !== action.payload.length) {
-                    state.waiters = action.payload
-                        .map(waiter => ({...waiterObj, id: waiter._id, name: waiter.name}))
-                        .sort((a, b) => a.name > b.name ? 1 : -1);
-                    state.isLoaded = true;
-                } else {
-                    state.isLoaded = true;
-                }
+                state.waiters = syncWithLocalStorage(action.payload)
+                state.isLoaded = true
             })
     }
 });

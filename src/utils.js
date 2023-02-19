@@ -32,4 +32,12 @@ function clearLocalStorage() {
     })
 }
 
-export {checkIfThereIsDivisionsData, checkIfAnyWaiterChosen, checkIfThereIsWaitersMoney, checkIfThereIsDataToReset, storage, capitalizeWord, clearLocalStorage}
+export {
+    checkIfThereIsDivisionsData,
+    checkIfAnyWaiterChosen,
+    checkIfThereIsWaitersMoney,
+    checkIfThereIsDataToReset,
+    storage,
+    capitalizeWord,
+    clearLocalStorage
+}
