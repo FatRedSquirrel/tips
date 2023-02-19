@@ -3,6 +3,7 @@ import {checkIfAnyWaiterChosen, checkIfThereIsWaitersMoney} from "../../utils";
 import {count} from "../../redux/slices/waiters";
 import {useDispatch, useSelector} from "react-redux";
 import {changeMainFields} from "../../redux/slices/mainFields";
+import axios from "../../axios";
 
 const WaitersMoney = ({showWarning}) => {
 
@@ -39,6 +40,7 @@ const WaitersMoney = ({showWarning}) => {
         const allTheMoney = +mainFields.waitersMoney + waitersCards;
         const tipsPerWaiter = allTheMoney / waitersAmount;
         dispatch(count(tipsPerWaiter));
+        axios.post('/tips', {tips: Math.floor(tipsPerWaiter)});
     }
 
     return (
