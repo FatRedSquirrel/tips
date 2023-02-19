@@ -1,10 +1,21 @@
-import cl from './Loader.module.css';
+import './Loader.css';
 
 import React from 'react';
 
 const Loader = () => {
     return (
-        <div className={cl.loader}></div>
+        <div className='loader'>
+            <div className="lds-roller">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
     );
 };
 
