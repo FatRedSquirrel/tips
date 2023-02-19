@@ -23,7 +23,7 @@ function Home() {
         }, 2000);
     }
 
-    return isWaitersLoaded ? <Loader/> : (
+    return !isWaitersLoaded ? <Loader/> : (
         <div className="home">
             <SideMenu/>
             <div className="main">
