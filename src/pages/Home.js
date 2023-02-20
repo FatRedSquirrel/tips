@@ -9,7 +9,7 @@ import WaitersMoney from "../components/major/WaitersMoney";
 import Header from "../components/major/Header";
 
 import {useSelector} from 'react-redux';
-import Loader from "../components/UI/Loader/Loader";
+import Loader from "../components/UI/Loader";
 
 function Home() {
 

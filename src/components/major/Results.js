@@ -1,7 +1,8 @@
 import React from "react";
-import {checkIfThereIsDivisionsData} from "../../utils";
 import {useSelector} from "react-redux";
-import Close from "../../icons/Close";
+
+import {checkIfThereIsDivisionsData} from "helpers/checkData";
+import Close from "icons/Close";
 
 export default function Results({showWarning}) {
 

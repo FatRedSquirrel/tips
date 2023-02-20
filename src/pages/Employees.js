@@ -1,14 +1,16 @@
 import React from 'react';
 import {Link, Navigate} from "react-router-dom";
-import Employee from "../components/minor/waiter/Employee";
 import {useDispatch, useSelector} from "react-redux";
-import NewEmployee from "../components/major/NewEmployee";
-import Modal from "../components/minor/Modal";
-import axios from "../axios";
-import {fetchWaiters} from "../redux/slices/waiters";
-import {capitalizeWord} from "../utils";
-import {EmployeeMessage} from "../const";
-import Loader from "../components/UI/Loader/Loader";
+import axios from "api";
+
+import Employee from "components/minor/waiter/Employee";
+import NewEmployee from "components/major/NewEmployee";
+import Modal from "components/minor/Modal";
+import Loader from "components/UI/Loader";
+
+import capitalizeWord from "helpers/capitalizeWord";
+import {fetchWaiters} from "redux/slices/waiters";
+import {EmployeeMessage} from "const";
 
 const Employees = () => {
 

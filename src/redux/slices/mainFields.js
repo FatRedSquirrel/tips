@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {storage} from "../../utils";
+import {storage} from "helpers/storage";
 
 const initialState = {
     mainFields: storage('mainFields') || {

@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import axios from "../../axios";
-import {storage} from "../../utils";
+import axios from "api";
+import {storage} from "helpers/storage";
 
 const initialState = {
     data: storage('isAuth') || null,

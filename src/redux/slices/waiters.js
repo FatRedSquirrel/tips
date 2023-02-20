@@ -1,7 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import axios from "../../axios";
-import {storage} from "../../utils";
-import {waiterObj} from "../../const";
+import axios from "api";
+import {storage} from "helpers/storage";
+import {waiterObj} from "const";
 
 function syncWithLocalStorage(data) {
     // проходимся по массиву, приходящему с базы

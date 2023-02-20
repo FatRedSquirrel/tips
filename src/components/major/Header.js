@@ -1,9 +1,11 @@
 import React from 'react';
-import Modal from "../minor/Modal";
-import {checkIfThereIsDataToReset} from "../../utils";
-import Reset from "../../icons/Reset";
-import {clearLocalStorage} from "../../utils";
 import {useSelector} from "react-redux";
+
+import Modal from "../minor/Modal";
+import {checkIfThereIsDataToReset} from "helpers/checkData";
+import {clearLocalStorage} from "helpers/storage";
+
+import Reset from "icons/Reset";
 
 const Header = () => {
 

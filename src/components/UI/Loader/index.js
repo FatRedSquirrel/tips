@@ -1,4 +1,4 @@
-import './Loader.css';
+import './index.scss';
 
 import React from 'react';
 

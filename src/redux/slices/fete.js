@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {storage} from "../../utils";
-import {FeteActionTypes} from "../../const";
+import {storage} from "helpers/storage";
+import {FeteActionTypes} from "const";
 
 const initialState = {
     fete: storage('fete') || [

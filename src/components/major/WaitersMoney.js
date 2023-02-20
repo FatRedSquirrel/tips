@@ -1,9 +1,11 @@
 import React from 'react';
-import {checkIfAnyWaiterChosen, checkIfThereIsWaitersMoney} from "../../utils";
-import {count} from "../../redux/slices/waiters";
 import {useDispatch, useSelector} from "react-redux";
-import {changeMainFields} from "../../redux/slices/mainFields";
-import axios from "../../axios";
+import axios from "api";
+
+import {checkIfAnyWaiterChosen, checkIfThereIsWaitersMoney} from "helpers/checkData";
+import {count} from "redux/slices/waiters";
+import {changeMainFields} from "redux/slices/mainFields";
+
 
 const WaitersMoney = ({showWarning}) => {
 

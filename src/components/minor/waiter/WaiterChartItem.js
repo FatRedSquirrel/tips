@@ -33,7 +33,8 @@ export default function WaiterChartItem(
             </div>
             <div className="waiter-main__text waiter-main__hours">
                 <select
-                    name="hours" className="hours-select"
+                    name="hours"
+                    className="hours-select"
                     value={hours}
                     onChange={(event) => dispatch(selectHours({id, hours: event.target.value}))}
                 >

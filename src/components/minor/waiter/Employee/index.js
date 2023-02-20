@@ -1,5 +1,6 @@
 import React, {useRef} from 'react';
-import Trash from "../../../icons/Trash";
+import Trash from "../../../../icons/Trash";
+import style from "./index.module.scss";
 
 const Employee = ({id, name, showConfirmation, setData}) => {
 
@@ -22,7 +23,7 @@ const Employee = ({id, name, showConfirmation, setData}) => {
     return (
         <div
             ref={ref}
-            className="employee"
+            className={style.employee}
         >
             <p onClick={employeeClickHandler}>{name}</p>
             <button onClick={deleteClickHandler}><Trash/></button>
