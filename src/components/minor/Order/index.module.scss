@@ -1,0 +1,17 @@
+.fete {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+  gap: 15px;
+
+  & span {
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  input {
+    width: 100px;
+  }
+}
+

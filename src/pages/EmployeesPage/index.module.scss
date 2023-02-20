@@ -1,0 +1,35 @@
+.employeesList {
+  overflow: hidden;
+
+  &__container {
+    flex-grow: 1;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  &__innerContainer {
+    width: 300px;
+    overflow-x: hidden;
+    height: 440px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    overflow-y: auto;
+    margin-top: 100px;
+  }
+
+  &__message {
+    margin-top: 4px;
+    font-size: 18px;
+    color: #249a24;
+    text-align: center;
+    opacity: 1;
+    height: 23px;
+
+    &.error {
+      color: var(--color-warning);
+    }
+  }
+}

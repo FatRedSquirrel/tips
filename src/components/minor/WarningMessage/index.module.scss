@@ -1,0 +1,18 @@
+.warningMessage {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translate(-50%, -100px);
+  color: var(--color-warning);
+  background-color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.4);
+  font-size: 20px;
+  z-index: 100;
+  transition: transform .3s ease;
+
+  &__shown {
+    transform: translate(-50%, 0);
+  }
+}

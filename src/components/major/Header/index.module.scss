@@ -1,0 +1,25 @@
+.reset {
+  display: block;
+  position: absolute;
+  top: 14px;
+  background-color: transparent;
+  border: none;
+  font-size: 14px;
+
+  svg {
+    stroke: #000;
+  }
+}
+
+.spinAnimation {
+  animation: spin .8s forwards;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}

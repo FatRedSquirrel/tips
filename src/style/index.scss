@@ -1,0 +1,234 @@
+@import "./reset";
+@import "variables";
+@import url('https://fonts.cdnfonts.com/css/sf-pro-display');
+
+html {
+  height: 100%;
+}
+
+#root {
+  min-height: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  font-family: 'SF Pro Display', sans-serif;
+  overflow-x: hidden;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  text-align: center;
+  padding: 4px 0;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid var(--color-primary);
+  font-size: 14px;
+  background-color: transparent;
+}
+
+select {
+  background-color: transparent;
+}
+
+button {
+  cursor: pointer;
+
+  &:active {
+    background: var(--color-additional);
+  }
+}
+
+.count {
+  padding: 6px 30px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 16px;
+  border: 3px solid var(--color-sber);
+  background-color: var(--color-sber);
+  color: #fff;
+  margin-bottom: 20px;
+
+  &:active {
+    color: #000;
+    background-color: transparent;
+  }
+}
+
+.title {
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  opacity: 1;
+  visibility: visible;
+  transition: .3s ease-in-out;
+  overflow: hidden;
+
+  &.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.app {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  min-height: 100%;
+  padding-bottom: 60px;
+
+  &.loading {
+    align-items: center;
+  }
+}
+
+.lock-scroll {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.tooltip {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -30px;
+  width: 16px;
+  height: 16px;
+  border: 1px solid black;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover &-text {
+    display: block;
+  }
+
+  &-text {
+    position: absolute;
+    top: 180%;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 180px;
+    text-align: center;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid var(--color-primary);
+    border-radius: 12px;
+    display: none;
+    color: #000;
+  }
+}
+
+.home-link {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 12px;
+  font-size: 20px;
+  border-bottom: 1px solid black;
+
+  &:active {
+    border-color: transparent;
+    opacity: 0.3;
+  }
+}
+
+.dark {
+
+  background-color: #121212;
+  color: #fff;
+
+  .reset svg {
+    stroke: #fff;
+  }
+
+  .input-error {
+    border-color: var(--color-warning);
+  }
+
+  .home-link {
+    border-color: #fff;
+  }
+
+  .new-waiter-button {
+    border-color: var(--color-primary-dark-mode);
+  }
+
+  .waiters-money-tooltip {
+    border-color: #fff;
+  }
+
+  button {
+    background: transparent;
+    border-color: var(--color-primary-dark-mode);
+  }
+
+  .fete-button {
+    border-color: var(--color-primary-dark-mode);
+  }
+
+  .waiters-main__header {
+    color: var(--color-primary-dark-mode);
+  }
+
+  input {
+    background: transparent;
+    border-color: var(--color-primary-dark-mode);
+  }
+
+  .burger::before, .burger::after {
+    background-color: var(--color-additional-dark-mode);
+  }
+
+  .tooltip {
+    color: var(--color-primary-dark-mode);
+    border-color: var(--color-primary-dark-mode);
+
+    &-text {
+      border-color: var(--color-additional-dark-mode);
+    }
+
+  }
+
+  .waiter-main__comment {
+    input {
+      background: #121212;
+      color: #fff;
+    }
+  }
+
+  .count {
+    border-color: var(--color-additional-dark-mode);
+    background-color: var(--color-additional-dark-mode);
+  }
+
+  .waiter-main:not(:last-child) {
+    border-bottom: 1px solid #3b3b3b;
+  }
+}

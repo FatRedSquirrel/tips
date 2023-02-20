@@ -1,0 +1,57 @@
+.results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  background: #fff;
+  padding: 50px 40px;
+  position: relative;
+
+  &.hidden {
+    display: none;
+  }
+
+  .division {
+    font-size: 24px;
+    margin-right: 3px;
+
+    &__tips {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--color-sber-bright);
+    }
+  }
+
+  button {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: transparent;
+    right: 18px;
+    top: 18px;
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      fill: #000;
+      opacity: 0.9;
+    }
+  }
+}
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  color: #000;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.6);
+}
