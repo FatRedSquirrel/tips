@@ -2,7 +2,7 @@ import React from 'react';
 import {Route, Routes} from "react-router-dom";
 import {routeConfig} from "router/routerConfig";
 
-const Index = () => {
+const AppRouter = () => {
     return (
         <Routes>
             {Object.values(routeConfig).map((route, index) => (
@@ -12,4 +12,4 @@ const Index = () => {
     );
 };
 
-export default Index;
+export default AppRouter;

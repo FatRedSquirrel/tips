@@ -2,7 +2,7 @@ import React from 'react';
 import DarkModeToggle from "components/minor/DarkModeToggle";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchWaiters} from "./redux/slices/waiters";
-import Index from "router";
+import AppRouter from "router";
 
 function App() {
 
@@ -42,7 +42,7 @@ function App() {
             className={`app ${isWaitersLoaded ? '' : 'loading'} ${darkMode ? 'dark' : ''}`}
         >
             <DarkModeToggle/>
-            <Index/>
+            <AppRouter/>
         </div>
     )
 }
