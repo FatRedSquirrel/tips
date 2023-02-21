@@ -41,7 +41,7 @@ function App() {
         <div
             className={`app ${isWaitersLoaded ? '' : 'loading'} ${darkMode ? 'dark' : ''}`}
         >
-            <DarkModeToggle/>
+            {/*<DarkModeToggle/>*/}
             <AppRouter/>
         </div>
     )
